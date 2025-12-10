@@ -1,0 +1,1806 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        /*body {*/-->
+<!--        /*    background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat fixed;*/-->
+<!--        /*    min-height: 100vh;*/-->
+<!--        /*    font-family: Arial, sans-serif;*/-->
+<!--        /*    overflow-x: hidden;*/-->
+<!--        /*}*/-->
+
+<!--        .intro-pages-container {-->
+<!--            position: relative;-->
+<!--            height: 400vh;-->
+<!--            width: 100%;-->
+<!--        }-->
+
+<!--        .intro-page {-->
+<!--            position: fixed;-->
+<!--            bottom: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100vh;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-start;-->
+<!--            padding: 0 4rem;-->
+<!--            z-index: 1;-->
+<!--            transition: transform 0.1s linear;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .intro-page::before {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.3);-->
+<!--            z-index: -1;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--        }-->
+
+<!--        #page2 {-->
+<!--            background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;-->
+<!--        }-->
+<!--        #page3 {-->
+<!--            background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;-->
+<!--        }-->
+<!--        #page4 {-->
+<!--            background: url('https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg') center/cover no-repeat;-->
+<!--        }-->
+
+<!--        .page-text {-->
+<!--            font-size: 4rem;-->
+<!--            color: white;-->
+<!--            font-weight: bold;-->
+<!--            text-align: left;-->
+<!--            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);-->
+<!--            line-height: 1.2;-->
+<!--        }-->
+
+<!--        .page-subtext {-->
+<!--            font-size: 1.5rem;-->
+<!--            color: white;-->
+<!--            margin-top: 1rem;-->
+<!--            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);-->
+<!--            line-height: 1.4;-->
+<!--            max-width: 600px;-->
+<!--        }-->
+
+<!--        .last-page {-->
+<!--            height: 100vh;-->
+<!--            width: 100%;-->
+<!--            position: relative;-->
+<!--            z-index: 5;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-start;-->
+<!--            padding: 0 4rem;-->
+<!--            color: white;-->
+<!--            overflow: hidden;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            background: white;-->
+<!--        }-->
+
+<!--        .last-page-video {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            z-index: -1;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .last-page-video video {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .last-page-overlay {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.6);-->
+<!--            z-index: 0;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--        }-->
+
+<!--        .last-page-content {-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--        }-->
+
+<!--        .logo-circle {-->
+<!--            position: absolute;-->
+<!--            right: 40px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--            width: 325px;-->
+<!--            height: 325px;-->
+<!--            border-radius: 50%;-->
+<!--            background-color: white;-->
+<!--            z-index: 10;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);-->
+<!--        }-->
+
+<!--        .logo-circle img {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .comm-icons {-->
+<!--            margin-top: 3rem;-->
+<!--            display: flex;-->
+<!--            gap: 2rem;-->
+<!--            align-items: center;-->
+<!--        }-->
+
+<!--        .comm-icon {-->
+<!--            width: 80px;-->
+<!--            height: 80px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            transition: transform 0.3s ease;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .comm-icon:hover {-->
+<!--            transform: scale(1.1);-->
+<!--        }-->
+
+<!--        .comm-icon img {-->
+<!--            width: 50px;-->
+<!--            height: 50px;-->
+<!--            object-fit: contain;-->
+<!--        }-->
+
+<!--        #page2 { z-index: 1; }-->
+<!--        #page3 { z-index: 2; }-->
+<!--        #page4 { z-index: 3; }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .page-text {-->
+<!--                font-size: 2.5rem;-->
+<!--            }-->
+<!--            .page-subtext {-->
+<!--                font-size: 1.2rem;-->
+<!--            }-->
+<!--            .intro-page {-->
+<!--                padding: 0 2rem;-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .intro-page::before {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .last-page {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--                padding: 0 2rem;-->
+<!--            }-->
+<!--            .last-page-video {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .last-page-overlay {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .comm-icon {-->
+<!--                width: 60px;-->
+<!--                height: 60px;-->
+<!--            }-->
+<!--            .comm-icon img {-->
+<!--                width: 35px;-->
+<!--                height: 35px;-->
+<!--            }-->
+<!--            .comm-icons {-->
+<!--                gap: 1.5rem;-->
+<!--            }-->
+<!--            .logo-circle {-->
+<!--                right: 20px;-->
+<!--                width: 80px;-->
+<!--                height: 80px;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .white-gap-page {-->
+<!--            position: relative;-->
+<!--            height: auto;-->
+<!--            min-height: 100vh;-->
+<!--            width: 100%;-->
+<!--            background: white;-->
+<!--            z-index: 4;-->
+<!--            margin-top: 0;-->
+<!--            border-radius: 0;-->
+<!--            padding: 3rem 4rem;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: flex-start;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .parks-heading {-->
+<!--            font-size: 3.5rem;-->
+<!--            color: #2a2a2a;-->
+<!--            font-weight: bold;-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 3rem;-->
+<!--            text-transform: uppercase;-->
+<!--            letter-spacing: 1px;-->
+<!--        }-->
+
+<!--        .parks-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(3, 1fr);-->
+<!--            gap: 2rem;-->
+<!--            width: 100%;-->
+<!--            max-width: 1600px;-->
+<!--            margin: 0 auto;-->
+<!--        }-->
+
+<!--        .park-card {-->
+<!--            background: #f8f8f8;-->
+<!--            border-radius: 12px;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--            cursor: pointer;-->
+<!--            height: 100%;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .park-card:hover {-->
+<!--            transform: translateY(-8px);-->
+<!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
+
+<!--        .park-img {-->
+<!--            width: 100%;-->
+<!--            height: 220px;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .park-content {-->
+<!--            padding: 1.5rem;-->
+<!--            flex-grow: 1;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .park-name {-->
+<!--            font-size: 1.5rem;-->
+<!--            color: #1a1a1a;-->
+<!--            font-weight: bold;-->
+<!--            margin-bottom: 0.8rem;-->
+<!--        }-->
+
+<!--        .park-desc {-->
+<!--            font-size: 1.1rem;-->
+<!--            color: #555;-->
+<!--            line-height: 1.5;-->
+<!--            flex-grow: 1;-->
+<!--        }-->
+
+<!--        @media (max-width: 1024px) {-->
+<!--            .parks-grid {-->
+<!--                grid-template-columns: repeat(2, 1fr);-->
+<!--            }-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .white-gap-page {-->
+<!--                padding: 2rem 1.5rem;-->
+<!--                overflow-x: hidden;-->
+<!--            }-->
+<!--            .parks-heading {-->
+<!--                font-size: 2.2rem;-->
+<!--                margin-bottom: 2rem;-->
+<!--            }-->
+<!--            .parks-grid {-->
+<!--                grid-template-columns: 1fr;-->
+<!--                gap: 1.5rem;-->
+<!--            }-->
+<!--            .park-img {-->
+<!--                height: 180px;-->
+<!--            }-->
+<!--            .park-name {-->
+<!--                font-size: 1.3rem;-->
+<!--            }-->
+<!--            .park-desc {-->
+<!--                font-size: 1rem;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="intro-pages-container">-->
+<!--    <div class="intro-page" id="page2">-->
+<!--        <div>-->
+<!--            <div class="page-text">Enjoy free airport pickup.</div>-->
+<!--            <div class="page-subtext">We’ll meet you on arrival and take you straight to your destination—fast, easy, and stress-free.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="intro-page" id="page3">-->
+<!--        <div>-->
+<!--            <div class="page-text">Free Refreshments snacks for Every Guest.</div>-->
+<!--            <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="intro-page" id="page4">-->
+<!--        <div>-->
+<!--            <div class="page-text">Special Park Route Discounts.</div>-->
+<!--            <div class="page-subtext">Enjoy reduced rates on every journey, giving you more adventure for less.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="white-gap-page">-->
+<!--    <h2 class="parks-heading">Bigpanda's famous National Parks</h2>-->
+<!--    <div class="parks-grid">-->
+<!--        &lt;!&ndash; Park 1 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/15088224/pexels-photo-15088224.jpeg" alt="Serengeti National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Serengeti National Park</h3>-->
+<!--                <p class="park-desc">Home of the Great Migration and endless plains.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 2 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/5282269/pexels-photo-5282269.jpeg" alt="Ngorongoro Crater" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Ngorongoro Crater</h3>-->
+<!--                <p class="park-desc">natural wildlife kingdom inside a volcano.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 3 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/16878683/pexels-photo-16878683.jpeg" alt="Tarangire National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Tarangire National Park</h3>-->
+<!--                <p class="park-desc">giant baobabs and massive elephant herds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 4 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/12573131/pexels-photo-12573131.jpeg" alt="Lake Manyara National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Lake Manyara National Park</h3>-->
+<!--                <p class="park-desc">Famous filled lake with flamingo.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 5 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/11575955/pexels-photo-11575955.jpeg" alt="Arusha National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Arusha National Park</h3>-->
+<!--                <p class="park-desc">lush forests, lakes, and Mount Meru views.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 6 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/16696489/pexels-photo-16696489.jpeg" alt="Kikuletwa Hot Spring" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Kikuletwa Hot Spring</h3>-->
+<!--                <p class="park-desc">crystal-clear, blue water in a hidden oasis.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 7 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/30705488/pexels-photo-30705488.jpeg" alt="Ruaha National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Ruaha National Park</h3>-->
+<!--                <p class="park-desc">wilderness packed with lions and elephants.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 8 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/34771753/pexels-photo-34771753.jpeg" alt="Mount Kilimanjaro" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Mount Kilimanjaro</h3>-->
+<!--                <p class="park-desc">Africa’s rooftop, rising above the clouds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 9 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/10768837/pexels-photo-10768837.jpeg" alt="Katavi National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Katavi National Park</h3>-->
+<!--                <p class="park-desc">wild, remote, and full of huge hippo and buffalo herds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 10 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/35024115/pexels-photo-35024115.jpeg" alt="Olduvai Gorge" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Olduvai Gorge</h3>-->
+<!--                <p class="park-desc">Birthplace of humanity, with some of the oldest human fossils.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="last-page">-->
+<!--    <div class="last-page-video">-->
+<!--        <video th:each="videoUrl : ${videos}"-->
+<!--               th:src="${videoUrl}"-->
+<!--               autoplay-->
+<!--               muted-->
+<!--               loop-->
+<!--               playsinline-->
+<!--               oncontextmenu="return false;">-->
+<!--        </video>-->
+<!--        <div class="last-page-overlay"></div>-->
+<!--    </div>-->
+
+<!--    <div class="logo-circle">-->
+<!--        <img src="obi/panda.jpg" alt="Logo">-->
+<!--    </div>-->
+
+<!--    <div class="last-page-content">-->
+<!--        <div class="page-text">Start Your Journey Today</div>-->
+<!--        <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>-->
+
+<!--        <div class="comm-icons">-->
+<!--            <a href="YOUR_WECHAT_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111615.png" alt="WeChat">-->
+<!--            </a>-->
+<!--            <a href="YOUR_FACEBOOK_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">-->
+<!--            </a>-->
+<!--            <a href="YOUR_WHATSAPP_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">-->
+<!--            </a>-->
+<!--            <a href="YOUR_INSTAGRAM_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const introPages = [-->
+<!--        document.getElementById('page2'),-->
+<!--        document.getElementById('page3'),-->
+<!--        document.getElementById('page4')-->
+<!--    ];-->
+
+<!--    let lastScrollY = window.scrollY;-->
+<!--    let scrollVelocity = 0;-->
+<!--    let lastTimestamp = 0;-->
+<!--    let animationId = null;-->
+
+<!--    function smoothScrollUpdate() {-->
+<!--        const currentScrollY = window.scrollY;-->
+<!--        const viewportHeight = window.innerHeight;-->
+<!--        const now = Date.now();-->
+<!--        const deltaTime = lastTimestamp ? now - lastTimestamp : 16;-->
+<!--        lastTimestamp = now;-->
+
+<!--        scrollVelocity = (currentScrollY - lastScrollY) / (deltaTime / 16);-->
+<!--        lastScrollY = currentScrollY;-->
+
+<!--        if (Math.abs(scrollVelocity) < 0.1) {-->
+<!--            const inertiaScrollY = currentScrollY + (scrollVelocity * 2);-->
+<!--            const effectiveScrollY = Math.max(0, Math.min(inertiaScrollY, viewportHeight * 4));-->
+
+<!--            introPages.forEach((page, index) => {-->
+<!--                const pageScrollThreshold = index * viewportHeight;-->
+<!--                const pageScrollRange = viewportHeight;-->
+
+<!--                if (effectiveScrollY < pageScrollThreshold) {-->
+<!--                    page.style.transform = 'translateY(100%)';-->
+<!--                } else if (effectiveScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--                    const riseProgress = (effectiveScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--                    page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--                } else {-->
+<!--                    page.style.transform = 'translateY(0)';-->
+<!--                }-->
+<!--            });-->
+<!--        } else {-->
+<!--            introPages.forEach((page, index) => {-->
+<!--                const pageScrollThreshold = index * viewportHeight;-->
+<!--                const pageScrollRange = viewportHeight;-->
+
+<!--                if (currentScrollY < pageScrollThreshold) {-->
+<!--                    page.style.transform = 'translateY(100%)';-->
+<!--                } else if (currentScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--                    const riseProgress = (currentScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--                    page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--                } else {-->
+<!--                    page.style.transform = 'translateY(0)';-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+
+<!--        if (currentScrollY >= viewportHeight * 4) {-->
+<!--            introPages.forEach(page => page.style.transform = 'translateY(0)');-->
+<!--        }-->
+
+<!--        animationId = requestAnimationFrame(smoothScrollUpdate);-->
+<!--    }-->
+
+<!--    smoothScrollUpdate();-->
+<!--    window.dispatchEvent(new Event('scroll'));-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 3-image layout container (fixed edge alignment) */
+        .initial-white-page {
+            width: 100%;
+            height: 100vh;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 0;
+            will-change: transform; /* Performance boost */
+        }
+
+        /* 3-image grid (unchanged) */
+        .image-layout {
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .big-left-img {
+            width: 60%;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .big-left-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .right-img-stack {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .small-right-img {
+            width: 100%;
+            height: 50%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .small-right-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Intro pages container (fixed height + edge lock) */
+        .intro-pages-container {
+            position: relative;
+            height: 300vh; /* Exact 3x viewport for 3 intro pages */
+            width: 100%;
+            margin-top: -1px; /* Eliminate gap between 3-image page and page2 */
+        }
+
+        /* Intro page (fixed position + no transition delay) */
+        .intro-page {
+            position: fixed;
+            top: 0; /* Align top edge to 3-image page's bottom edge */
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 4rem;
+            z-index: 1;
+            transition: none; /* Remove delay/bounce */
+            will-change: transform; /* Performance boost */
+            border-radius: 60px 0 0 60px;
+            overflow: hidden;
+        }
+
+        .intro-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            border-radius: 60px 0 0 60px;
+        }
+
+        #page2 {
+            background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;
+            z-index: 1;
+        }
+        #page3 {
+            background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;
+            z-index: 2;
+        }
+        #page4 {
+            background: url('https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg') center/cover no-repeat;
+            z-index: 3;
+        }
+
+        .page-text {
+            font-size: 4rem;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            line-height: 1.2;
+        }
+
+        .page-subtext {
+            font-size: 1.5rem;
+            color: white;
+            margin-top: 1rem;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            line-height: 1.4;
+            max-width: 600px;
+        }
+
+        .last-page {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 4rem;
+            color: white;
+            overflow: hidden;
+            border-radius: 60px 0 0 60px;
+            background: white;
+        }
+
+        .last-page-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            border-radius: 60px 0 0 60px;
+            overflow: hidden;
+        }
+
+        .last-page-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .last-page-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+            border-radius: 60px 0 0 60px;
+        }
+
+        .last-page-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-circle {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 325px;
+            height: 325px;
+            border-radius: 50%;
+            background-color: white;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comm-icons {
+            margin-top: 3rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .comm-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .comm-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .comm-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 768px) {
+            .page-text {
+                font-size: 2.5rem;
+            }
+            .page-subtext {
+                font-size: 1.2rem;
+            }
+            .intro-page {
+                padding: 0 2rem;
+                border-radius: 40px 0 0 40px;
+            }
+            .intro-page::before {
+                border-radius: 40px 0 0 40px;
+            }
+            .last-page {
+                border-radius: 40px 0 0 40px;
+                padding: 0 2rem;
+            }
+            .last-page-video {
+                border-radius: 40px 0 0 40px;
+            }
+            .last-page-overlay {
+                border-radius: 40px 0 0 40px;
+            }
+            .comm-icon {
+                width: 60px;
+                height: 60px;
+            }
+            .comm-icon img {
+                width: 35px;
+                height: 35px;
+            }
+            .comm-icons {
+                gap: 1.5rem;
+            }
+            .logo-circle {
+                right: 20px;
+                width: 80px;
+                height: 80px;
+            }
+            /* Responsive for 3-image layout */
+            .initial-white-page {
+                padding: 0 2rem;
+            }
+            .image-layout {
+                height: 70vh;
+                gap: 1.5rem;
+            }
+        }
+
+        .white-gap-page {
+            position: relative;
+            height: auto;
+            min-height: 100vh;
+            width: 100%;
+            background: white;
+            z-index: 4;
+            margin-top: 0;
+            border-radius: 0;
+            padding: 3rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow: hidden;
+            margin-top: 5vh;
+            padding-top: 5vh;
+        }
+
+        .parks-heading {
+            font-size: 3.5rem;
+            color: #2a2a2a;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .parks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .park-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .park-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .park-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .park-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .park-name {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        .park-desc {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .parks-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .white-gap-page {
+                padding: 2rem 1.5rem;
+                overflow-x: hidden;
+            }
+            .parks-heading {
+                font-size: 2.2rem;
+                margin-bottom: 2rem;
+            }
+            .parks-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .park-img {
+                height: 180px;
+            }
+            .park-name {
+                font-size: 1.3rem;
+            }
+            .park-desc {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 3-image layout page -->
+<div class="initial-white-page">
+    <div class="image-layout">
+        <div class="big-left-img">
+            <img src="https://images.pexels.com/photos/31071556/pexels-photo-31071556.jpeg" alt="Cherry Blossoms with Mount Fuji in Spring">
+        </div>
+        <div class="right-img-stack">
+            <div class="small-right-img">
+                <img src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg" alt="Small Right Top Image">
+            </div>
+            <div class="small-right-img">
+                <img src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg" alt="Small Right Bottom Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Intro pages (airport pickup + refreshments + discounts) -->
+<div class="intro-pages-container">
+    <div class="intro-page" id="page2">
+        <div>
+            <div class="page-text">Enjoy free airport pickup.</div>
+            <div class="page-subtext">We’ll meet you on arrival and take you straight to your destination—fast, easy, and stress-free.</div>
+        </div>
+    </div>
+    <div class="intro-page" id="page3">
+        <div>
+            <div class="page-text">Free Refreshments snacks for Every Guest.</div>
+            <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>
+        </div>
+    </div>
+    <div class="intro-page" id="page4">
+        <div>
+            <div class="page-text">Special Park Route Discounts.</div>
+            <div class="page-subtext">Enjoy reduced rates on every journey, giving you more adventure for less.</div>
+        </div>
+    </div>
+</div>
+
+<!-- National parks page -->
+<div class="white-gap-page">
+    <h2 class="parks-heading">Bigpanda's famous National Parks</h2>
+    <div class="parks-grid">
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/15088224/pexels-photo-15088224.jpeg" alt="Serengeti National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Serengeti National Park</h3>
+                <p class="park-desc">Home of the Great Migration and endless plains.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/5282269/pexels-photo-5282269.jpeg" alt="Ngorongoro Crater" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Ngorongoro Crater</h3>
+                <p class="park-desc">natural wildlife kingdom inside a volcano.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/16878683/pexels-photo-16878683.jpeg" alt="Tarangire National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Tarangire National Park</h3>
+                <p class="park-desc">giant baobabs and massive elephant herds.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/12573131/pexels-photo-12573131.jpeg" alt="Lake Manyara National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Lake Manyara National Park</h3>
+                <p class="park-desc">Famous filled lake with flamingo.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/11575955/pexels-photo-11575955.jpeg" alt="Arusha National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Arusha National Park</h3>
+                <p class="park-desc">lush forests, lakes, and Mount Meru views.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/16696489/pexels-photo-16696489.jpeg" alt="Kikuletwa Hot Spring" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Kikuletwa Hot Spring</h3>
+                <p class="park-desc">crystal-clear, blue water in a hidden oasis.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/30705488/pexels-photo-30705488.jpeg" alt="Ruaha National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Ruaha National Park</h3>
+                <p class="park-desc">wilderness packed with lions and elephants.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/34771753/pexels-photo-34771753.jpeg" alt="Mount Kilimanjaro" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Mount Kilimanjaro</h3>
+                <p class="park-desc">Africa’s rooftop, rising above the clouds.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/10768837/pexels-photo-10768837.jpeg" alt="Katavi National Park" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Katavi National Park</h3>
+                <p class="park-desc">wild, remote, and full of huge hippo and buffalo herds.</p>
+            </div>
+        </div>
+        <div class="park-card">
+            <img src="https://images.pexels.com/photos/35024115/pexels-photo-35024115.jpeg" alt="Olduvai Gorge" class="park-img">
+            <div class="park-content">
+                <h3 class="park-name">Olduvai Gorge</h3>
+                <p class="park-desc">Birthplace of humanity, with some of the oldest human fossils.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Last page with video -->
+<div class="last-page">
+    <div class="last-page-video">
+        <video th:each="videoUrl : ${videos}"
+               th:src="${videoUrl}"
+               autoplay
+               muted
+               loop
+               playsinline
+               oncontextmenu="return false;">
+        </video>
+        <div class="last-page-overlay"></div>
+    </div>
+
+
+        <div class="logo-circle">
+        <img src="obi/panda.jpg" alt="Logo">
+    </div>
+    <div class="last-page-content">
+        <div class="page-text">Start Your Journey Today</div>
+        <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>
+        <div class="comm-icons">
+            <a href="YOUR_WECHAT_URL_HERE" class="comm-icon" target="_self">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111615.png" alt="WeChat">
+            </a>
+            <a href="YOUR_FACEBOOK_URL_HERE" class="comm-icon" target="_self">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+            </a>
+            <a href="YOUR_WHATSAPP_URL_HERE" class="comm-icon" target="_self">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
+            <a href="YOUR_INSTAGRAM_URL_HERE" class="comm-icon" target="_self">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Fixed scroll script (1:1 sync, no delay/bounce) -->
+<script>
+    const introPages = [
+        document.getElementById('page2'),
+        document.getElementById('page3'),
+        document.getElementById('page4')
+    ];
+    const viewportHeight = window.innerHeight;
+    let lastScrollY = window.scrollY;
+    let isTicking = false;
+
+    // 1:1 scroll sync (no inertia/delay)
+    function syncPagePositions() {
+        const currentScrollY = window.scrollY;
+        lastScrollY = currentScrollY;
+
+        introPages.forEach((page, index) => {
+            const threshold = index;
+            const scrollProgress = currentScrollY / viewportHeight;
+
+            if (scrollProgress < threshold) {
+                page.style.transform = 'translateY(100%)';
+            } else if (scrollProgress < threshold + 1) {
+                const translateY = 100 - ((scrollProgress - threshold) * 100);
+                page.style.transform = `translateY(${translateY}%)`;
+            } else {
+                page.style.transform = 'translateY(0)';
+            }
+        });
+        isTicking = false;
+    }
+
+    // Throttle to 60fps (smooth, no lag)
+    window.addEventListener('scroll', () => {
+        if (!isTicking) {
+            requestAnimationFrame(syncPagePositions);
+            isTicking = true;
+        }
+    });
+    // Initial sync on load
+    syncPagePositions();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        /* This is the original commented body - replaced with the 3-image layout container */-->
+<!--        body {-->
+<!--            min-height: 100vh;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            overflow-x: hidden;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+
+<!--        /* New: Container for the 3 images (replaces the commented body background) */-->
+<!--        .initial-white-page {-->
+<!--            width: 100%;-->
+<!--            height: 100vh; /* Exact same height as the original body min-height */-->
+<!--            background: white; /* Keeps the white background */-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            padding: 0 4rem;-->
+<!--            position: relative;-->
+<!--            z-index: 0;-->
+<!--        }-->
+
+<!--        /* 3-image layout (1 big left, 2 stacked right) - fixed size, no overflow */-->
+<!--        .image-layout {-->
+<!--            width: 100%;-->
+<!--            height: 80vh; /* Fits within 100vh without altering page size */-->
+<!--            display: flex;-->
+<!--            gap: 2rem;-->
+<!--        }-->
+
+<!--        .big-left-img {-->
+<!--            width: 60%;-->
+<!--            height: 100%;-->
+<!--            border-radius: 12px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .big-left-img img {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .right-img-stack {-->
+<!--            width: 40%;-->
+<!--            height: 100%;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 2rem;-->
+<!--        }-->
+
+<!--        .small-right-img {-->
+<!--            width: 100%;-->
+<!--            height: 50%;-->
+<!--            border-radius: 12px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .small-right-img img {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        /* Original styles (UNCHANGED) */-->
+<!--        .intro-pages-container {-->
+<!--            position: relative;-->
+<!--            height: 400vh;-->
+<!--            width: 100%;-->
+<!--        }-->
+
+<!--        .intro-page {-->
+<!--            position: fixed;-->
+<!--            bottom: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100vh;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-start;-->
+<!--            padding: 0 4rem;-->
+<!--            z-index: 1;-->
+<!--            transition: transform 0.1s linear;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .intro-page::before {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.3);-->
+<!--            z-index: -1;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--        }-->
+
+<!--        #page2 {-->
+<!--            background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;-->
+<!--        }-->
+<!--        #page3 {-->
+<!--            background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;-->
+<!--        }-->
+<!--        #page4 {-->
+<!--            background: url('https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg') center/cover no-repeat;-->
+<!--        }-->
+
+<!--        .page-text {-->
+<!--            font-size: 4rem;-->
+<!--            color: white;-->
+<!--            font-weight: bold;-->
+<!--            text-align: left;-->
+<!--            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);-->
+<!--            line-height: 1.2;-->
+<!--        }-->
+
+<!--        .page-subtext {-->
+<!--            font-size: 1.5rem;-->
+<!--            color: white;-->
+<!--            margin-top: 1rem;-->
+<!--            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);-->
+<!--            line-height: 1.4;-->
+<!--            max-width: 600px;-->
+<!--        }-->
+
+<!--        .last-page {-->
+<!--            height: 100vh;-->
+<!--            width: 100%;-->
+<!--            position: relative;-->
+<!--            z-index: 5;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-start;-->
+<!--            padding: 0 4rem;-->
+<!--            color: white;-->
+<!--            overflow: hidden;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            background: white;-->
+<!--        }-->
+
+<!--        .last-page-video {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            z-index: -1;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .last-page-video video {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .last-page-overlay {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.6);-->
+<!--            z-index: 0;-->
+<!--            border-radius: 60px 0 0 60px;-->
+<!--        }-->
+
+<!--        .last-page-content {-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--        }-->
+
+<!--        .logo-circle {-->
+<!--            position: absolute;-->
+<!--            right: 40px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--            width: 325px;-->
+<!--            height: 325px;-->
+<!--            border-radius: 50%;-->
+<!--            background-color: white;-->
+<!--            z-index: 10;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);-->
+<!--        }-->
+
+<!--        .logo-circle img {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .comm-icons {-->
+<!--            margin-top: 3rem;-->
+<!--            display: flex;-->
+<!--            gap: 2rem;-->
+<!--            align-items: center;-->
+<!--        }-->
+
+<!--        .comm-icon {-->
+<!--            width: 80px;-->
+<!--            height: 80px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            transition: transform 0.3s ease;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .comm-icon:hover {-->
+<!--            transform: scale(1.1);-->
+<!--        }-->
+
+<!--        .comm-icon img {-->
+<!--            width: 50px;-->
+<!--            height: 50px;-->
+<!--            object-fit: contain;-->
+<!--        }-->
+
+<!--        #page2 { z-index: 1; }-->
+<!--        #page3 { z-index: 2; }-->
+<!--        #page4 { z-index: 3; }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .page-text {-->
+<!--                font-size: 2.5rem;-->
+<!--            }-->
+<!--            .page-subtext {-->
+<!--                font-size: 1.2rem;-->
+<!--            }-->
+<!--            .intro-page {-->
+<!--                padding: 0 2rem;-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .intro-page::before {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .last-page {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--                padding: 0 2rem;-->
+<!--            }-->
+<!--            .last-page-video {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .last-page-overlay {-->
+<!--                border-radius: 40px 0 0 40px;-->
+<!--            }-->
+<!--            .comm-icon {-->
+<!--                width: 60px;-->
+<!--                height: 60px;-->
+<!--            }-->
+<!--            .comm-icon img {-->
+<!--                width: 35px;-->
+<!--                height: 35px;-->
+<!--            }-->
+<!--            .comm-icons {-->
+<!--                gap: 1.5rem;-->
+<!--            }-->
+<!--            .logo-circle {-->
+<!--                right: 20px;-->
+<!--                width: 80px;-->
+<!--                height: 80px;-->
+<!--            }-->
+<!--            /* Responsive for 3-image layout (matches original breakpoints) */-->
+<!--            .initial-white-page {-->
+<!--                padding: 0 2rem;-->
+<!--            }-->
+<!--            .image-layout {-->
+<!--                height: 70vh;-->
+<!--                gap: 1.5rem;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .white-gap-page {-->
+<!--            position: relative;-->
+<!--            height: auto;-->
+<!--            min-height: 100vh;-->
+<!--            width: 100%;-->
+<!--            background: white;-->
+<!--            z-index: 4;-->
+<!--            margin-top: 0;-->
+<!--            border-radius: 0;-->
+<!--            padding: 3rem 4rem;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: flex-start;-->
+<!--            overflow: hidden;-->
+
+<!--            margin-top: 5vh; /* Reduce from -100vh */-->
+<!--            padding-top: 5vh; /* Reduce from 100vh */-->
+<!--        }-->
+
+<!--        .parks-heading {-->
+<!--            font-size: 3.5rem;-->
+<!--            color: #2a2a2a;-->
+<!--            font-weight: bold;-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 3rem;-->
+<!--            text-transform: uppercase;-->
+<!--            letter-spacing: 1px;-->
+<!--        }-->
+
+<!--        .parks-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(3, 1fr);-->
+<!--            gap: 2rem;-->
+<!--            width: 100%;-->
+<!--            max-width: 1600px;-->
+<!--            margin: 0 auto;-->
+<!--        }-->
+
+<!--        .park-card {-->
+<!--            background: #f8f8f8;-->
+<!--            border-radius: 12px;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--            cursor: pointer;-->
+<!--            height: 100%;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .park-card:hover {-->
+<!--            transform: translateY(-8px);-->
+<!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
+
+<!--        .park-img {-->
+<!--            width: 100%;-->
+<!--            height: 220px;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+<!--        .park-content {-->
+<!--            padding: 1.5rem;-->
+<!--            flex-grow: 1;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .park-name {-->
+<!--            font-size: 1.5rem;-->
+<!--            color: #1a1a1a;-->
+<!--            font-weight: bold;-->
+<!--            margin-bottom: 0.8rem;-->
+<!--        }-->
+
+<!--        .park-desc {-->
+<!--            font-size: 1.1rem;-->
+<!--            color: #555;-->
+<!--            line-height: 1.5;-->
+<!--            flex-grow: 1;-->
+<!--        }-->
+
+<!--        @media (max-width: 1024px) {-->
+<!--            .parks-grid {-->
+<!--                grid-template-columns: repeat(2, 1fr);-->
+<!--            }-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .white-gap-page {-->
+<!--                padding: 2rem 1.5rem;-->
+<!--                overflow-x: hidden;-->
+<!--            }-->
+<!--            .parks-heading {-->
+<!--                font-size: 2.2rem;-->
+<!--                margin-bottom: 2rem;-->
+<!--            }-->
+<!--            .parks-grid {-->
+<!--                grid-template-columns: 1fr;-->
+<!--                gap: 1.5rem;-->
+<!--            }-->
+<!--            .park-img {-->
+<!--                height: 180px;-->
+<!--            }-->
+<!--            .park-name {-->
+<!--                font-size: 1.3rem;-->
+<!--            }-->
+<!--            .park-desc {-->
+<!--                font-size: 1rem;-->
+<!--            }-->
+<!--        }-->
+
+
+
+
+
+
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; NEW: 3-image layout (replaces the commented body background - this is the white starting page) &ndash;&gt;-->
+<!--<div class="initial-white-page">-->
+<!--    <div class="image-layout">-->
+<!--        <div class="big-left-img">-->
+<!--            <img src="https://images.pexels.com/photos/31071556/pexels-photo-31071556.jpeg" alt="Cherry Blossoms with Mount Fuji in Spring">-->
+<!--        </div>-->
+
+
+<!--        <div class="right-img-stack">-->
+<!--            <div class="small-right-img">-->
+<!--                <img src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg" alt="Small Right Top Image">-->
+<!--            </div>-->
+
+
+<!--            <div class="small-right-img">-->
+<!--                <img src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg" alt="Small Right Bottom Image">-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Original intro pages (UNCHANGED) &ndash;&gt;-->
+<!--<div class="intro-pages-container">-->
+<!--    <div class="intro-page" id="page2">-->
+<!--        <div>-->
+<!--            <div class="page-text">Enjoy free airport pickup.</div>-->
+<!--            <div class="page-subtext">We’ll meet you on arrival and take you straight to your destination—fast, easy, and stress-free.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="intro-page" id="page3">-->
+<!--        <div>-->
+<!--            <div class="page-text">Free Refreshments snacks for Every Guest.</div>-->
+<!--            <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="intro-page" id="page4">-->
+<!--        <div>-->
+<!--            <div class="page-text">Special Park Route Discounts.</div>-->
+<!--            <div class="page-subtext">Enjoy reduced rates on every journey, giving you more adventure for less.</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Original national parks white page (UNCHANGED) &ndash;&gt;-->
+<!--<div class="white-gap-page">-->
+<!--    <h2 class="parks-heading">Bigpanda's famous National Parks</h2>-->
+<!--    <div class="parks-grid">-->
+<!--        &lt;!&ndash; Park 1 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/15088224/pexels-photo-15088224.jpeg" alt="Serengeti National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Serengeti National Park</h3>-->
+<!--                <p class="park-desc">Home of the Great Migration and endless plains.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 2 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/5282269/pexels-photo-5282269.jpeg" alt="Ngorongoro Crater" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Ngorongoro Crater</h3>-->
+<!--                <p class="park-desc">natural wildlife kingdom inside a volcano.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 3 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/16878683/pexels-photo-16878683.jpeg" alt="Tarangire National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Tarangire National Park</h3>-->
+<!--                <p class="park-desc">giant baobabs and massive elephant herds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 4 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/12573131/pexels-photo-12573131.jpeg" alt="Lake Manyara National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Lake Manyara National Park</h3>-->
+<!--                <p class="park-desc">Famous filled lake with flamingo.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 5 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/11575955/pexels-photo-11575955.jpeg" alt="Arusha National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Arusha National Park</h3>-->
+<!--                <p class="park-desc">lush forests, lakes, and Mount Meru views.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 6 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/16696489/pexels-photo-16696489.jpeg" alt="Kikuletwa Hot Spring" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Kikuletwa Hot Spring</h3>-->
+<!--                <p class="park-desc">crystal-clear, blue water in a hidden oasis.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 7 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/30705488/pexels-photo-30705488.jpeg" alt="Ruaha National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Ruaha National Park</h3>-->
+<!--                <p class="park-desc">wilderness packed with lions and elephants.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 8 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/34771753/pexels-photo-34771753.jpeg" alt="Mount Kilimanjaro" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Mount Kilimanjaro</h3>-->
+<!--                <p class="park-desc">Africa’s rooftop, rising above the clouds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 9 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/10768837/pexels-photo-10768837.jpeg" alt="Katavi National Park" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Katavi National Park</h3>-->
+<!--                <p class="park-desc">wild, remote, and full of huge hippo and buffalo herds.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Park 10 &ndash;&gt;-->
+<!--        <div class="park-card">-->
+<!--            <img src="https://images.pexels.com/photos/35024115/pexels-photo-35024115.jpeg" alt="Olduvai Gorge" class="park-img">-->
+<!--            <div class="park-content">-->
+<!--                <h3 class="park-name">Olduvai Gorge</h3>-->
+<!--                <p class="park-desc">Birthplace of humanity, with some of the oldest human fossils.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Original last page with video (UNCHANGED) &ndash;&gt;-->
+<!--<div class="last-page">-->
+<!--    <div class="last-page-video">-->
+<!--        <video th:each="videoUrl : ${videos}"-->
+<!--               th:src="${videoUrl}"-->
+<!--               autoplay-->
+<!--               muted-->
+<!--               loop-->
+<!--               playsinline-->
+<!--               oncontextmenu="return false;">-->
+<!--        </video>-->
+<!--        <div class="last-page-overlay"></div>-->
+<!--    </div>-->
+
+<!--    <div class="logo-circle">-->
+<!--        <img src="obi/panda.jpg" alt="Logo">-->
+<!--    </div>-->
+
+<!--    <div class="last-page-content">-->
+<!--        <div class="page-text">Start Your Journey Today</div>-->
+<!--        <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>-->
+
+<!--        <div class="comm-icons">-->
+<!--            <a href="YOUR_WECHAT_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111615.png" alt="WeChat">-->
+<!--            </a>-->
+<!--            <a href="YOUR_FACEBOOK_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">-->
+<!--            </a>-->
+<!--            <a href="YOUR_WHATSAPP_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">-->
+<!--            </a>-->
+<!--            <a href="YOUR_INSTAGRAM_URL_HERE" class="comm-icon" target="_self">-->
+<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Original scroll script (UNCHANGED) &ndash;&gt;-->
+<!--<script>-->
+<!--    const introPages = [-->
+<!--        document.getElementById('page2'),-->
+<!--        document.getElementById('page3'),-->
+<!--        document.getElementById('page4')-->
+<!--    ];-->
+
+<!--    let lastScrollY = window.scrollY;-->
+<!--    let scrollVelocity = 0;-->
+<!--    let lastTimestamp = 0;-->
+<!--    let animationId = null;-->
+
+<!--    function smoothScrollUpdate() {-->
+<!--        const currentScrollY = window.scrollY;-->
+<!--        const viewportHeight = window.innerHeight;-->
+<!--        const now = Date.now();-->
+<!--        const deltaTime = lastTimestamp ? now - lastTimestamp : 16;-->
+<!--        lastTimestamp = now;-->
+
+<!--        scrollVelocity = (currentScrollY - lastScrollY) / (deltaTime / 16);-->
+<!--        lastScrollY = currentScrollY;-->
+
+<!--        if (Math.abs(scrollVelocity) < 0.1) {-->
+<!--            const inertiaScrollY = currentScrollY + (scrollVelocity * 2);-->
+<!--            const effectiveScrollY = Math.max(0, Math.min(inertiaScrollY, viewportHeight * 4));-->
+
+<!--            introPages.forEach((page, index) => {-->
+<!--                const pageScrollThreshold = index * viewportHeight;-->
+<!--                const pageScrollRange = viewportHeight;-->
+
+<!--                if (effectiveScrollY < pageScrollThreshold) {-->
+<!--                    page.style.transform = 'translateY(100%)';-->
+<!--                } else if (effectiveScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--                    const riseProgress = (effectiveScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--                    page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--                } else {-->
+<!--                    page.style.transform = 'translateY(0)';-->
+<!--                }-->
+<!--            });-->
+<!--        } else {-->
+<!--            introPages.forEach((page, index) => {-->
+<!--                const pageScrollThreshold = index * viewportHeight;-->
+<!--                const pageScrollRange = viewportHeight;-->
+
+<!--                if (currentScrollY < pageScrollThreshold) {-->
+<!--                    page.style.transform = 'translateY(100%)';-->
+<!--                } else if (currentScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--                    const riseProgress = (currentScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--                    page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--                } else {-->
+<!--                    page.style.transform = 'translateY(0)';-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+<!--        if (currentScrollY >= viewportHeight * 4) {-->
+<!--            introPages.forEach(page => page.style.transform = 'translateY(0)');-->
+
+
+<!--        }-->
+
+<!--        animationId = requestAnimationFrame(smoothScrollUpdate);-->
+<!--    }-->
+<!--    smoothScrollUpdate();-->
+<!--    window.dispatchEvent(new Event('scroll'));-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
