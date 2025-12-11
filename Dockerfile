@@ -13,5 +13,5 @@ RUN chmod +x mvnw
 # Build the app (skip tests)
 RUN ./mvnw package -DskipTests
 
-# Run the app
-CMD ["java", "-jar", "target/*.jar"]
+# Run the app with exact JAR name
+CMD ["java", "-jar", "target/pandaNow-0.0.1-SNAPSHOT.jar"]
