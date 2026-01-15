@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import tools.jackson.databind.JsonNode;
@@ -67,6 +68,9 @@ import java.util.List;
 //    }
 //}
 
+
+
+
 @Controller
 @RequestMapping("/panda")
 public class VideoControllers {
@@ -122,6 +126,14 @@ public class VideoControllers {
 
         return "child/kid";
     }
+
+
+    @GetMapping
+    public String onelove() {
+//        return "me/index";
+        return "child/kid";
+    }
 }
+
 
 //UNd8P2jHZDckiFIHRvNgLJlaph07mkMPa961HyBYpdJOERuGZDObDvFm

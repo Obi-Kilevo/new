@@ -1,0 +1,1138 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">-->
+<!--    <style>-->
+<!--        /* ===== ORIGINAL 3-COLUMN STYLES (PRESERVED) ===== */-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--            color: white;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            user-select: none;-->
+<!--            -webkit-user-scalable: no;-->
+<!--        }-->
+<!--        html, body {-->
+<!--            height: 100%;-->
+<!--            width: 100%;-->
+<!--            overflow-x: hidden; /* Allow vertical scroll (for parks section) */-->
+<!--        }-->
+<!--        body {-->
+<!--            background: #a6692f;-->
+<!--            padding: 2vw;-->
+<!--        }-->
+<!--        /* Original 3-column container */-->
+<!--        .original-container {-->
+<!--            display: flex;-->
+<!--            width: 100%;-->
+<!--            height: 100vh; /* Full viewport height for original form */-->
+<!--            gap: 2vw;-->
+<!--            padding-top: 3vw;-->
+<!--            margin-bottom: 5vh; /* Space before park section */-->
+<!--        }-->
+<!--        .column {-->
+<!--            flex: 1;-->
+<!--            position: relative;-->
+<!--            padding: 0 2vw;-->
+<!--            overflow-y: auto;-->
+<!--        }-->
+<!--        .column:not(:last-child) {-->
+<!--            border-right: 1px solid rgba(255,255,255,0.3);-->
+<!--        }-->
+<!--        h2 {-->
+<!--            margin-bottom: 2vw;-->
+<!--            font-size: 1.8vw;-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        /* Phase 1: Centered Price + Park Link */-->
+<!--        .phase1-content {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--        .price-display {-->
+<!--            font-size: 10vw;-->
+<!--            font-weight: bold;-->
+<!--            line-height: 1;-->
+<!--            margin-bottom: 4vw;-->
+<!--        }-->
+<!--        .other-parks-link {-->
+<!--            font-size: 1.5vw;-->
+<!--            text-decoration: underline;-->
+<!--            cursor: pointer;-->
+<!--            opacity: 0.9;-->
+<!--            transition: opacity 0.2s;-->
+<!--        }-->
+<!--        .other-parks-link:hover {-->
+<!--            opacity: 1;-->
+<!--        }-->
+<!--        /* Phase 2: Booking Form */-->
+<!--        .booking-form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 2vw;-->
+<!--            margin-top: 2vw;-->
+<!--        }-->
+<!--        .form-input {-->
+<!--            padding: 1.5vw;-->
+<!--            background: rgba(255,255,255,0.1);-->
+<!--            border: 1px solid rgba(255,255,255,0.3);-->
+<!--            border-radius: 4px;-->
+<!--            font-size: 1.2vw;-->
+<!--            width: 100%;-->
+<!--        }-->
+<!--        .form-input::placeholder {-->
+<!--            color: rgba(255,255,255,0.7);-->
+<!--        }-->
+<!--        .submit-btn {-->
+<!--            padding: 1.5vw;-->
+<!--            background: #d4a04e;-->
+<!--            border: none;-->
+<!--            border-radius: 4px;-->
+<!--            font-size: 1.2vw;-->
+<!--            font-weight: bold;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        /* Phase 3: Park Info */-->
+<!--        .park-info {-->
+<!--            font-size: 1.2vw;-->
+<!--            line-height: 1.6;-->
+<!--            margin-top: 2vw;-->
+<!--        }-->
+
+<!--        /* ===== NATIONAL PARK SECTION STYLES (INTEGRATED) ===== */-->
+<!--        /* Park section wrapper (white background to match second form) */-->
+<!--        .park-section {-->
+<!--            width: 100%;-->
+<!--            min-height: 100vh;-->
+<!--            background: white;-->
+<!--            padding: 3rem 4rem;-->
+<!--            margin-top: 2rem;-->
+<!--            border-radius: 0;-->
+<!--            position: relative;-->
+<!--            z-index: 10;-->
+<!--        }-->
+<!--        /* Park section header */-->
+<!--        .park-section-header {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 4rem;-->
+<!--        }-->
+<!--        .park-section-logo {-->
+<!--            font-size: 2.5rem;-->
+<!--            font-weight: bold;-->
+<!--            color: #2a2a2a;-->
+<!--            margin-bottom: 0.5rem;-->
+<!--        }-->
+<!--        .park-section-main-text {-->
+<!--            font-size: 3rem;-->
+<!--            font-weight: bold;-->
+<!--            color: #2a2a2a;-->
+<!--            margin-bottom: 1rem;-->
+<!--        }-->
+<!--        .park-section-subtext {-->
+<!--            font-size: 1.2rem;-->
+<!--            color: #555;-->
+<!--            max-width: 800px;-->
+<!--            margin: 0 auto;-->
+<!--        }-->
+<!--        /* Park cards container */-->
+<!--        .park-container {-->
+<!--            display: flex;-->
+<!--            gap: 3rem;-->
+<!--            width: 100%;-->
+<!--            justify-content: space-between;-->
+<!--        }-->
+<!--        .park-cards-container {-->
+<!--            width: 90%;-->
+<!--            position: relative;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+<!--        /* Default/Additional park cards */-->
+<!--        .default-cards-wrapper, .additional-cards-wrapper {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(3, 1fr);-->
+<!--            gap: 2.5rem;-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);-->
+<!--            width: 100%;-->
+<!--        }-->
+<!--        .default-cards-wrapper {-->
+<!--            transform: translateX(0);-->
+<!--            opacity: 1;-->
+<!--        }-->
+<!--        .default-cards-wrapper.pushed-left {-->
+<!--            transform: translateX(-100%);-->
+<!--            opacity: 0;-->
+<!--        }-->
+<!--        .additional-cards-wrapper {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            z-index: 2;-->
+<!--            transform: translateX(100%);-->
+<!--            opacity: 0;-->
+<!--        }-->
+<!--        .additional-cards-wrapper.visible {-->
+<!--            transform: translateX(0);-->
+<!--            opacity: 1;-->
+<!--        }-->
+<!--        /* Park card styles */-->
+<!--        .left-card {-->
+<!--            background: #f8f8f8;-->
+<!--            border-radius: 12px;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-end;-->
+<!--            padding: 2.5rem;-->
+<!--            text-align: center;-->
+<!--            position: relative;-->
+<!--            min-height: 450px;-->
+<!--            width: 100%;-->
+<!--            aspect-ratio: 3/4;-->
+<!--            cursor: pointer;-->
+<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .left-card:hover {-->
+<!--            transform: translateY(-5px);-->
+<!--            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
+<!--        .left-card-bg {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--            z-index: 1;-->
+<!--        }-->
+<!--        .left-card-overlay {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);-->
+<!--            z-index: 2;-->
+<!--        }-->
+<!--        .left-card-content {-->
+<!--            position: relative;-->
+<!--            z-index: 3;-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--            width: 100%;-->
+<!--        }-->
+<!--        .left-card-title {-->
+<!--            font-size: 1.8rem;-->
+<!--            font-weight: bold;-->
+<!--            color: white;-->
+<!--            margin-bottom: 0.5rem;-->
+<!--            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);-->
+<!--        }-->
+<!--        .left-card-subtext {-->
+<!--            font-size: 1.2rem;-->
+<!--            color: white;-->
+<!--            font-weight: 500;-->
+<!--            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);-->
+<!--        }-->
+<!--        /* Toggle buttons (Show More/Less) */-->
+<!--        .toggle-btn {-->
+<!--            grid-column: 1 / -1;-->
+<!--            padding: 1.2rem 2.5rem;-->
+<!--            background-color: #2a2a2a;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 8px;-->
+<!--            font-size: 1.1rem;-->
+<!--            font-weight: 600;-->
+<!--            cursor: pointer;-->
+<!--            transition: background-color 0.3s ease, transform 0.2s ease;-->
+<!--            margin-top: 1rem;-->
+<!--            min-height: auto;-->
+<!--            position: relative;-->
+<!--            z-index: 3;-->
+<!--        }-->
+<!--        .toggle-btn:hover {-->
+<!--            background-color: #444;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+<!--        .toggle-btn.hidden {-->
+<!--            display: none;-->
+<!--        }-->
+<!--        /* Right video grid */-->
+<!--        .right-small-grid {-->
+<!--            width: 25%;-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(2, 1fr);-->
+<!--            grid-template-rows: repeat(2, auto);-->
+<!--            row-gap: 0.5rem;-->
+<!--            column-gap: 0.6rem;-->
+<!--            position: relative;-->
+<!--            margin-right: 0;-->
+<!--            margin-left: auto;-->
+<!--        }-->
+<!--        .right-small-box {-->
+<!--            width: 100%;-->
+<!--            border-radius: 8px;-->
+<!--            overflow: hidden;-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            background: white;-->
+<!--            height: 350px;-->
+<!--        }-->
+<!--        .video-mask {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            overflow: hidden;-->
+<!--            border-radius: 8px;-->
+<!--            pointer-events: none;-->
+<!--        }-->
+<!--        .video-mask video {-->
+<!--            position: absolute;-->
+<!--            width: 200%;-->
+<!--            height: 200%;-->
+<!--            object-fit: cover;-->
+<!--            pointer-events: none;-->
+<!--        }-->
+<!--        .box1 video { top: 0; left: 0; }-->
+<!--        .box2 video { top: 0; left: -100%; }-->
+<!--        .box3 video { top: -100%; left: 0; }-->
+<!--        .box4 video { top: -100%; left: -100%; }-->
+
+<!--        /* ===== MOBILE RESPONSIVENESS ===== */-->
+<!--        @media (max-width: 768px) {-->
+<!--            /* Original form mobile */-->
+<!--            .original-container { flex-direction: column; height: 100%; }-->
+<!--            .column:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); margin-bottom: 2vw; padding-bottom: 2vw; }-->
+<!--            h2, .park-info { font-size: 3vw; }-->
+<!--            .price-display { font-size: 15vw; margin-bottom: 6vw; }-->
+<!--            .other-parks-link { font-size: 3vw; }-->
+<!--            .form-input, .submit-btn { font-size: 3vw; padding: 3vw; }-->
+
+<!--            /* Park section mobile */-->
+<!--            .park-section { padding: 2rem 1.5rem; }-->
+<!--            .park-section-main-text { font-size: 1.8rem; }-->
+<!--            .park-container { flex-direction: column; }-->
+<!--            .park-cards-container, .right-small-grid { width: 100%; }-->
+<!--            .right-small-grid { margin-top: 2rem; }-->
+<!--            .default-cards-wrapper, .additional-cards-wrapper { grid-template-columns: 1fr; }-->
+<!--            .left-card { min-height: 220px; }-->
+<!--            .left-card-title { font-size: 1.5rem; }-->
+<!--            .left-card-subtext { font-size: 1rem; }-->
+<!--            .toggle-btn { padding: 1rem 2rem; font-size: 1rem; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; ===== ORIGINAL 3-COLUMN FORM (PRESERVED) ===== &ndash;&gt;-->
+<!--<div class="original-container">-->
+<!--    &lt;!&ndash; Phase 1: Price + Link to Parks &ndash;&gt;-->
+<!--    <div class="column">-->
+<!--        <div class="phase1-content">-->
+<!--            <h2>Phase 1</h2>-->
+<!--            <div class="price-display" id="priceCounter">¥0</div>-->
+<!--            &lt;!&ndash; Link to park section (smooth scroll) &ndash;&gt;-->
+<!--            <div class="other-parks-link" id="parkLink">View other famous parks</div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Phase 2: Booking Form &ndash;&gt;-->
+<!--    <div class="column">-->
+<!--        <h2>Phase 2</h2>-->
+<!--        <form class="booking-form">-->
+<!--            <input type="text" class="form-input" placeholder="Name" required>-->
+<!--            <input type="email" class="form-input" placeholder="Email" required>-->
+<!--            <input type="number" class="form-input" placeholder="Number of People" min="1" required>-->
+<!--            <button type="submit" class="submit-btn">Submit</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Phase 3: Arusha Park Info &ndash;&gt;-->
+<!--    <div class="column">-->
+<!--        <h2>Phase 3</h2>-->
+<!--        <div class="park-info">-->
+<!--            Arusha National Park lets you spot zebras, giraffes, and even elephants in their natural habitat—all in a day trip.-->
+<!--            <br><br>-->
+<!--            Hike its gentle trails for stunning views of Mount Meru (Tanzania’s 2nd highest peak) at sunrise.-->
+<!--            <br><br>-->
+<!--            It’s the perfect quick escape for wildlife lovers who want beauty without the crowds.-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ===== NATIONAL PARK SECTION (EMBEDDED BELOW ORIGINAL FORM) ===== &ndash;&gt;-->
+<!--<div id="parkSection" class="park-section">-->
+<!--    <div class="park-section-header">-->
+<!--        <div class="park-section-logo">BigPanda's Famous Parks</div>-->
+<!--        <div class="park-section-main-text">Start Your Journey Today</div>-->
+<!--        <div class="park-section-subtext">Explore Tanzania's most iconic national parks—book your adventure now!</div>-->
+<!--    </div>-->
+
+<!--    <div class="park-container">-->
+<!--        <div class="park-cards-container">-->
+<!--            &lt;!&ndash; Default 6 Park Cards &ndash;&gt;-->
+<!--            <div class="default-cards-wrapper" id="defaultCardsWrapper">-->
+<!--                <a href="/parks/ngorongoro-crater" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Ngorongoro Crater</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/tarangire-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Tarangire National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Tarangire National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/serengeti-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Serengeti National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Serengeti National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/olduvai-gorge" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Olduvai Gorge">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Olduvai Gorge</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/kikuletwa-hot-spring" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Kikuletwa Hot Spring">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Kikuletwa Hot Spring</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/manyara-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Manyara National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Manyara National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <button class="toggle-btn" id="showMoreBtn">Show More National Parks</button>-->
+<!--                <button class="toggle-btn hidden" id="showLessBtn">Show Less National Parks</button>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Additional 5 Park Cards &ndash;&gt;-->
+<!--            <div class="additional-cards-wrapper" id="additionalCardsWrapper">-->
+<!--                <a href="/parks/arusha-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Arusha National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Arusha National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/ruaha-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ruaha National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Ruaha National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/mikumi-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mikumi National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Mikumi National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/katavi-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Katavi National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Katavi National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="/parks/mount-kilimanjaro" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mount Kilimanjaro">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Mount Kilimanjaro</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <button class="toggle-btn" id="showLessBtnAdditional">Show Less National Parks</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Right Video Grid (simplified for demo - replace video URL with your own) &ndash;&gt;-->
+<!--        <div class="right-small-grid">-->
+<!--            <div class="right-small-box">-->
+<!--                <div class="video-mask box1">-->
+<!--                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="right-small-box">-->
+<!--                <div class="video-mask box2">-->
+<!--                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="right-small-box">-->
+<!--                <div class="video-mask box3">-->
+<!--                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="right-small-box">-->
+<!--                <div class="video-mask box4">-->
+<!--                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; ===== SCRIPTS (Price Animation + Smooth Scroll + Park Toggle) ===== &ndash;&gt;-->
+<!--<script>-->
+<!--    // 1. Price animation (original)-->
+<!--    const counter = document.getElementById('priceCounter');-->
+<!--    let current = 0;-->
+<!--    const target = 259;-->
+<!--    const duration = 800;-->
+<!--    const step = target / (duration / 16);-->
+
+<!--    const animatePrice = () => {-->
+<!--        current += step;-->
+<!--        if (current >= target) {-->
+<!--            counter.textContent = `¥${target}`;-->
+<!--            return;-->
+<!--        }-->
+<!--        counter.textContent = `¥${Math.floor(current)}`;-->
+<!--        requestAnimationFrame(animatePrice);-->
+<!--    };-->
+<!--    window.addEventListener('load', animatePrice);-->
+
+<!--    // 2. Smooth scroll from Phase 1 link to park section-->
+<!--    const parkLink = document.getElementById('parkLink');-->
+<!--    const parkSection = document.getElementById('parkSection');-->
+<!--    parkLink.addEventListener('click', () => {-->
+<!--        parkSection.scrollIntoView({ behavior: 'smooth' });-->
+<!--    });-->
+
+<!--    // 3. Park card toggle (Show More/Less)-->
+<!--    const showMoreBtn = document.getElementById('showMoreBtn');-->
+<!--    const showLessBtn = document.getElementById('showLessBtn');-->
+<!--    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');-->
+<!--    const defaultCardsWrapper = document.getElementById('defaultCardsWrapper');-->
+<!--    const additionalCardsWrapper = document.getElementById('additionalCardsWrapper');-->
+
+<!--    showMoreBtn.addEventListener('click', () => {-->
+<!--        defaultCardsWrapper.classList.add('pushed-left');-->
+<!--        additionalCardsWrapper.classList.add('visible');-->
+<!--        showMoreBtn.classList.add('hidden');-->
+<!--        showLessBtn.classList.remove('hidden');-->
+<!--    });-->
+
+<!--    showLessBtn.addEventListener('click', () => {-->
+<!--        additionalCardsWrapper.classList.remove('visible');-->
+<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
+<!--        showLessBtn.classList.add('hidden');-->
+<!--        showMoreBtn.classList.remove('hidden');-->
+<!--    });-->
+
+<!--    showLessBtnAdditional.addEventListener('click', () => {-->
+<!--        additionalCardsWrapper.classList.remove('visible');-->
+<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
+<!--        showLessBtn.classList.add('hidden');-->
+<!--        showMoreBtn.classList.remove('hidden');-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        /* ===== ORIGINAL 3-COLUMN STYLES (PRESERVED) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: white;
+            font-family: Arial, sans-serif;
+            user-select: none;
+            -webkit-user-scalable: no;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden; /* Allow vertical scroll (for parks section) */
+        }
+        body {
+            background: #a6692f;
+            padding: 2vw;
+        }
+        /* Original 3-column container */
+        .original-container {
+            display: flex;
+            width: 100%;
+            height: 100vh; /* Full viewport height for original form */
+            gap: 2vw;
+            padding-top: 3vw;
+            margin-bottom: 5vh; /* Space before park section */
+        }
+        .column {
+            flex: 1;
+            position: relative;
+            padding: 0 2vw;
+            overflow-y: auto;
+        }
+        .column:not(:last-child) {
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        h2 {
+            margin-bottom: 2vw;
+            font-size: 1.8vw;
+            text-align: center;
+        }
+        /* Phase 1: Centered Price + Park Link */
+        .phase1-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .price-display {
+            font-size: 10vw;
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 4vw;
+        }
+        .other-parks-link {
+            font-size: 1.5vw;
+            text-decoration: underline;
+            cursor: pointer;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        .other-parks-link:hover {
+            opacity: 1;
+        }
+        /* Phase 2: Booking Form */
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2vw;
+            margin-top: 2vw;
+        }
+        .form-input {
+            padding: 1.5vw;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            font-size: 1.2vw;
+            width: 100%;
+        }
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .submit-btn {
+            padding: 1.5vw;
+            background: #d4a04e;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2vw;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* Phase 3: Park Info */
+        .park-info {
+            font-size: 1.2vw;
+            line-height: 1.6;
+            margin-top: 2vw;
+        }
+
+        /* ===== NATIONAL PARK SECTION STYLES (INTEGRATED) ===== */
+        /* Park section wrapper (white background to match second form) */
+        .park-section {
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+            padding: 3rem 4rem;
+            margin-top: 2rem;
+            border-radius: 0;
+            position: relative;
+            z-index: 10;
+        }
+        /* Park section header */
+        .park-section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .park-section-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2a2a2a;
+            margin-bottom: 0.5rem;
+        }
+        .park-section-main-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2a2a2a;
+            margin-bottom: 1rem;
+        }
+        .park-section-subtext {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* Park cards container */
+        .park-container {
+            display: flex;
+            gap: 3rem;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .park-cards-container {
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Default/Additional park cards */
+        .default-cards-wrapper, .additional-cards-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+        }
+        .default-cards-wrapper {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .default-cards-wrapper.pushed-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        .additional-cards-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        .additional-cards-wrapper.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        /* Park card styles */
+        .left-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            min-height: 450px;
+            width: 100%;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+        .left-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .left-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .left-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+            z-index: 2;
+        }
+        .left-card-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+        .left-card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        .left-card-subtext {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        /* Toggle buttons (Show More/Less) */
+        .toggle-btn {
+            grid-column: 1 / -1;
+            padding: 1.2rem 2.5rem;
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1rem;
+            min-height: auto;
+            position: relative;
+            z-index: 3;
+        }
+        .toggle-btn:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+        .toggle-btn.hidden {
+            display: none;
+        }
+        /* Right video grid */
+        .right-small-grid {
+            width: 25%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
+            row-gap: 0.5rem;
+            column-gap: 0.6rem;
+            position: relative;
+            margin-right: 0;
+            margin-left: auto;
+        }
+        .right-small-box {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            background: white;
+            height: 350px;
+        }
+        .video-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .video-mask video {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .box1 video { top: 0; left: 0; }
+        .box2 video { top: 0; left: -100%; }
+        .box3 video { top: -100%; left: 0; }
+        .box4 video { top: -100%; left: -100%; }
+
+        /* ===== MOBILE RESPONSIVENESS ===== */
+        @media (max-width: 768px) {
+            /* Original form mobile */
+            .original-container { flex-direction: column; height: 100%; }
+            .column:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); margin-bottom: 2vw; padding-bottom: 2vw; }
+            h2, .park-info { font-size: 3vw; }
+            .price-display { font-size: 15vw; margin-bottom: 6vw; }
+            .other-parks-link { font-size: 3vw; }
+            .form-input, .submit-btn { font-size: 3vw; padding: 3vw; }
+
+            /* Park section mobile */
+            .park-section { padding: 2rem 1.5rem; }
+            .park-section-main-text { font-size: 1.8rem; }
+            .park-container { flex-direction: column; }
+            .park-cards-container, .right-small-grid { width: 100%; }
+            .right-small-grid { margin-top: 2rem; }
+            .default-cards-wrapper, .additional-cards-wrapper { grid-template-columns: 1fr; }
+            .left-card { min-height: 220px; }
+            .left-card-title { font-size: 1.5rem; }
+            .left-card-subtext { font-size: 1rem; }
+            .toggle-btn { padding: 1rem 2rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<!-- ===== ORIGINAL 3-COLUMN FORM (PRESERVED) ===== -->
+
+<div class="original-container">
+    <!-- Phase 1: Price + Link to Parks -->
+    <div class="column">
+        <div class="phase1-content">
+            <h2>Phase 1</h2>
+            <div class="price-display" id="priceCounter">¥0</div>
+            <!-- Link to park section (smooth scroll) -->
+            <div class="other-parks-link" id="parkLink">View other famous parks</div>
+        </div>
+    </div>
+
+    <!-- Phase 2: Booking Form -->
+    <div class="column">
+        <h2>Phase 2</h2>
+        <form class="booking-form">
+            <input type="text" class="form-input" placeholder="Name" required>
+            <input type="email" class="form-input" placeholder="Email" required>
+            <input type="number" class="form-input" placeholder="Number of People" min="1" required>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <!-- Phase 3: Arusha Park Info -->
+    <div class="column">
+        <h2>Phase 3</h2>
+        <div class="park-info">
+            Arusha National Park lets you spot zebras, giraffes, and even elephants in their natural habitat—all in a day trip.
+            <br><br>
+            Hike its gentle trails for stunning views of Mount Meru (Tanzania’s 2nd highest peak) at sunrise.
+            <br><br>
+            It’s the perfect quick escape for wildlife lovers who want beauty without the crowds.
+        </div>
+    </div>
+</div>
+
+<!-- ===== NATIONAL PARK SECTION (EMBEDDED BELOW ORIGINAL FORM) ===== -->
+<div id="parkSection" class="park-section">
+    <div class="park-section-header">
+        <div class="park-section-logo">BigPanda's Famous Parks</div>
+        <div class="park-section-main-text">Start Your Journey Today</div>
+        <div class="park-section-subtext">Explore Tanzania's most iconic national parks—book your adventure now!</div>
+    </div>
+
+    <div class="park-container">
+        <div class="park-cards-container">
+            <!-- Default 6 Park Cards -->
+            <div class="default-cards-wrapper" id="defaultCardsWrapper">
+                <a href="/parks/ngorongoro-crater" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Ngorongoro Crater</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/tarangire-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Tarangire National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Tarangire National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/serengeti-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Serengeti National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Serengeti National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/olduvai-gorge" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Olduvai Gorge">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Olduvai Gorge</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/kikuletwa-hot-spring" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Kikuletwa Hot Spring">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Kikuletwa Hot Spring</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/manyara-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Manyara National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Manyara National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <button class="toggle-btn" id="showMoreBtn">Show More National Parks</button>
+                <button class="toggle-btn hidden" id="showLessBtn">Show Less National Parks</button>
+            </div>
+
+            <!-- Additional 5 Park Cards -->
+            <div class="additional-cards-wrapper" id="additionalCardsWrapper">
+                <a href="/parks/arusha-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Arusha National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Arusha National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/ruaha-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ruaha National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Ruaha National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/mikumi-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mikumi National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Mikumi National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/katavi-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/13033126/pexels-photo-13033126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Katavi National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Katavi National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <a href="/parks/mount-kilimanjaro" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mount Kilimanjaro">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Mount Kilimanjaro</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+                <button class="toggle-btn" id="showLessBtnAdditional">Show Less National Parks</button>
+            </div>
+        </div>
+
+        <!-- Right Video Grid (simplified for demo - replace video URL with your own) -->
+        <div class="right-small-grid">
+            <div class="right-small-box">
+                <div class="video-mask box1">
+                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>
+                </div>
+            </div>
+            <div class="right-small-box">
+                <div class="video-mask box2">
+                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>
+                </div>
+            </div>
+            <div class="right-small-box">
+                <div class="video-mask box3">
+                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>
+                </div>
+            </div>
+            <div class="right-small-box">
+                <div class="video-mask box4">
+                    <video src="YOUR_VIDEO_URL_HERE" autoplay muted loop playsinline></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== SCRIPTS (Price Animation + Smooth Scroll + Park Toggle) ===== -->
+<script>
+    // 1. Price animation (original)
+    const counter = document.getElementById('priceCounter');
+    let current = 0;
+    const target = 259;
+    const duration = 800;
+    const step = target / (duration / 16);
+
+    const animatePrice = () => {
+        current += step;
+        if (current >= target) {
+            counter.textContent = `¥${target}`;
+            return;
+        }
+        counter.textContent = `¥${Math.floor(current)}`;
+        requestAnimationFrame(animatePrice);
+    };
+    window.addEventListener('load', animatePrice);
+
+    // 2. Smooth scroll from Phase 1 link to park section
+    const parkLink = document.getElementById('parkLink');
+    const parkSection = document.getElementById('parkSection');
+    parkLink.addEventListener('click', () => {
+        parkSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // 3. Park card toggle (Show More/Less)
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');
+    const defaultCardsWrapper = document.getElementById('defaultCardsWrapper');
+    const additionalCardsWrapper = document.getElementById('additionalCardsWrapper');
+
+    showMoreBtn.addEventListener('click', () => {
+        defaultCardsWrapper.classList.add('pushed-left');
+        additionalCardsWrapper.classList.add('visible');
+        showMoreBtn.classList.add('hidden');
+        showLessBtn.classList.remove('hidden');
+    });
+
+    showLessBtn.addEventListener('click', () => {
+        additionalCardsWrapper.classList.remove('visible');
+        defaultCardsWrapper.classList.remove('pushed-left');
+        showLessBtn.classList.add('hidden');
+        showMoreBtn.classList.remove('hidden');
+    });
+
+    showLessBtnAdditional.addEventListener('click', () => {
+        additionalCardsWrapper.classList.remove('visible');
+        defaultCardsWrapper.classList.remove('pushed-left');
+        showLessBtn.classList.add('hidden');
+        showMoreBtn.classList.remove('hidden');
+    });
+</script>
+</body>
+</html>

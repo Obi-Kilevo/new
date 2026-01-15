@@ -1,0 +1,1034 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>BIG PANDA SAFARI</title>-->
+<!--  <style>-->
+<!--    * {-->
+<!--      margin: 0;-->
+<!--      padding: 0;-->
+<!--      box-sizing: border-box;-->
+<!--    }-->
+
+<!--    html, body {-->
+<!--      overflow-x: hidden;-->
+<!--    }-->
+
+<!--    .video-background {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      z-index: -2;-->
+<!--      overflow: hidden;-->
+<!--    }-->
+
+<!--    .video-background video {-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    body {-->
+<!--      min-height: 100vh;-->
+<!--      font-family: Arial, sans-serif;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    .video-overlay {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      background: rgba(0, 0, 0, 0.4);-->
+<!--      z-index: -1;-->
+<!--    }-->
+
+<!--    .header {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      width: 100%;-->
+<!--      padding: 15px 40px;-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      transition: all 0.4s ease;-->
+<!--      z-index: 1000;-->
+<!--    }-->
+
+<!--    .header.top {-->
+<!--      background: transparent;-->
+<!--      backdrop-filter: none;-->
+<!--    }-->
+
+<!--    .header.scrolled {-->
+<!--      background: rgba(153, 204, 102, 0.9);-->
+<!--      backdrop-filter: blur(10px);-->
+<!--    }-->
+
+<!--    /* Logo Circle - LEFT SIDE (FIXED PATH) */-->
+<!--    .logo-circle {-->
+<!--      width: 60px;-->
+<!--      height: 60px;-->
+<!--      border-radius: 50%;-->
+<!--      /* Thymeleaf path for static resources (src/main/resources/static/obi/panda.jpg) */-->
+<!--      background: url('/obi/panda.jpg') center/cover no-repeat;-->
+<!--      border: 2px solid white;-->
+<!--      box-shadow: 0 4px 12px rgba(0,0,0,0.2);-->
+<!--      margin-right: 15px;-->
+<!--    }-->
+
+<!--    /* Enlarged logo text */-->
+<!--    .logo {-->
+<!--      color: white;-->
+<!--      font-size: 28px; /* Increased from 24px */-->
+<!--      font-weight: bold;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 10px;-->
+<!--    }-->
+
+<!--    .logo-left {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    /* Increased gap between nav items to avoid crowding */-->
+<!--    .nav {-->
+<!--      display: flex;-->
+<!--      gap: 50px; /* Increased from 40px */-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    .nav-item {-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    /* Enlarged main nav text (Adventure/Book a Tour/New) */-->
+<!--    .nav-main {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      font-size: 20px; /* Increased from 16px */-->
+<!--      font-weight: bold;-->
+<!--      padding: 10px 20px;-->
+<!--      border-radius: 25px;-->
+<!--      transition: all 0.3s ease;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    .nav-main:hover {-->
+<!--      background: rgba(255, 255, 255, 0.2);-->
+<!--    }-->
+
+<!--    .dropdown {-->
+<!--      position: absolute;-->
+<!--      top: 100%;-->
+<!--      left: 0;-->
+<!--      background: rgba(0, 0, 0, 0.9);-->
+<!--      backdrop-filter: blur(10px);-->
+<!--      border-radius: 10px;-->
+<!--      padding: 10px 0;-->
+<!--      min-width: 180px;-->
+<!--      opacity: 0;-->
+<!--      visibility: hidden;-->
+<!--      transform: translateY(-10px);-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
+
+<!--    .nav-item:hover .dropdown {-->
+<!--      opacity: 1;-->
+<!--      visibility: visible;-->
+<!--      transform: translateY(0);-->
+<!--    }-->
+
+<!--    /* Enlarged dropdown text to match main nav */-->
+<!--    .dropdown a {-->
+<!--      display: block;-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      padding: 12px 20px;-->
+<!--      font-size: 16px; /* Increased from 14px */-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
+
+<!--    .dropdown a:hover {-->
+<!--      background: rgba(255, 255, 255, 0.1);-->
+<!--      padding-left: 25px;-->
+<!--    }-->
+
+<!--    .hero {-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: center;-->
+<!--      color: white;-->
+<!--      text-align: center;-->
+<!--      padding: 0 20px;-->
+<!--    }-->
+
+<!--    .hero-content h1 {-->
+<!--      font-size: 3em;-->
+<!--      margin-bottom: 20px;-->
+<!--      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);-->
+<!--    }-->
+
+<!--    .hero-content p {-->
+<!--      font-size: 1.2em;-->
+<!--      margin-bottom: 30px;-->
+<!--      max-width: 600px;-->
+<!--      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);-->
+<!--    }-->
+
+<!--    .book-tour {-->
+<!--      background: white;-->
+<!--      color: #333;-->
+<!--      padding: 15px 30px;-->
+<!--      border: none;-->
+<!--      border-radius: 5px;-->
+<!--      font-size: 1.1em;-->
+<!--      cursor: pointer;-->
+<!--      font-weight: bold;-->
+<!--      transition: transform 0.3s ease;-->
+<!--    }-->
+
+<!--    .book-tour:hover {-->
+<!--      transform: scale(1.05);-->
+<!--    }-->
+
+<!--    /* Styles from second HTML (UNALTERED) */-->
+<!--    .intro-pages-container {-->
+<!--      position: relative;-->
+<!--      height: 400vh;-->
+<!--      width: 100%;-->
+<!--    }-->
+
+
+
+<!--    .intro-page {-->
+<!--      position: fixed;-->
+<!--      bottom: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: flex-start;-->
+<!--      padding: 0 4rem;-->
+<!--      z-index: 1;-->
+<!--      transition: transform 0.1s linear;-->
+<!--      border-radius: 60px 0 0 60px;-->
+<!--      overflow: hidden;-->
+<!--    }-->
+
+<!--    .intro-page::before {-->
+<!--      content: '';-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      background: rgba(0, 0, 0, 0.3);-->
+<!--      z-index: -1;-->
+<!--      border-radius: 60px 0 0 60px;-->
+<!--    }-->
+
+<!--    #page2 {-->
+<!--      background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;-->
+<!--    }-->
+<!--    #page3 {-->
+<!--      background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;-->
+<!--    }-->
+<!--    #page4 {-->
+<!--      background: url('https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg') center/cover no-repeat;-->
+<!--    }-->
+
+<!--    .page-text {-->
+<!--      font-size: 4rem;-->
+<!--      color: white;-->
+<!--      font-weight: bold;-->
+<!--      text-align: left;-->
+<!--      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);-->
+<!--      line-height: 1.2;-->
+<!--    }-->
+
+<!--    .page-subtext {-->
+<!--      font-size: 1.5rem;-->
+<!--      color: white;-->
+<!--      margin-top: 1rem;-->
+<!--      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);-->
+<!--      line-height: 1.4;-->
+<!--      max-width: 600px;-->
+<!--    }-->
+
+<!--    .last-page {-->
+<!--      height: 100vh;-->
+<!--      width: 100%;-->
+<!--      position: relative;-->
+<!--      z-index: 5;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: flex-start;-->
+<!--      padding: 0 4rem;-->
+<!--      color: white;-->
+<!--      overflow: hidden;-->
+<!--      border-radius: 60px 0 0 60px;-->
+<!--      background: white;-->
+<!--    }-->
+
+<!--    .last-page-video {-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      z-index: -1;-->
+<!--      border-radius: 60px 0 0 60px;-->
+<!--      overflow: hidden;-->
+<!--    }-->
+
+<!--    .last-page-video video {-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    .last-page-overlay {-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      background: rgba(0, 0, 0, 0.6);-->
+<!--      z-index: 0;-->
+<!--      border-radius: 60px 0 0 60px;-->
+<!--    }-->
+
+<!--    .last-page-content {-->
+<!--      position: relative;-->
+<!--      z-index: 1;-->
+<!--    }-->
+
+<!--    /* Override logo-circle for second HTML (only for last-page logo) */-->
+<!--    .last-page .logo-circle {-->
+<!--      position: absolute;-->
+<!--      right: 40px;-->
+<!--      top: 50%;-->
+<!--      transform: translateY(-50%);-->
+<!--      width: 325px;-->
+<!--      height: 325px;-->
+<!--      border-radius: 50%;-->
+<!--      background-color: white;-->
+<!--      z-index: 10;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: center;-->
+<!--      overflow: hidden;-->
+<!--      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);-->
+<!--      margin-right: 0;-->
+<!--      border: none;-->
+<!--      background-image: none;-->
+<!--    }-->
+
+<!--    .last-page .logo-circle img {-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    .comm-icons {-->
+<!--      margin-top: 3rem;-->
+<!--      display: flex;-->
+<!--      gap: 2rem;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .comm-icon {-->
+<!--      width: 80px;-->
+<!--      height: 80px;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: center;-->
+<!--      transition: transform 0.3s ease;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    .comm-icon:hover {-->
+<!--      transform: scale(1.1);-->
+<!--    }-->
+
+<!--    .comm-icon img {-->
+<!--      width: 50px;-->
+<!--      height: 50px;-->
+<!--      object-fit: contain;-->
+<!--    }-->
+
+<!--    #page2 { z-index: 1; }-->
+<!--    #page3 { z-index: 2; }-->
+<!--    #page4 { z-index: 3; }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--      .page-text {-->
+<!--        font-size: 2.5rem;-->
+<!--      }-->
+<!--      .page-subtext {-->
+<!--        font-size: 1.2rem;-->
+<!--      }-->
+<!--      .intro-page {-->
+<!--        padding: 0 2rem;-->
+<!--        border-radius: 40px 0 0 40px;-->
+<!--      }-->
+<!--      .intro-page::before {-->
+<!--        border-radius: 40px 0 0 40px;-->
+<!--      }-->
+<!--      .last-page {-->
+<!--        border-radius: 40px 0 0 40px;-->
+<!--        padding: 0 2rem;-->
+<!--      }-->
+<!--      .last-page-video {-->
+<!--        border-radius: 40px 0 0 40px;-->
+<!--      }-->
+<!--      .last-page-overlay {-->
+<!--        border-radius: 40px 0 0 40px;-->
+<!--      }-->
+<!--      .comm-icon {-->
+<!--        width: 60px;-->
+<!--        height: 60px;-->
+<!--      }-->
+<!--      .comm-icon img {-->
+<!--        width: 35px;-->
+<!--        height: 35px;-->
+<!--      }-->
+<!--      .comm-icons {-->
+<!--        gap: 1.5rem;-->
+<!--      }-->
+<!--      .last-page .logo-circle {-->
+<!--        right: 20px;-->
+<!--        width: 80px;-->
+<!--        height: 80px;-->
+<!--      }-->
+<!--    }-->
+
+<!--    .white-gap-page {-->
+<!--      position: relative;-->
+<!--      height: auto;-->
+<!--      min-height: 100vh;-->
+<!--      width: 100%;-->
+<!--      background: white;-->
+<!--      z-index: 4;-->
+<!--      margin-top: 0;-->
+<!--      border-radius: 0;-->
+<!--      padding: 3rem 4rem;-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--      justify-content: flex-start;-->
+<!--      overflow: hidden;-->
+<!--    }-->
+
+<!--    .parks-heading {-->
+<!--      font-size: 3.5rem;-->
+<!--      color: #2a2a2a;-->
+<!--      font-weight: bold;-->
+<!--      text-align: center;-->
+<!--      margin-bottom: 3rem;-->
+<!--      text-transform: uppercase;-->
+<!--      letter-spacing: 1px;-->
+<!--    }-->
+
+<!--    .parks-grid {-->
+<!--      display: grid;-->
+<!--      grid-template-columns: repeat(3, 1fr);-->
+<!--      gap: 2rem;-->
+<!--      width: 100%;-->
+<!--      max-width: 1600px;-->
+<!--      margin: 0 auto;-->
+<!--    }-->
+
+<!--    .park-card {-->
+<!--      background: #f8f8f8;-->
+<!--      border-radius: 12px;-->
+<!--      overflow: hidden;-->
+<!--      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--      transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--      cursor: pointer;-->
+<!--      height: 100%;-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--    }-->
+
+<!--    .park-card:hover {-->
+<!--      transform: translateY(-8px);-->
+<!--      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);-->
+<!--    }-->
+
+<!--    .park-img {-->
+<!--      width: 100%;-->
+<!--      height: 220px;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    .park-content {-->
+<!--      padding: 1.5rem;-->
+<!--      flex-grow: 1;-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--    }-->
+
+<!--    .park-name {-->
+<!--      font-size: 1.5rem;-->
+<!--      color: #1a1a1a;-->
+<!--      font-weight: bold;-->
+<!--      margin-bottom: 0.8rem;-->
+<!--    }-->
+
+<!--    .park-desc {-->
+<!--      font-size: 1.1rem;-->
+<!--      color: #555;-->
+<!--      line-height: 1.5;-->
+<!--      flex-grow: 1;-->
+<!--    }-->
+
+<!--    @media (max-width: 1024px) {-->
+<!--      .parks-grid {-->
+<!--        grid-template-columns: repeat(2, 1fr);-->
+<!--      }-->
+<!--    }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--      .white-gap-page {-->
+<!--        padding: 2rem 1.5rem;-->
+<!--        overflow-x: hidden;-->
+<!--      }-->
+<!--      .parks-heading {-->
+<!--        font-size: 2.2rem;-->
+<!--        margin-bottom: 2rem;-->
+<!--      }-->
+<!--      .parks-grid {-->
+<!--        grid-template-columns: 1fr;-->
+<!--        gap: 1.5rem;-->
+<!--      }-->
+<!--      .park-img {-->
+<!--        height: 180px;-->
+<!--      }-->
+<!--      .park-name {-->
+<!--        font-size: 1.3rem;-->
+<!--      }-->
+<!--      .park-desc {-->
+<!--        font-size: 1rem;-->
+<!--      }-->
+<!--    }-->
+
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; First HTML Content (UNALTERED) &ndash;&gt;-->
+<!--<header class="header top" id="header">-->
+<!--  <div class="logo-left">-->
+<!--    <div class="logo-circle"></div>-->
+<!--    <div class="logo">BIG PANDA SAFARI</div>-->
+<!--  </div>-->
+
+<!--  <nav class="nav">-->
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">Adventure</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/parkspanda/three" target="_top">Family</a>-->
+<!--        <a href="/adventure/path1">Adventure Path 1</a>-->
+<!--        <a href="/adventure/path2">Adventure Path 2</a>-->
+<!--        <a href="/adventure/path3">Adventure Path 3</a>-->
+<!--        <a href="/adventure/path4">Adventure Path 4</a>-->
+<!--        <a href="/adventure/path5">Adventure Path 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">Book a Tour</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/book/path1">Tour Option 1</a>-->
+<!--        <a href="/book/path2">Tour Option 2</a>-->
+<!--        <a href="/book/path3">Tour Option 3</a>-->
+<!--        <a href="/book/path4">Tour Option 4</a>-->
+<!--        <a href="/book/path5">Tour Option 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">New</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/new/path1">New Item 1</a>-->
+<!--        <a href="/new/path2">New Item 2</a>-->
+<!--        <a href="/new/path3">New Item 3</a>-->
+<!--        <a href="/new/path4">New Item 4</a>-->
+<!--        <a href="/new/path5">New Item 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--</header>-->
+
+<!--<section class="hero">-->
+<!--  <div class="hero-content">-->
+<!--    <h1>BIG PANDA SAFARI</h1>-->
+<!--    <p>Experience the ultimate wildlife adventure with our guided panda safari tours. Get up close with these magnificent creatures in their natural habitat.</p>-->
+<!--    <p>Book your adventure today and get 20% off your first safari experience!</p>-->
+<!--    <button class="book-tour">BOOK A TOUR</button>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<div class="video-background">-->
+<!--  <video th:each="videoUrl : ${videos}"-->
+<!--         th:src="${videoUrl}"-->
+<!--         autoplay-->
+<!--         muted-->
+<!--         loop-->
+<!--         playsinline-->
+<!--         oncontextmenu="return false;">-->
+<!--  </video>-->
+<!--</div>-->
+
+
+<!--<div class="video-overlay"></div>-->
+
+<!--&lt;!&ndash; Second HTML Content (UNALTERED, added after first HTML) &ndash;&gt;-->
+<!--<div class="intro-pages-container">-->
+<!--  <div class="intro-page" id="page2">-->
+<!--    <div>-->
+<!--      <div class="page-text">Enjoy free airport pickup.</div>-->
+<!--      <div class="page-subtext">We’ll meet you on arrival and take you straight to your destination—fast, easy, and stress-free.</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="intro-page" id="page3">-->
+<!--    <div>-->
+<!--      <div class="page-text">Free Refreshments snacks for Every Guest.</div>-->
+<!--      <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="intro-page" id="page4">-->
+<!--    <div>-->
+<!--      <div class="page-text">Special Park Route Discounts.</div>-->
+<!--      <div class="page-subtext">Enjoy reduced rates on every journey, giving you more adventure for less.</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="white-gap-page">-->
+<!--  &lt;!&ndash;    <h2 class="parks-heading">Bigpanda's famous National Parks</h2>&ndash;&gt;-->
+<!--  &lt;!&ndash;  <div class="parks-grid">&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 1 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/15088224/pexels-photo-15088224.jpeg" alt="Serengeti National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Serengeti National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">Home of the Great Migration and endless plains.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 2 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/5282269/pexels-photo-5282269.jpeg" alt="Ngorongoro Crater" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Ngorongoro Crater</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">natural wildlife kingdom inside a volcano.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 3 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/16878683/pexels-photo-16878683.jpeg" alt="Tarangire National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Tarangire National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">giant baobabs and massive elephant herds.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 4 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/12573131/pexels-photo-12573131.jpeg" alt="Lake Manyara National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Lake Manyara National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">Famous filled lake with flamingo.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 5 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/11575955/pexels-photo-11575955.jpeg" alt="Arusha National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Arusha National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">lush forests, lakes, and Mount Meru views.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 6 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/16696489/pexels-photo-16696489.jpeg" alt="Kikuletwa Hot Spring" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Kikuletwa Hot Spring</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">crystal-clear, blue water in a hidden oasis.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 7 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/30705488/pexels-photo-30705488.jpeg" alt="Ruaha National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Ruaha National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">wilderness packed with lions and elephants.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 8 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/34771753/pexels-photo-34771753.jpeg" alt="Mount Kilimanjaro" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Mount Kilimanjaro</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">Africa’s rooftop, rising above the clouds.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 9 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/10768837/pexels-photo-10768837.jpeg" alt="Katavi National Park" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Katavi National Park</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">wild, remote, and full of huge hippo and buffalo herds.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    &lt;!&ndash; Park 10 &ndash;&gt;&ndash;&gt;-->
+<!--  &lt;!&ndash;    <div class="park-card">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <img src="https://images.pexels.com/photos/35024115/pexels-photo-35024115.jpeg" alt="Olduvai Gorge" class="park-img">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <div class="park-content">&ndash;&gt;-->
+<!--  &lt;!&ndash;        <h3 class="park-name">Olduvai Gorge</h3>&ndash;&gt;-->
+<!--  &lt;!&ndash;        <p class="park-desc">Birthplace of humanity, with some of the oldest human fossils.</p>&ndash;&gt;-->
+<!--  &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;<div class="last-page">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="last-page-video">&ndash;&gt;-->
+<!--&lt;!&ndash;    <video th:each="videoUrl : ${videos}"&ndash;&gt;-->
+<!--&lt;!&ndash;           th:src="${videoUrl}"&ndash;&gt;-->
+<!--&lt;!&ndash;           autoplay&ndash;&gt;-->
+<!--&lt;!&ndash;           muted&ndash;&gt;-->
+<!--&lt;!&ndash;           loop&ndash;&gt;-->
+<!--&lt;!&ndash;           playsinline&ndash;&gt;-->
+<!--&lt;!&ndash;           oncontextmenu="return false;">&ndash;&gt;-->
+<!--&lt;!&ndash;    </video>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="last-page-overlay"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--<div class="last-page">-->
+<!--  <div class="last-page-video">-->
+<!--    <video th:src="${videos[1]}"-->
+<!--           autoplay-->
+<!--           muted-->
+<!--           loop-->
+<!--           playsinline-->
+<!--           oncontextmenu="return false;">-->
+<!--    </video>-->
+<!--    <div class="last-page-overlay"></div>-->
+<!--  </div>-->
+
+
+<!--  <div class="logo-circle">-->
+<!--    <img src="/obi/panda.jpg" alt="Logo">-->
+<!--  </div>-->
+
+<!--  <div class="last-page-content">-->
+<!--    <div class="page-text">Start Your Journey Today</div>-->
+<!--    <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>-->
+
+<!--    <div class="comm-icons">-->
+<!--      <a href="YOUR_WECHAT_URL_HERE" class="comm-icon" target="_self">-->
+<!--        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111615.png" alt="WeChat">-->
+<!--      </a>-->
+<!--      <a href="YOUR_FACEBOOK_URL_HERE" class="comm-icon" target="_self">-->
+<!--        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">-->
+<!--      </a>-->
+<!--      <a href="YOUR_WHATSAPP_URL_HERE" class="comm-icon" target="_self">-->
+<!--        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">-->
+<!--      </a>-->
+<!--      <a href="YOUR_INSTAGRAM_URL_HERE" class="comm-icon" target="_self">-->
+<!--        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Scripts (merged, UNALTERED) &ndash;&gt;-->
+
+
+<!--<script>-->
+<!--  // Script from first HTML (header scroll) - added (was missing in original first HTML)-->
+<!--  window.addEventListener('scroll', function() {-->
+<!--    const header = document.getElementById('header');-->
+<!--    if (window.scrollY > 50) {-->
+<!--      header.classList.remove('top');-->
+<!--      header.classList.add('scrolled');-->
+<!--    } else {-->
+<!--      header.classList.remove('scrolled');-->
+<!--      header.classList.add('top');-->
+<!--    }-->
+<!--  });-->
+
+<!--  // Script from second HTML (smooth scroll for intro pages)-->
+<!--  const introPages = [-->
+<!--    document.getElementById('page2'),-->
+<!--    document.getElementById('page3'),-->
+<!--    document.getElementById('page4')-->
+<!--  ];-->
+
+<!--  let lastScrollY = window.scrollY;-->
+<!--  let scrollVelocity = 0;-->
+<!--  let lastTimestamp = 0;-->
+<!--  let animationId = null;-->
+
+<!--  function smoothScrollUpdate() {-->
+<!--    const currentScrollY = window.scrollY;-->
+<!--    const viewportHeight = window.innerHeight;-->
+<!--    const now = Date.now();-->
+<!--    const deltaTime = lastTimestamp ? now - lastTimestamp : 16;-->
+<!--    lastTimestamp = now;-->
+
+<!--    scrollVelocity = (currentScrollY - lastScrollY) / (deltaTime / 16);-->
+<!--    lastScrollY = currentScrollY;-->
+
+<!--    if (Math.abs(scrollVelocity) < 0.1) {-->
+<!--      const inertiaScrollY = currentScrollY + (scrollVelocity * 2);-->
+<!--      const effectiveScrollY = Math.max(0, Math.min(inertiaScrollY, viewportHeight * 4));-->
+
+
+
+<!--      introPages.forEach((page, index) => {-->
+<!--        const pageScrollThreshold = index * viewportHeight;-->
+<!--        const pageScrollRange = viewportHeight;-->
+
+<!--        if (effectiveScrollY < pageScrollThreshold) {-->
+<!--          page.style.transform = 'translateY(100%)';-->
+<!--        } else if (effectiveScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--          const riseProgress = (effectiveScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--          page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--        } else {-->
+<!--          page.style.transform = 'translateY(0)';-->
+<!--        }-->
+<!--      });-->
+<!--    } else {-->
+<!--      introPages.forEach((page, index) => {-->
+<!--        const pageScrollThreshold = index * viewportHeight;-->
+<!--        const pageScrollRange = viewportHeight;-->
+
+<!--        if (currentScrollY < pageScrollThreshold) {-->
+<!--          page.style.transform = 'translateY(100%)';-->
+<!--        } else if (currentScrollY < pageScrollThreshold + pageScrollRange) {-->
+<!--          const riseProgress = (currentScrollY - pageScrollThreshold) / pageScrollRange;-->
+<!--          page.style.transform = `translateY(${100 - (riseProgress * 100)}%)`;-->
+<!--        } else {-->
+<!--          page.style.transform = 'translateY(0)';-->
+<!--        }-->
+<!--      });-->
+<!--    }-->
+
+
+
+
+<!--    if (currentScrollY >= viewportHeight * 4) {-->
+<!--      introPages.forEach(page => page.style.transform = 'translateY(0)');-->
+<!--    }-->
+
+<!--    animationId = requestAnimationFrame(smoothScrollUpdate);-->
+<!--  }-->
+
+<!--  smoothScrollUpdate();-->
+<!--  window.dispatchEvent(new Event('scroll'));-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+<!--&lt;!&ndash;four boxes&ndash;&gt;-->
+
+<!--&lt;!&ndash; ==========================================-->
+<!--     4 Small Video Boxes - Full Isolated Code-->
+<!--     (HTML + CSS + Related Logic)-->
+<!--=========================================== &ndash;&gt;-->
+
+<!--&lt;!&ndash; CSS for Small Video Boxes &ndash;&gt;-->
+<!--<style>-->
+<!--  /* Right small grid container for 4 video boxes */-->
+<!--  .right-small-grid {-->
+<!--    width: 25%;-->
+<!--    display: grid;-->
+<!--    grid-template-columns: repeat(2, 1fr);-->
+<!--    grid-template-rows: repeat(2, auto);-->
+<!--    row-gap: 0.5rem;-->
+<!--    column-gap: 0.6rem;-->
+<!--    position: relative;-->
+<!--    margin-right: 0;-->
+<!--    margin-left: auto;-->
+<!--  }-->
+
+<!--  /* Single video container (hidden parent) */-->
+<!--  .single-video-container {-->
+<!--    position: absolute;-->
+<!--    top: 0;-->
+<!--    left: 0;-->
+<!--    width: calc(200% + 0.6rem);-->
+<!--    height: calc(200% + 0.6rem);-->
+<!--    z-index: 0;-->
+<!--    display: none;-->
+<!--  }-->
+
+<!--  .single-video-container video {-->
+<!--    width: 100%;-->
+<!--    height: 100%;-->
+<!--    object-fit: cover;-->
+<!--  }-->
+
+<!--  /* Individual small video box */-->
+<!--  .right-small-box {-->
+<!--    width: 100%;-->
+<!--    border-radius: 8px;-->
+<!--    overflow: hidden;-->
+<!--    position: relative;-->
+<!--    z-index: 1;-->
+<!--    background: white;-->
+<!--    height: 350px;-->
+<!--  }-->
+
+<!--  /* Video mask for splitting video across 4 boxes */-->
+<!--  .video-mask {-->
+<!--    position: absolute;-->
+<!--    top: 0;-->
+<!--    left: 0;-->
+<!--    width: 100%;-->
+<!--    height: 100%;-->
+<!--    overflow: hidden;-->
+<!--    border-radius: 8px;-->
+<!--    pointer-events: none;-->
+<!--  }-->
+
+<!--  .video-mask video {-->
+<!--    position: absolute;-->
+<!--    width: 200%;-->
+<!--    height: 200%;-->
+<!--    object-fit: cover;-->
+<!--    pointer-events: none;-->
+<!--  }-->
+
+<!--  /* Position video segments for each box */-->
+<!--  .box1 video { top: 0; left: 0; }-->
+<!--  .box2 video { top: 0; left: -100%; }-->
+<!--  .box3 video { top: -100%; left: 0; }-->
+<!--  .box4 video { top: -100%; left: -100%; }-->
+
+<!--  /* Hide unused boxes (box5-box11) */-->
+<!--  .box5 video, .box6 video, .box7 video, .box8 video, .box9 video, .box10 video, .box11 video {-->
+<!--    display: none;-->
+<!--  }-->
+
+<!--  /* Overlay effect for small boxes */-->
+<!--  .right-small-box::after {-->
+<!--    content: '';-->
+<!--    position: absolute;-->
+<!--    top: 0;-->
+<!--    left: 0;-->
+<!--    width: 100%;-->
+<!--    height: 100%;-->
+<!--    background: rgba(0, 50, 255, 0.15);-->
+<!--    z-index: 2;-->
+<!--    border-radius: 8px;-->
+<!--    pointer-events: none;-->
+<!--  }-->
+
+<!--  /* Brightness filter for video */-->
+<!--  .video-mask video {-->
+<!--    filter: brightness(1.1);-->
+<!--  }-->
+
+<!--  /* Positioning for small boxes */-->
+<!--  .right-small-box {-->
+<!--    position: relative;-->
+<!--  }-->
+
+<!--  /* Responsive adjustments for small video boxes */-->
+<!--  @media (max-width: 1024px) {-->
+<!--    .right-small-grid {-->
+<!--      width: 100%;-->
+<!--      margin-top: 2rem;-->
+<!--      grid-template-columns: repeat(2, 1fr);-->
+<!--      grid-template-rows: repeat(2, 1fr);-->
+<!--    }-->
+<!--    .video-mask video {-->
+<!--      width: 200%;-->
+<!--      height: 200%;-->
+<!--    }-->
+<!--  }-->
+
+<!--  @media (max-width: 768px) {-->
+<!--    .right-small-grid {-->
+<!--      grid-template-columns: repeat(2, 1fr);-->
+<!--      grid-template-rows: repeat(2, 1fr);-->
+<!--    }-->
+<!--  }-->
+<!--</style>-->
+
+<!--&lt;!&ndash; HTML for 4 Small Video Boxes &ndash;&gt;-->
+<!--<div class="right-small-grid">-->
+<!--  <div class="single-video-container">-->
+<!--    <video id="main-video-source"-->
+<!--           th:src="${videoUrl}"-->
+<!--           autoplay-->
+<!--           muted-->
+<!--           loop-->
+<!--           playsinline>-->
+<!--    </video>-->
+<!--  </div>-->
+
+<!--  <div class="right-small-box">-->
+<!--    <div class="video-mask box1">-->
+<!--      <video th:src="${videoUrl}"-->
+<!--             autoplay-->
+<!--             muted-->
+<!--             loop-->
+<!--             playsinline>-->
+<!--      </video>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="right-small-box">-->
+<!--    <div class="video-mask box2">-->
+<!--      <video th:src="${videoUrl}"-->
+<!--             autoplay-->
+<!--             muted-->
+<!--             loop-->
+<!--             playsinline>-->
+<!--      </video>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="right-small-box">-->
+<!--    <div class="video-mask box3">-->
+<!--      <video th:src="${videoUrl}"-->
+<!--             autoplay-->
+<!--             muted-->
+<!--             loop-->
+<!--             playsinline>-->
+<!--      </video>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="right-small-box">-->
+<!--    <div class="video-mask box4">-->
+<!--      <video th:src="${videoUrl}"-->
+<!--             autoplay-->
+<!--             muted-->
+<!--             loop-->
+<!--             playsinline>-->
+<!--      </video>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!-- No dedicated script for small video boxes (all logic is CSS-based) -->
