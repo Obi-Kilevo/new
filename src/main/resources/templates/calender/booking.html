@@ -1,0 +1,2007 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Calendar</title>-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            display: flex;-->
+<!--            justify-content: flex-end;-->
+<!--            align-items: center;-->
+<!--            min-height: 100vh;-->
+<!--            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);-->
+<!--            padding: 60px;-->
+<!--            padding-right: 180px;-->
+<!--        }-->
+
+<!--        .calendar-container {-->
+<!--            width: 1600px;-->
+<!--            max-width: 95vw;-->
+<!--            position: relative;-->
+<!--            overflow: visible;-->
+<!--            border-radius: 35px;-->
+<!--            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);-->
+<!--            margin-right: 10px;-->
+<!--        }-->
+
+<!--        .calendar-inner {-->
+<!--            display: flex;-->
+<!--            align-items: flex-start;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .side-month-btn {-->
+<!--            width: 100px;-->
+<!--            height: 100px;-->
+<!--            background: #007bff;-->
+<!--            color: white;-->
+<!--            border: 5px solid white;-->
+<!--            border-radius: 50%;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 50px;-->
+<!--            font-weight: bold;-->
+<!--            transition: all 0.3s;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            position: absolute;-->
+<!--            z-index: 10;-->
+<!--            box-shadow: 0 10px 30px rgba(0,0,0,0.5);-->
+<!--        }-->
+
+<!--        #prev-month {-->
+<!--            left: -130px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+
+<!--        #next-month {-->
+<!--            right: -150px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+
+<!--        .side-month-btn:hover {-->
+<!--            background: #0056b3;-->
+<!--            transform: translateY(-50%) scale(1.1);-->
+<!--        }-->
+
+<!--        .calendar-content {-->
+<!--            width: 100%;-->
+<!--            position: relative;-->
+<!--            z-index: 2;-->
+<!--            background: rgba(255, 255, 255, 0.95);-->
+<!--            border-radius: 35px;-->
+<!--        }-->
+
+<!--        .calendar-header {-->
+<!--            background: rgba(52, 73, 94, 0.95);-->
+<!--            color: white;-->
+<!--            padding: 0;-->
+<!--            height: 0;-->
+<!--            border-radius: 35px 35px 0 0;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .current-date {-->
+<!--            font-size: 120px;-->
+<!--            font-weight: bold;-->
+<!--            position: absolute;-->
+<!--            left: -800px;-->
+<!--            top: 80px;-->
+<!--            color: white;-->
+<!--            min-width: 800px;-->
+<!--            text-align: right;-->
+<!--            text-shadow: 6px 6px 15px rgba(0,0,0,0.9);-->
+<!--            white-space: nowrap;-->
+<!--        }-->
+
+<!--        .weekdays {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(7, 1fr);-->
+<!--            background: rgba(52, 152, 219, 0.95);-->
+<!--            color: white;-->
+<!--            font-weight: bold;-->
+<!--            padding: 35px 0;-->
+<!--            text-align: center;-->
+<!--            font-size: 40px;-->
+<!--            border-radius: 35px 35px 0 0;-->
+<!--        }-->
+
+<!--        .weekdays div {-->
+<!--            padding: 30px;-->
+<!--        }-->
+
+<!--        .calendar-days {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(7, 1fr);-->
+<!--            gap: 4px;-->
+<!--            padding: 4px;-->
+<!--            background-image: url('calender/one.png');-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-repeat: no-repeat;-->
+<!--            background-color: transparent;-->
+<!--            min-height: 1200px;-->
+<!--        }-->
+
+<!--        .day {-->
+<!--            aspect-ratio: 1;-->
+<!--            padding: 40px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            cursor: pointer;-->
+<!--            position: relative;-->
+<!--            background: transparent;-->
+<!--        }-->
+
+<!--        .day.past-day {-->
+<!--            cursor: not-allowed;-->
+<!--        }-->
+
+<!--        .day.past-day .day-number::after {-->
+<!--            content: "✕";-->
+<!--            position: absolute;-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, -50%);-->
+<!--            font-size: 90px;-->
+<!--            color: rgba(255, 0, 0, 0.6);-->
+<!--            font-weight: bold;-->
+<!--            z-index: 2;-->
+<!--        }-->
+
+<!--        .day-number {-->
+<!--            font-size: 60px;-->
+<!--            font-weight: 900;-->
+<!--            color: #000000;-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            -webkit-text-stroke: 3px white;-->
+<!--            text-stroke: 3px white;-->
+<!--            paint-order: stroke fill;-->
+<!--        }-->
+
+<!--        .day.other-month .day-number {-->
+<!--            color: #666666;-->
+<!--            -webkit-text-stroke: 3px white;-->
+<!--            text-stroke: 3px white;-->
+<!--        }-->
+
+<!--        .day.today .day-number {-->
+<!--            color: #ffffff;-->
+<!--            -webkit-text-stroke: 3px black;-->
+<!--            text-stroke: 3px black;-->
+<!--        }-->
+
+<!--        .day.selected .day-number {-->
+<!--            color: #ffffff;-->
+<!--            -webkit-text-stroke: 3px black;-->
+<!--            text-stroke: 3px black;-->
+<!--        }-->
+
+<!--        .footer {-->
+<!--            display: none;-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            body {-->
+<!--                padding: 30px;-->
+<!--                padding-right: 120px;-->
+<!--                justify-content: center;-->
+<!--            }-->
+<!--            .calendar-container {-->
+<!--                width: 95%;-->
+<!--                margin-right: 5px;-->
+<!--            }-->
+<!--            .current-date {-->
+<!--                font-size: 70px;-->
+<!--                left: -450px;-->
+<!--                min-width: 400px;-->
+<!--            }-->
+<!--            .side-month-btn {-->
+<!--                width: 70px;-->
+<!--                height: 70px;-->
+<!--                font-size: 35px;-->
+<!--            }-->
+<!--            #prev-month {-->
+<!--                left: -90px;-->
+<!--            }-->
+<!--            #next-month {-->
+<!--                right: -110px;-->
+<!--            }-->
+<!--            .weekdays {-->
+<!--                padding: 25px 0;-->
+<!--                font-size: 30px;-->
+<!--            }-->
+<!--            .weekdays div {-->
+<!--                padding: 20px;-->
+<!--            }-->
+<!--            .calendar-days {-->
+<!--                min-height: 800px;-->
+<!--            }-->
+<!--            .day {-->
+<!--                padding: 30px;-->
+<!--            }-->
+<!--            .day-number {-->
+<!--                font-size: 40px;-->
+<!--                -webkit-text-stroke: 2px white;-->
+<!--                text-stroke: 2px white;-->
+<!--            }-->
+<!--            .day.today .day-number,-->
+<!--            .day.selected .day-number {-->
+<!--                -webkit-text-stroke: 2px black;-->
+<!--                text-stroke: 2px black;-->
+<!--            }-->
+<!--            .day.past-day .day-number::after {-->
+<!--                font-size: 60px;-->
+<!--            }-->
+<!--        }-->
+
+<!--        @media (max-width: 480px) {-->
+<!--            body {-->
+<!--                padding: 20px;-->
+<!--                padding-right: 80px;-->
+<!--            }-->
+<!--            .current-date {-->
+<!--                font-size: 50px;-->
+<!--                left: -320px;-->
+<!--                min-width: 280px;-->
+<!--                top: 50px;-->
+<!--            }-->
+<!--            .side-month-btn {-->
+<!--                width: 60px;-->
+<!--                height: 60px;-->
+<!--                font-size: 30px;-->
+<!--            }-->
+<!--            #prev-month {-->
+<!--                left: -80px;-->
+<!--            }-->
+<!--            #next-month {-->
+<!--                right: -90px;-->
+<!--            }-->
+<!--            .weekdays {-->
+<!--                padding: 20px 0;-->
+<!--                font-size: 24px;-->
+<!--            }-->
+<!--            .weekdays div {-->
+<!--                padding: 15px;-->
+<!--            }-->
+<!--            .calendar-days {-->
+<!--                min-height: 600px;-->
+<!--            }-->
+<!--            .day {-->
+<!--                padding: 20px;-->
+<!--            }-->
+<!--            .day-number {-->
+<!--                font-size: 30px;-->
+<!--                -webkit-text-stroke: 1.5px white;-->
+<!--                text-stroke: 1.5px white;-->
+<!--            }-->
+<!--            .day.today .day-number,-->
+<!--            .day.selected .day-number {-->
+<!--                -webkit-text-stroke: 1.5px black;-->
+<!--                text-stroke: 1.5px black;-->
+<!--            }-->
+<!--            .day.past-day .day-number::after {-->
+<!--                font-size: 45px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="calendar-container">-->
+<!--    <div class="calendar-inner">-->
+<!--        <button class="side-month-btn" id="prev-month">‹</button>-->
+<!--        <button class="side-month-btn" id="next-month">›</button>-->
+
+<!--        <div class="calendar-content">-->
+<!--            <div class="calendar-header">-->
+<!--                <div class="current-date" id="current-month-year">October 2023</div>-->
+<!--            </div>-->
+
+<!--            <div class="weekdays">-->
+<!--                <div>Sun</div>-->
+<!--                <div>Mon</div>-->
+<!--                <div>Tue</div>-->
+<!--                <div>Wed</div>-->
+<!--                <div>Thu</div>-->
+<!--                <div>Fri</div>-->
+<!--                <div>Sat</div>-->
+<!--            </div>-->
+
+<!--            <div class="calendar-days" id="calendar-days">-->
+<!--                &lt;!&ndash; Calendar days generated by JS &ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <div class="footer">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    let currentDate = new Date();-->
+<!--    let currentYear = currentDate.getFullYear();-->
+<!--    let currentMonth = currentDate.getMonth();-->
+<!--    const today = new Date();-->
+<!--    today.setHours(0, 0, 0, 0);-->
+
+<!--    const calendarDaysElement = document.getElementById('calendar-days');-->
+<!--    const currentMonthYearElement = document.getElementById('current-month-year');-->
+
+<!--    document.getElementById('prev-month').addEventListener('click', () => {-->
+<!--        currentMonth&#45;&#45;;-->
+<!--        if (currentMonth < 0) {-->
+<!--            currentMonth = 11;-->
+<!--            currentYear&#45;&#45;;-->
+<!--        }-->
+<!--        renderCalendar();-->
+<!--    });-->
+
+<!--    document.getElementById('next-month').addEventListener('click', () => {-->
+<!--        currentMonth++;-->
+<!--        if (currentMonth > 11) {-->
+<!--            currentMonth = 0;-->
+<!--            currentYear++;-->
+<!--        }-->
+<!--        renderCalendar();-->
+<!--    });-->
+
+<!--    function renderCalendar() {-->
+<!--        calendarDaysElement.innerHTML = '';-->
+
+<!--        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',-->
+<!--            'July', 'August', 'September', 'October', 'November', 'December'];-->
+<!--        currentMonthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;-->
+
+<!--        const firstDay = new Date(currentYear, currentMonth, 1);-->
+<!--        const lastDay = new Date(currentYear, currentMonth + 1, 0);-->
+<!--        const totalDays = lastDay.getDate();-->
+<!--        const firstDayIndex = firstDay.getDay();-->
+
+<!--        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();-->
+
+<!--        for (let i = firstDayIndex; i > 0; i&#45;&#45;) {-->
+<!--            const day = document.createElement('div');-->
+<!--            day.classList.add('day', 'other-month', 'past-day');-->
+<!--            day.innerHTML = `<div class="day-number">${prevMonthLastDay - i + 1}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+<!--        }-->
+
+<!--        const isCurrentMonth = today.getFullYear() === currentYear && today.getMonth() === currentMonth;-->
+
+<!--        for (let i = 1; i <= totalDays; i++) {-->
+<!--            const day = document.createElement('div');-->
+<!--            const dayDate = new Date(currentYear, currentMonth, i);-->
+<!--            dayDate.setHours(0, 0, 0, 0);-->
+
+<!--            if (isCurrentMonth && i === today.getDate()) {-->
+<!--                day.classList.add('day', 'today');-->
+<!--            } else {-->
+<!--                day.classList.add('day');-->
+<!--            }-->
+
+<!--            if (dayDate < today) {-->
+<!--                day.classList.add('past-day');-->
+<!--            }-->
+
+<!--            day.innerHTML = `<div class="day-number">${i}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+
+<!--            if (dayDate >= today) {-->
+<!--                day.addEventListener('click', () => {-->
+<!--                    document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));-->
+<!--                    day.classList.add('selected');-->
+<!--                });-->
+<!--            }-->
+<!--        }-->
+
+<!--        const totalCells = 42;-->
+<!--        const nextMonthDays = totalCells - (firstDayIndex + totalDays);-->
+<!--        for (let i = 1; i <= nextMonthDays; i++) {-->
+<!--            const day = document.createElement('div');-->
+<!--            day.classList.add('day', 'other-month');-->
+<!--            const nextMonthDate = new Date(currentYear, currentMonth + 1, i);-->
+<!--            nextMonthDate.setHours(0, 0, 0, 0);-->
+
+<!--            if (nextMonthDate < today) {-->
+<!--                day.classList.add('past-day');-->
+<!--            }-->
+
+<!--            day.innerHTML = `<div class="day-number">${i}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+<!--        }-->
+<!--    }-->
+
+<!--    renderCalendar();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Tour Booking Calendar</title>-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            min-height: 100vh;-->
+<!--            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);-->
+<!--            padding: 60px;-->
+<!--            gap: 100px;-->
+<!--        }-->
+
+<!--        .booking-form {-->
+<!--            width: 600px;-->
+<!--            background: rgba(255, 255, 255, 0.95);-->
+<!--            border-radius: 35px;-->
+<!--            padding: 50px;-->
+<!--            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 40px;-->
+<!--        }-->
+
+<!--        .form-title {-->
+<!--            font-size: 50px;-->
+<!--            font-weight: bold;-->
+<!--            color: #2c3e50;-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        .form-field {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 15px;-->
+<!--        }-->
+
+<!--        .form-label {-->
+<!--            font-size: 30px;-->
+<!--            font-weight: bold;-->
+<!--            color: #2c3e50;-->
+<!--        }-->
+
+<!--        .form-input {-->
+<!--            padding: 25px;-->
+<!--            font-size: 28px;-->
+<!--            border: 3px solid #3498db;-->
+<!--            border-radius: 15px;-->
+<!--            background: white;-->
+<!--            cursor: pointer;-->
+<!--            transition: all 0.3s;-->
+<!--        }-->
+
+<!--        .form-input:focus {-->
+<!--            outline: none;-->
+<!--            border-color: #2980b9;-->
+<!--            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);-->
+<!--        }-->
+
+<!--        .date-display {-->
+<!--            font-size: 28px;-->
+<!--            color: #2c3e50;-->
+<!--            min-height: 40px;-->
+<!--        }-->
+
+<!--        .travelers-selector {-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .travelers-popup {-->
+<!--            display: none;-->
+<!--            position: absolute;-->
+<!--            top: 100%;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            background: white;-->
+<!--            border: 3px solid #3498db;-->
+<!--            border-radius: 15px;-->
+<!--            padding: 30px;-->
+<!--            z-index: 100;-->
+<!--            box-shadow: 0 10px 30px rgba(0,0,0,0.2);-->
+<!--            margin-top: 10px;-->
+<!--        }-->
+
+<!--        .traveler-category {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            padding: 20px 0;-->
+<!--            border-bottom: 2px solid #ecf0f1;-->
+<!--        }-->
+
+<!--        .traveler-category:last-child {-->
+<!--            border-bottom: none;-->
+<!--        }-->
+
+<!--        .category-title {-->
+<!--            font-size: 26px;-->
+<!--            color: #2c3e50;-->
+<!--        }-->
+
+<!--        .counter {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 20px;-->
+<!--        }-->
+
+<!--        .counter-btn {-->
+<!--            width: 50px;-->
+<!--            height: 50px;-->
+<!--            border: none;-->
+<!--            background: #3498db;-->
+<!--            color: white;-->
+<!--            font-size: 30px;-->
+<!--            border-radius: 50%;-->
+<!--            cursor: pointer;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--        }-->
+
+<!--        .counter-btn:hover {-->
+<!--            background: #2980b9;-->
+<!--        }-->
+
+<!--        .counter-value {-->
+<!--            font-size: 30px;-->
+<!--            font-weight: bold;-->
+<!--            min-width: 40px;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .popup-header {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            margin-bottom: 30px;-->
+<!--        }-->
+
+<!--        .popup-title {-->
+<!--            font-size: 28px;-->
+<!--            font-weight: bold;-->
+<!--            color: #2c3e50;-->
+<!--        }-->
+
+<!--        .close-popup {-->
+<!--            background: none;-->
+<!--            border: none;-->
+<!--            font-size: 40px;-->
+<!--            color: #e74c3c;-->
+<!--            cursor: pointer;-->
+<!--            line-height: 1;-->
+<!--        }-->
+
+<!--        .close-popup:hover {-->
+<!--            color: #c0392b;-->
+<!--        }-->
+
+<!--        .calendar-container {-->
+<!--            width: 1600px;-->
+<!--            max-width: 95vw;-->
+<!--            position: relative;-->
+<!--            overflow: visible;-->
+<!--            border-radius: 35px;-->
+<!--            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);-->
+<!--        }-->
+
+<!--        .calendar-inner {-->
+<!--            display: flex;-->
+<!--            align-items: flex-start;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .side-month-btn {-->
+<!--            width: 100px;-->
+<!--            height: 100px;-->
+<!--            background: #007bff;-->
+<!--            color: white;-->
+<!--            border: 5px solid white;-->
+<!--            border-radius: 50%;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 50px;-->
+<!--            font-weight: bold;-->
+<!--            transition: all 0.3s;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            position: absolute;-->
+<!--            z-index: 10;-->
+<!--            box-shadow: 0 10px 30px rgba(0,0,0,0.5);-->
+<!--        }-->
+
+<!--        #prev-month {-->
+<!--            left: -130px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+
+<!--        #next-month {-->
+<!--            right: -150px;-->
+<!--            top: 50%;-->
+<!--            transform: translateY(-50%);-->
+<!--        }-->
+
+<!--        .side-month-btn:hover {-->
+<!--            background: #0056b3;-->
+<!--            transform: translateY(-50%) scale(1.1);-->
+<!--        }-->
+
+<!--        .calendar-content {-->
+<!--            width: 100%;-->
+<!--            position: relative;-->
+<!--            z-index: 2;-->
+<!--            background: rgba(255, 255, 255, 0.95);-->
+<!--            border-radius: 35px;-->
+<!--        }-->
+
+<!--        .calendar-header {-->
+<!--            background: rgba(52, 73, 94, 0.95);-->
+<!--            color: white;-->
+<!--            padding: 0;-->
+<!--            height: 0;-->
+<!--            border-radius: 35px 35px 0 0;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .current-date {-->
+<!--            font-size: 120px;-->
+<!--            font-weight: bold;-->
+<!--            position: absolute;-->
+<!--            left: -800px;-->
+<!--            top: 80px;-->
+<!--            color: white;-->
+<!--            min-width: 800px;-->
+<!--            text-align: right;-->
+<!--            text-shadow: 6px 6px 15px rgba(0,0,0,0.9);-->
+<!--            white-space: nowrap;-->
+<!--        }-->
+
+<!--        .weekdays {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(7, 1fr);-->
+<!--            background: rgba(52, 152, 219, 0.95);-->
+<!--            color: white;-->
+<!--            font-weight: bold;-->
+<!--            padding: 35px 0;-->
+<!--            text-align: center;-->
+<!--            font-size: 40px;-->
+<!--            border-radius: 35px 35px 0 0;-->
+<!--        }-->
+
+<!--        .weekdays div {-->
+<!--            padding: 30px;-->
+<!--        }-->
+
+<!--        .calendar-days {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(7, 1fr);-->
+<!--            gap: 4px;-->
+<!--            padding: 4px;-->
+<!--            background-image: url('calender/one.png');-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-repeat: no-repeat;-->
+<!--            background-color: transparent;-->
+<!--            min-height: 1200px;-->
+<!--        }-->
+
+<!--        .day {-->
+<!--            aspect-ratio: 1;-->
+<!--            padding: 40px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            cursor: pointer;-->
+<!--            position: relative;-->
+<!--            background: transparent;-->
+<!--        }-->
+
+<!--        .day.past-day {-->
+<!--            cursor: not-allowed;-->
+<!--        }-->
+
+<!--        .day.past-day .day-number::after {-->
+<!--            content: "✕";-->
+<!--            position: absolute;-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, -50%);-->
+<!--            font-size: 90px;-->
+<!--            color: rgba(255, 0, 0, 0.6);-->
+<!--            font-weight: bold;-->
+<!--            z-index: 2;-->
+<!--        }-->
+
+<!--        .day-number {-->
+<!--            font-size: 60px;-->
+<!--            font-weight: 900;-->
+<!--            color: #000000;-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            -webkit-text-stroke: 3px white;-->
+<!--            text-stroke: 3px white;-->
+<!--            paint-order: stroke fill;-->
+<!--        }-->
+
+<!--        .day.other-month .day-number {-->
+<!--            color: #666666;-->
+<!--            -webkit-text-stroke: 3px white;-->
+<!--            text-stroke: 3px white;-->
+<!--        }-->
+
+<!--        .day.today .day-number {-->
+<!--            color: #ffffff;-->
+<!--            -webkit-text-stroke: 3px black;-->
+<!--            text-stroke: 3px black;-->
+<!--        }-->
+
+<!--        .day.selected .day-number {-->
+<!--            color: #ffffff;-->
+<!--            -webkit-text-stroke: 3px black;-->
+<!--            text-stroke: 3px black;-->
+<!--        }-->
+
+<!--        .footer {-->
+<!--            display: none;-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            body {-->
+<!--                flex-direction: column;-->
+<!--                padding: 30px;-->
+<!--                gap: 50px;-->
+<!--            }-->
+
+<!--            .booking-form {-->
+<!--                width: 95%;-->
+<!--                padding: 30px;-->
+<!--            }-->
+
+<!--            .form-title {-->
+<!--                font-size: 35px;-->
+<!--            }-->
+
+<!--            .form-label {-->
+<!--                font-size: 24px;-->
+<!--            }-->
+
+<!--            .form-input {-->
+<!--                font-size: 22px;-->
+<!--                padding: 20px;-->
+<!--            }-->
+
+<!--            .calendar-container {-->
+<!--                width: 95%;-->
+<!--            }-->
+
+<!--            .current-date {-->
+<!--                font-size: 70px;-->
+<!--                left: -450px;-->
+<!--                min-width: 400px;-->
+<!--            }-->
+
+<!--            .side-month-btn {-->
+<!--                width: 70px;-->
+<!--                height: 70px;-->
+<!--                font-size: 35px;-->
+<!--            }-->
+
+<!--            #prev-month {-->
+<!--                left: -90px;-->
+<!--            }-->
+
+<!--            #next-month {-->
+<!--                right: -110px;-->
+<!--            }-->
+
+<!--            .weekdays {-->
+<!--                padding: 25px 0;-->
+<!--                font-size: 30px;-->
+<!--            }-->
+
+<!--            .weekdays div {-->
+<!--                padding: 20px;-->
+<!--            }-->
+
+<!--            .calendar-days {-->
+<!--                min-height: 800px;-->
+<!--            }-->
+
+<!--            .day {-->
+<!--                padding: 30px;-->
+<!--            }-->
+
+<!--            .day-number {-->
+<!--                font-size: 40px;-->
+<!--                -webkit-text-stroke: 2px white;-->
+<!--                text-stroke: 2px white;-->
+<!--            }-->
+
+<!--            .day.today .day-number,-->
+<!--            .day.selected .day-number {-->
+<!--                -webkit-text-stroke: 2px black;-->
+<!--                text-stroke: 2px black;-->
+<!--            }-->
+
+<!--            .day.past-day .day-number::after {-->
+<!--                font-size: 60px;-->
+<!--            }-->
+<!--        }-->
+
+<!--        @media (max-width: 480px) {-->
+<!--            body {-->
+<!--                padding: 20px;-->
+<!--                gap: 30px;-->
+<!--            }-->
+
+<!--            .booking-form {-->
+<!--                padding: 20px;-->
+<!--            }-->
+
+<!--            .form-title {-->
+<!--                font-size: 28px;-->
+<!--            }-->
+
+<!--            .form-label {-->
+<!--                font-size: 20px;-->
+<!--            }-->
+
+<!--            .form-input {-->
+<!--                font-size: 18px;-->
+<!--                padding: 15px;-->
+<!--            }-->
+
+<!--            .current-date {-->
+<!--                font-size: 50px;-->
+<!--                left: -320px;-->
+<!--                min-width: 280px;-->
+<!--                top: 50px;-->
+<!--            }-->
+
+<!--            .side-month-btn {-->
+<!--                width: 60px;-->
+<!--                height: 60px;-->
+<!--                font-size: 30px;-->
+<!--            }-->
+
+<!--            #prev-month {-->
+<!--                left: -80px;-->
+<!--            }-->
+
+<!--            #next-month {-->
+<!--                right: -90px;-->
+<!--            }-->
+
+<!--            .weekdays {-->
+<!--                padding: 20px 0;-->
+<!--                font-size: 24px;-->
+<!--            }-->
+
+<!--            .weekdays div {-->
+<!--                padding: 15px;-->
+<!--            }-->
+
+<!--            .calendar-days {-->
+<!--                min-height: 600px;-->
+<!--            }-->
+
+<!--            .day {-->
+<!--                padding: 20px;-->
+<!--            }-->
+
+<!--            .day-number {-->
+<!--                font-size: 30px;-->
+<!--                -webkit-text-stroke: 1.5px white;-->
+<!--                text-stroke: 1.5px white;-->
+<!--            }-->
+
+<!--            .day.today .day-number,-->
+<!--            .day.selected .day-number {-->
+<!--                -webkit-text-stroke: 1.5px black;-->
+<!--                text-stroke: 1.5px black;-->
+<!--            }-->
+
+<!--            .day.past-day .day-number::after {-->
+<!--                font-size: 45px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; Booking Form on Left &ndash;&gt;-->
+<!--<div class="booking-form">-->
+<!--    <div class="form-title">Tour Booking</div>-->
+
+<!--    <div class="form-field">-->
+<!--        <label class="form-label">Where to?</label>-->
+<!--        <input type="text" class="form-input" id="destination" placeholder="Enter your destination">-->
+<!--    </div>-->
+
+<!--    <div class="form-field">-->
+<!--        <label class="form-label">Travel Date</label>-->
+<!--        <div class="form-input" id="date-field">Click to select date</div>-->
+<!--        <div class="date-display" id="selected-date"></div>-->
+<!--    </div>-->
+
+<!--    <div class="form-field travelers-selector">-->
+<!--        <label class="form-label">Travelers</label>-->
+<!--        <div class="form-input" id="travelers-field">Select travelers</div>-->
+
+<!--        <div class="travelers-popup" id="travelers-popup">-->
+<!--            <div class="popup-header">-->
+<!--                <div class="popup-title">Select Travelers</div>-->
+<!--                <button class="close-popup" id="close-popup">×</button>-->
+<!--            </div>-->
+
+<!--            <div class="traveler-category">-->
+<!--                <div class="category-title">Adults</div>-->
+<!--                <div class="counter">-->
+<!--                    <button class="counter-btn" id="adult-minus">-</button>-->
+<!--                    <span class="counter-value" id="adult-count">0</span>-->
+<!--                    <button class="counter-btn" id="adult-plus">+</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="traveler-category">-->
+<!--                <div class="category-title">Children</div>-->
+<!--                <div class="counter">-->
+<!--                    <button class="counter-btn" id="child-minus">-</button>-->
+<!--                    <span class="counter-value" id="child-count">0</span>-->
+<!--                    <button class="counter-btn" id="child-plus">+</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Calendar on Right (unchanged) &ndash;&gt;-->
+<!--<div class="calendar-container">-->
+<!--    <div class="calendar-inner">-->
+<!--        <button class="side-month-btn" id="prev-month">‹</button>-->
+<!--        <button class="side-month-btn" id="next-month">›</button>-->
+
+<!--        <div class="calendar-content">-->
+<!--            <div class="calendar-header">-->
+<!--                <div class="current-date" id="current-month-year">October 2023</div>-->
+<!--            </div>-->
+
+<!--            <div class="weekdays">-->
+<!--                <div>Sun</div>-->
+<!--                <div>Mon</div>-->
+<!--                <div>Tue</div>-->
+<!--                <div>Wed</div>-->
+<!--                <div>Thu</div>-->
+<!--                <div>Fri</div>-->
+<!--                <div>Sat</div>-->
+<!--            </div>-->
+
+<!--            <div class="calendar-days" id="calendar-days">-->
+<!--                &lt;!&ndash; Calendar days generated by JS &ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <div class="footer">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    let currentDate = new Date();-->
+<!--    let currentYear = currentDate.getFullYear();-->
+<!--    let currentMonth = currentDate.getMonth();-->
+<!--    const today = new Date();-->
+<!--    today.setHours(0, 0, 0, 0);-->
+
+<!--    let selectedDay = null;-->
+<!--    let adultCount = 0;-->
+<!--    let childCount = 0;-->
+
+<!--    const calendarDaysElement = document.getElementById('calendar-days');-->
+<!--    const currentMonthYearElement = document.getElementById('current-month-year');-->
+<!--    const dateField = document.getElementById('date-field');-->
+<!--    const selectedDateDisplay = document.getElementById('selected-date');-->
+<!--    const travelersField = document.getElementById('travelers-field');-->
+<!--    const travelersPopup = document.getElementById('travelers-popup');-->
+<!--    const destinationInput = document.getElementById('destination');-->
+
+<!--    document.getElementById('prev-month').addEventListener('click', () => {-->
+<!--        currentMonth&#45;&#45;;-->
+<!--        if (currentMonth < 0) {-->
+<!--            currentMonth = 11;-->
+<!--            currentYear&#45;&#45;;-->
+<!--        }-->
+<!--        renderCalendar();-->
+<!--    });-->
+
+<!--    document.getElementById('next-month').addEventListener('click', () => {-->
+<!--        currentMonth++;-->
+<!--        if (currentMonth > 11) {-->
+<!--            currentMonth = 0;-->
+<!--            currentYear++;-->
+<!--        }-->
+<!--        renderCalendar();-->
+<!--    });-->
+
+<!--    dateField.addEventListener('click', () => {-->
+<!--        selectedDateDisplay.textContent = 'Click a date on the calendar';-->
+<!--    });-->
+
+<!--    travelersField.addEventListener('click', () => {-->
+<!--        travelersPopup.style.display = 'block';-->
+<!--    });-->
+
+<!--    document.getElementById('close-popup').addEventListener('click', () => {-->
+<!--        travelersPopup.style.display = 'none';-->
+<!--        updateTravelersField();-->
+<!--    });-->
+
+<!--    document.getElementById('adult-plus').addEventListener('click', () => {-->
+<!--        adultCount++;-->
+<!--        document.getElementById('adult-count').textContent = adultCount;-->
+<!--    });-->
+
+<!--    document.getElementById('adult-minus').addEventListener('click', () => {-->
+<!--        if (adultCount > 0) {-->
+<!--            adultCount&#45;&#45;;-->
+<!--            document.getElementById('adult-count').textContent = adultCount;-->
+<!--        }-->
+<!--    });-->
+
+<!--    document.getElementById('child-plus').addEventListener('click', () => {-->
+<!--        childCount++;-->
+<!--        document.getElementById('child-count').textContent = childCount;-->
+<!--    });-->
+
+<!--    document.getElementById('child-minus').addEventListener('click', () => {-->
+<!--        if (childCount > 0) {-->
+<!--            childCount&#45;&#45;;-->
+<!--            document.getElementById('child-count').textContent = childCount;-->
+<!--        }-->
+<!--    });-->
+
+<!--    function updateTravelersField() {-->
+<!--        const total = adultCount + childCount;-->
+<!--        travelersField.textContent = total > 0-->
+<!--            ? `${adultCount} Adult${adultCount !== 1 ? 's' : ''}, ${childCount} Child${childCount !== 1 ? 'ren' : ''}`-->
+<!--            : 'Select travelers';-->
+<!--    }-->
+
+<!--    function renderCalendar() {-->
+<!--        calendarDaysElement.innerHTML = '';-->
+
+<!--        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',-->
+<!--            'July', 'August', 'September', 'October', 'November', 'December'];-->
+<!--        currentMonthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;-->
+
+<!--        const firstDay = new Date(currentYear, currentMonth, 1);-->
+<!--        const lastDay = new Date(currentYear, currentMonth + 1, 0);-->
+<!--        const totalDays = lastDay.getDate();-->
+<!--        const firstDayIndex = firstDay.getDay();-->
+
+<!--        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();-->
+
+<!--        for (let i = firstDayIndex; i > 0; i&#45;&#45;) {-->
+<!--            const day = document.createElement('div');-->
+<!--            day.classList.add('day', 'other-month', 'past-day');-->
+<!--            day.innerHTML = `<div class="day-number">${prevMonthLastDay - i + 1}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+<!--        }-->
+
+<!--        const isCurrentMonth = today.getFullYear() === currentYear && today.getMonth() === currentMonth;-->
+
+<!--        for (let i = 1; i <= totalDays; i++) {-->
+<!--            const day = document.createElement('div');-->
+<!--            const dayDate = new Date(currentYear, currentMonth, i);-->
+<!--            dayDate.setHours(0, 0, 0, 0);-->
+
+<!--            if (isCurrentMonth && i === today.getDate()) {-->
+<!--                day.classList.add('day', 'today');-->
+<!--            } else {-->
+<!--                day.classList.add('day');-->
+<!--            }-->
+
+<!--            if (dayDate < today) {-->
+<!--                day.classList.add('past-day');-->
+<!--            }-->
+
+<!--            day.innerHTML = `<div class="day-number">${i}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+
+<!--            if (dayDate >= today) {-->
+<!--                day.addEventListener('click', () => {-->
+<!--                    document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));-->
+<!--                    day.classList.add('selected');-->
+
+<!--                    selectedDay = i;-->
+<!--                    const selectedDate = new Date(currentYear, currentMonth, i);-->
+<!--                    const formattedDate = `${monthNames[currentMonth]} ${i}, ${currentYear}`;-->
+
+<!--                    selectedDateDisplay.textContent = `Selected: ${formattedDate}`;-->
+<!--                    dateField.textContent = formattedDate;-->
+<!--                });-->
+<!--            }-->
+<!--        }-->
+
+<!--        const totalCells = 42;-->
+<!--        const nextMonthDays = totalCells - (firstDayIndex + totalDays);-->
+<!--        for (let i = 1; i <= nextMonthDays; i++) {-->
+<!--            const day = document.createElement('div');-->
+<!--            day.classList.add('day', 'other-month');-->
+<!--            const nextMonthDate = new Date(currentYear, currentMonth + 1, i);-->
+<!--            nextMonthDate.setHours(0, 0, 0, 0);-->
+
+<!--            if (nextMonthDate < today) {-->
+<!--                day.classList.add('past-day');-->
+<!--            }-->
+
+<!--            day.innerHTML = `<div class="day-number">${i}</div>`;-->
+<!--            calendarDaysElement.appendChild(day);-->
+<!--        }-->
+<!--    }-->
+
+<!--    renderCalendar();-->
+<!--    updateTravelersField();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Booking Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* REPLACED: Linear gradient with full-page background image */
+            background-image: url('https://images.pexels.com/photos/19228321/pexels-photo-19228321/free-photo-of-hot-air-balloons-flying-over-cappadocia.jpeg');
+            background-size: cover; /* Cover entire viewport */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* No repeating */
+            background-attachment: fixed; /* Fixed position on scroll */
+            padding: 80px;
+            gap: 120px;
+        }
+
+        .booking-form {
+            width: 700px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .form-title {
+            font-size: 65px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .form-label {
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-input {
+            padding: 35px;
+            font-size: 38px;
+            border: 4px solid white;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #2c3e50;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.7);
+            background: white;
+        }
+
+        .date-display {
+            font-size: 36px;
+            color: white;
+            min-height: 50px;
+            text-stroke: 2px black;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .travelers-selector {
+            position: relative;
+        }
+
+        .travelers-popup {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            border: 4px solid #3498db;
+            border-radius: 20px;
+            padding: 40px;
+            z-index: 100;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin-top: 15px;
+        }
+
+        .traveler-category {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #ecf0f1;
+        }
+
+        .traveler-category:last-child {
+            border-bottom: none;
+        }
+
+        .category-title {
+            font-size: 36px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .counter-btn {
+            width: 70px;
+            height: 70px;
+            border: none;
+            background: #3498db;
+            color: white;
+            font-size: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .counter-btn:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .counter-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .counter-value {
+            font-size: 42px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .popup-title {
+            font-size: 38px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .close-popup {
+            background: none;
+            border: none;
+            font-size: 50px;
+            color: #e74c3c;
+            cursor: pointer;
+            line-height: 1;
+            transition: all 0.2s;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-popup:hover {
+            color: #c0392b;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .calendar-container {
+            width: 1800px;
+            max-width: 95vw;
+            position: relative;
+            overflow: visible;
+            border-radius: 40px;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+        }
+
+        .calendar-inner {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .side-month-btn {
+            width: 120px;
+            height: 120px;
+            background: #007bff;
+            color: white;
+            border: 6px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 60px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            z-index: 10;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        #prev-month {
+            left: -150px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #next-month {
+            right: -180px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .side-month-btn:hover {
+            background: #0056b3;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .calendar-content {
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+        }
+
+        .calendar-header {
+            background: rgba(52, 73, 94, 0.95);
+            color: white;
+            padding: 0;
+            height: 0;
+            border-radius: 40px 40px 0 0;
+            position: relative;
+        }
+
+        /* CORRECTED: Month/Year display at LEFT VERTICAL CENTER */
+        .current-date {
+            font-size: 140px;
+            font-weight: bold;
+            position: fixed;
+            left: 40px; /* Close to left window edge */
+            top: 50%; /* Vertical center of window */
+            transform: translateY(-50%); /* Perfect vertical centering */
+            color: white;
+            text-shadow: 8px 8px 20px rgba(0,0,0,1);
+            z-index: 999;
+            /* Prevent touching window edge */
+            margin-right: 20px;
+            /* Stack month above year vertically */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        /* Month/year text sizing */
+        .current-date .month-part {
+            font-size: 140px;
+            display: block;
+        }
+
+        .current-date .year-part {
+            font-size: 100px;
+            display: block;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background: rgba(52, 152, 219, 0.95);
+            color: white;
+            font-weight: bold;
+            padding: 45px 0;
+            text-align: center;
+            font-size: 48px;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .weekdays div {
+            padding: 40px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            padding: 5px;
+            /* UNCHANGED: Kept as requested - do not touch this URL */
+            background-image: url('calender/one.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            min-height: 1400px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background: transparent;
+        }
+
+        .day.past-day {
+            cursor: not-allowed;
+        }
+
+        .day.past-day .day-number::after {
+            content: "✕";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 110px;
+            color: rgba(255, 0, 0, 0.6);
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .day-number {
+            font-size: 70px;
+            font-weight: 900;
+            color: #000000;
+            position: relative;
+            z-index: 1;
+            -webkit-text-stroke: 4px white;
+            text-stroke: 4px white;
+            paint-order: stroke fill;
+        }
+
+        .day.other-month .day-number {
+            color: #666666;
+            -webkit-text-stroke: 4px white;
+            text-stroke: 4px white;
+        }
+
+        .day.today .day-number {
+            color: #ffffff;
+            -webkit-text-stroke: 4px black;
+            text-stroke: 4px black;
+        }
+
+        .day.selected .day-number {
+            color: #ffffff;
+            -webkit-text-stroke: 4px black;
+            text-stroke: 4px black;
+        }
+
+        .footer {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                padding: 40px;
+                gap: 60px;
+            }
+
+            .booking-form {
+                width: 95%;
+                gap: 40px;
+            }
+
+            .form-title {
+                font-size: 50px;
+            }
+
+            .form-label {
+                font-size: 32px;
+            }
+
+            .form-input {
+                font-size: 30px;
+                padding: 30px;
+            }
+
+            .calendar-container {
+                width: 95%;
+            }
+
+            /* Mobile: Left vertical center positioning */
+            .current-date {
+                font-size: 80px;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                gap: 15px;
+            }
+
+            .current-date .month-part {
+                font-size: 80px;
+            }
+
+            .current-date .year-part {
+                font-size: 60px;
+            }
+
+            .side-month-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 45px;
+            }
+
+            #prev-month {
+                left: -100px;
+            }
+
+            #next-month {
+                right: -130px;
+            }
+
+            .weekdays {
+                padding: 35px 0;
+                font-size: 38px;
+            }
+
+            .weekdays div {
+                padding: 30px;
+            }
+
+            .calendar-days {
+                min-height: 1000px;
+            }
+
+            .day {
+                padding: 35px;
+            }
+
+            .day-number {
+                font-size: 50px;
+                -webkit-text-stroke: 3px white;
+                text-stroke: 3px white;
+            }
+
+            .day.today .day-number,
+            .day.selected .day-number {
+                -webkit-text-stroke: 3px black;
+                text-stroke: 3px black;
+            }
+
+            .day.past-day .day-number::after {
+                font-size: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 25px;
+                gap: 40px;
+            }
+
+            .booking-form {
+                padding: 25px;
+            }
+
+            .form-title {
+                font-size: 40px;
+            }
+
+            .form-label {
+                font-size: 26px;
+            }
+
+            .form-input {
+                font-size: 24px;
+                padding: 25px;
+            }
+
+            /* Mobile: Left vertical center positioning */
+            .current-date {
+                font-size: 60px;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                gap: 10px;
+            }
+
+            .current-date .month-part {
+                font-size: 60px;
+            }
+
+            .current-date .year-part {
+                font-size: 45px;
+            }
+
+            .side-month-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 40px;
+            }
+
+            #prev-month {
+                left: -90px;
+            }
+
+            #next-month {
+                right: -110px;
+            }
+
+            .weekdays {
+                padding: 30px 0;
+                font-size: 30px;
+            }
+
+            .weekdays div {
+                padding: 25px;
+            }
+
+            .calendar-days {
+                min-height: 800px;
+            }
+
+            .day {
+                padding: 25px;
+            }
+
+            .day-number {
+                font-size: 40px;
+                -webkit-text-stroke: 2.5px white;
+                text-stroke: 2.5px white;
+            }
+
+            .day.today .day-number,
+            .day.selected .day-number {
+                -webkit-text-stroke: 2.5px black;
+                text-stroke: 2.5px black;
+            }
+
+            .day.past-day .day-number::after {
+                font-size: 55px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Booking Form on Left -->
+<div class="booking-form">
+    <div class="form-title">Tour Booking Calendar</div>
+
+    <div class="form-field">
+        <label class="form-label">Where to?</label>
+        <input type="text" class="form-input" id="destination" placeholder="Enter your destination">
+    </div>
+
+    <div class="form-field">
+        <label class="form-label">Travel Date</label>
+        <div class="form-input" id="date-field">Click to select date</div>
+        <div class="date-display" id="selected-date"></div>
+    </div>
+
+    <div class="form-field travelers-selector">
+        <label class="form-label">Travelers</label>
+        <div class="form-input" id="travelers-field">Select travelers</div>
+
+        <div class="travelers-popup" id="travelers-popup">
+            <div class="popup-header">
+                <div class="popup-title">Select Travelers</div>
+                <button class="close-popup" id="close-popup">×</button>
+            </div>
+
+            <div class="traveler-category">
+                <div class="category-title">Adults</div>
+                <div class="counter">
+                    <button class="counter-btn" id="adult-minus">-</button>
+                    <span class="counter-value" id="adult-count">0</span>
+                    <button class="counter-btn" id="adult-plus">+</button>
+                </div>
+            </div>
+
+            <div class="traveler-category">
+                <div class="category-title">Children</div>
+                <div class="counter">
+                    <button class="counter-btn" id="child-minus">-</button>
+                    <span class="counter-value" id="child-count">0</span>
+                    <button class="counter-btn" id="child-plus">+</button>
+                </div>
+            </div>
+            <!-- REMOVED: Cancel/Done buttons section -->
+        </div>
+    </div>
+</div>
+
+<!-- Calendar on Right -->
+<div class="calendar-container">
+    <div class="calendar-inner">
+        <button class="side-month-btn" id="prev-month">‹</button>
+        <button class="side-month-btn" id="next-month">›</button>
+
+        <div class="calendar-content">
+            <div class="calendar-header">
+                <div class="current-date" id="current-month-year">
+                    <span class="month-part">October</span>
+                    <span class="year-part">2023</span>
+                </div>
+            </div>
+
+            <div class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div class="calendar-days" id="calendar-days">
+                <!-- Calendar days generated by JS -->
+            </div>
+
+            <div class="footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let selectedDay = null;
+    let adultCount = 0;
+    let childCount = 0;
+
+    const calendarDaysElement = document.getElementById('calendar-days');
+    const currentMonthYearElement = document.getElementById('current-month-year');
+    const dateField = document.getElementById('date-field');
+    const selectedDateDisplay = document.getElementById('selected-date');
+    const travelersField = document.getElementById('travelers-field');
+    const travelersPopup = document.getElementById('travelers-popup');
+    const destinationInput = document.getElementById('destination');
+    const adultCountElement = document.getElementById('adult-count');
+    const childCountElement = document.getElementById('child-count');
+    const adultMinusBtn = document.getElementById('adult-minus');
+    const adultPlusBtn = document.getElementById('adult-plus');
+    const childMinusBtn = document.getElementById('child-minus');
+    const childPlusBtn = document.getElementById('child-plus');
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar();
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar();
+    });
+
+    dateField.addEventListener('click', () => {
+        selectedDateDisplay.textContent = 'Click a date on the calendar';
+    });
+
+    travelersField.addEventListener('click', () => {
+        travelersPopup.style.display = 'block';
+    });
+
+    document.getElementById('close-popup').addEventListener('click', () => {
+        closeTravelersPopup();
+    });
+
+    // REMOVED: Cancel/Done button event listeners
+
+    adultPlusBtn.addEventListener('click', () => {
+        adultCount++;
+        updateCounters();
+        updateTravelersField(); // Auto-update display when count changes
+    });
+
+    adultMinusBtn.addEventListener('click', () => {
+        if (adultCount > 0) {
+            adultCount--;
+            updateCounters();
+            updateTravelersField(); // Auto-update display when count changes
+        }
+    });
+
+    childPlusBtn.addEventListener('click', () => {
+        childCount++;
+        updateCounters();
+        updateTravelersField(); // Auto-update display when count changes
+    });
+
+    childMinusBtn.addEventListener('click', () => {
+        if (childCount > 0) {
+            childCount--;
+            updateCounters();
+            updateTravelersField(); // Auto-update display when count changes
+        }
+    });
+
+    function updateCounters() {
+        adultCountElement.textContent = adultCount;
+        childCountElement.textContent = childCount;
+        adultMinusBtn.disabled = adultCount === 0;
+        childMinusBtn.disabled = childCount === 0;
+    }
+
+    function closeTravelersPopup() {
+        travelersPopup.style.display = 'none';
+    }
+
+    function updateTravelersField() {
+        const total = adultCount + childCount;
+        if (total === 0) {
+            travelersField.textContent = 'Select travelers';
+        } else {
+            travelersField.textContent = `${adultCount} Adult${adultCount !== 1 ? 's' : ''}, ${childCount} Child${childCount !== 1 ? 'ren' : ''}`;
+        }
+    }
+
+    function renderCalendar() {
+        calendarDaysElement.innerHTML = '';
+
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'];
+
+        // Update month/year display with separate elements
+        currentMonthYearElement.innerHTML = `
+            <span class="month-part">${monthNames[currentMonth]}</span>
+            <span class="year-part">${currentYear}</span>
+        `;
+
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const totalDays = lastDay.getDate();
+        const firstDayIndex = firstDay.getDay();
+
+        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+        for (let i = firstDayIndex; i > 0; i--) {
+            const day = document.createElement('div');
+            day.classList.add('day', 'other-month', 'past-day');
+            day.innerHTML = `<div class="day-number">${prevMonthLastDay - i + 1}</div>`;
+            calendarDaysElement.appendChild(day);
+        }
+
+        const isCurrentMonth = today.getFullYear() === currentYear && today.getMonth() === currentMonth;
+
+        for (let i = 1; i <= totalDays; i++) {
+            const day = document.createElement('div');
+            const dayDate = new Date(currentYear, currentMonth, i);
+            dayDate.setHours(0, 0, 0, 0);
+
+            if (isCurrentMonth && i === today.getDate()) {
+                day.classList.add('day', 'today');
+            } else {
+                day.classList.add('day');
+            }
+
+            if (dayDate < today) {
+                day.classList.add('past-day');
+            }
+
+            day.innerHTML = `<div class="day-number">${i}</div>`;
+            calendarDaysElement.appendChild(day);
+
+            if (dayDate >= today) {
+                day.addEventListener('click', () => {
+                    document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
+                    day.classList.add('selected');
+
+                    selectedDay = i;
+                    const selectedDate = new Date(currentYear, currentMonth, i);
+                    const formattedDate = `${monthNames[currentMonth]} ${i}, ${currentYear}`;
+
+                    selectedDateDisplay.textContent = `Selected: ${formattedDate}`;
+                    dateField.textContent = formattedDate;
+                });
+            }
+        }
+
+        const totalCells = 42;
+        const nextMonthDays = totalCells - (firstDayIndex + totalDays);
+        for (let i = 1; i <= nextMonthDays; i++) {
+            const day = document.createElement('div');
+            day.classList.add('day', 'other-month');
+            const nextMonthDate = new Date(currentYear, currentMonth + 1, i);
+            nextMonthDate.setHours(0, 0, 0, 0);
+
+            if (nextMonthDate < today) {
+                day.classList.add('past-day');
+            }
+
+            day.innerHTML = `<div class="day-number">${i}</div>`;
+            calendarDaysElement.appendChild(day);
+        }
+    }
+
+    renderCalendar();
+    updateTravelersField();
+    updateCounters();
+</script>
+</body>
+</html>

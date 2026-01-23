@@ -120,7 +120,7 @@ public String getSmallBoxVideo(Model model) {
     String[] videoIds = {
             "30917411",    // First video - for small boxes
             "18271055",    // Second video - for background
-            "34776281"// Third video - ADDED THIS FROM YOUR OLD CONTROLLER
+            "34776281"
 //            "15529198",
 
     };
@@ -207,9 +207,14 @@ public String getSmallBoxVideo(Model model) {
 
 
 
-    @GetMapping("/map")
-    public String getters() {
-        return "map/africa";
+//    @GetMapping("/map")
+//    public String getters() {
+//        return "map/africa";
+//    }
+
+    @GetMapping("/nationalParks")
+    public String getThem() {
+    return "me/nationalParks";
     }
 
     @GetMapping("/africaMap")

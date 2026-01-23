@@ -1,268 +1,268 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>BIG PANDA SAFARI</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>BIG PANDA SAFARI</title>-->
+<!--  <style>-->
+<!--    * {-->
+<!--      margin: 0;-->
+<!--      padding: 0;-->
+<!--      box-sizing: border-box;-->
+<!--    }-->
 
-    html, body {
-      overflow-x: hidden;
-    }
+<!--    html, body {-->
+<!--      overflow-x: hidden;-->
+<!--    }-->
 
-    .video-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      overflow: hidden;
-    }
+<!--    .video-background {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      z-index: -2;-->
+<!--      overflow: hidden;-->
+<!--    }-->
 
-    .video-background video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+<!--    .video-background video {-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      object-fit: cover;-->
+<!--    }-->
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      position: relative;
-    }
+<!--    body {-->
+<!--      min-height: 100vh;-->
+<!--      font-family: Arial, sans-serif;-->
+<!--      position: relative;-->
+<!--    }-->
 
-    .video-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: -1;
-    }
+<!--    .video-overlay {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      background: rgba(0, 0, 0, 0.4);-->
+<!--      z-index: -1;-->
+<!--    }-->
 
-    .header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.4s ease;
-      z-index: 1000;
-    }
+<!--    .header {-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      width: 100%;-->
+<!--      padding: 15px 40px;-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      transition: all 0.4s ease;-->
+<!--      z-index: 1000;-->
+<!--    }-->
 
-    .header.top {
-      background: transparent;
-      backdrop-filter: none;
-    }
+<!--    .header.top {-->
+<!--      background: transparent;-->
+<!--      backdrop-filter: none;-->
+<!--    }-->
 
-    .header.scrolled {
-      background: rgba(153, 204, 102, 0.9);
-      backdrop-filter: blur(10px);
-    }
+<!--    .header.scrolled {-->
+<!--      background: rgba(153, 204, 102, 0.9);-->
+<!--      backdrop-filter: blur(10px);-->
+<!--    }-->
 
-    /* Logo Circle - LEFT SIDE (FIXED PATH) */
-    .logo-circle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      /* Thymeleaf path for static resources (src/main/resources/static/obi/panda.jpg) */
-      background: url('/obi/panda.jpg') center/cover no-repeat;
-      border: 2px solid white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      margin-right: 15px;
-    }
+<!--    /* Logo Circle - LEFT SIDE (FIXED PATH) */-->
+<!--    .logo-circle {-->
+<!--      width: 60px;-->
+<!--      height: 60px;-->
+<!--      border-radius: 50%;-->
+<!--      /* Thymeleaf path for static resources (src/main/resources/static/obi/panda.jpg) */-->
+<!--      background: url('/obi/panda.jpg') center/cover no-repeat;-->
+<!--      border: 2px solid white;-->
+<!--      box-shadow: 0 4px 12px rgba(0,0,0,0.2);-->
+<!--      margin-right: 15px;-->
+<!--    }-->
 
-    /* Enlarged logo text */
-    .logo {
-      color: white;
-      font-size: 28px; /* Increased from 24px */
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+<!--    /* Enlarged logo text */-->
+<!--    .logo {-->
+<!--      color: white;-->
+<!--      font-size: 28px; /* Increased from 24px */-->
+<!--      font-weight: bold;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 10px;-->
+<!--    }-->
 
-    .logo-left {
-      display: flex;
-      align-items: center;
-    }
+<!--    .logo-left {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--    }-->
 
-    /* Increased gap between nav items to avoid crowding */
-    .nav {
-      display: flex;
-      gap: 50px; /* Increased from 40px */
-      position: relative;
-    }
+<!--    /* Increased gap between nav items to avoid crowding */-->
+<!--    .nav {-->
+<!--      display: flex;-->
+<!--      gap: 50px; /* Increased from 40px */-->
+<!--      position: relative;-->
+<!--    }-->
 
-    .nav-item {
-      position: relative;
-    }
+<!--    .nav-item {-->
+<!--      position: relative;-->
+<!--    }-->
 
-    /* Enlarged main nav text (Adventure/Book a Tour/New) */
-    .nav-main {
-      color: white;
-      text-decoration: none;
-      font-size: 20px; /* Increased from 16px */
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 25px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+<!--    /* Enlarged main nav text (Adventure/Book a Tour/New) */-->
+<!--    .nav-main {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      font-size: 20px; /* Increased from 16px */-->
+<!--      font-weight: bold;-->
+<!--      padding: 10px 20px;-->
+<!--      border-radius: 25px;-->
+<!--      transition: all 0.3s ease;-->
+<!--      cursor: pointer;-->
+<!--    }-->
 
-    .nav-main:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
+<!--    .nav-main:hover {-->
+<!--      background: rgba(255, 255, 255, 0.2);-->
+<!--    }-->
 
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(10px);
-      border-radius: 10px;
-      padding: 10px 0;
-      min-width: 180px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-    }
+<!--    .dropdown {-->
+<!--      position: absolute;-->
+<!--      top: 100%;-->
+<!--      left: 0;-->
+<!--      background: rgba(0, 0, 0, 0.9);-->
+<!--      backdrop-filter: blur(10px);-->
+<!--      border-radius: 10px;-->
+<!--      padding: 10px 0;-->
+<!--      min-width: 180px;-->
+<!--      opacity: 0;-->
+<!--      visibility: hidden;-->
+<!--      transform: translateY(-10px);-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
 
-    .nav-item:hover .dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
+<!--    .nav-item:hover .dropdown {-->
+<!--      opacity: 1;-->
+<!--      visibility: visible;-->
+<!--      transform: translateY(0);-->
+<!--    }-->
 
-    /* Enlarged dropdown text to match main nav */
-    .dropdown a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 12px 20px;
-      font-size: 16px; /* Increased from 14px */
-      transition: all 0.3s ease;
-    }
+<!--    /* Enlarged dropdown text to match main nav */-->
+<!--    .dropdown a {-->
+<!--      display: block;-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      padding: 12px 20px;-->
+<!--      font-size: 16px; /* Increased from 14px */-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
 
-    .dropdown a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      padding-left: 25px;
-    }
+<!--    .dropdown a:hover {-->
+<!--      background: rgba(255, 255, 255, 0.1);-->
+<!--      padding-left: 25px;-->
+<!--    }-->
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      padding: 0 20px;
-    }
+<!--    .hero {-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      justify-content: center;-->
+<!--      color: white;-->
+<!--      text-align: center;-->
+<!--      padding: 0 20px;-->
+<!--    }-->
 
-    .hero-content h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
+<!--    .hero-content h1 {-->
+<!--      font-size: 3em;-->
+<!--      margin-bottom: 20px;-->
+<!--      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);-->
+<!--    }-->
 
-    .hero-content p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      max-width: 600px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    }
+<!--    .hero-content p {-->
+<!--      font-size: 1.2em;-->
+<!--      margin-bottom: 30px;-->
+<!--      max-width: 600px;-->
+<!--      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);-->
+<!--    }-->
 
-    .book-tour {
-      background: white;
-      color: #333;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1.1em;
-      cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.3s ease;
-    }
+<!--    .book-tour {-->
+<!--      background: white;-->
+<!--      color: #333;-->
+<!--      padding: 15px 30px;-->
+<!--      border: none;-->
+<!--      border-radius: 5px;-->
+<!--      font-size: 1.1em;-->
+<!--      cursor: pointer;-->
+<!--      font-weight: bold;-->
+<!--      transition: transform 0.3s ease;-->
+<!--    }-->
 
-    .book-tour:hover {
-      transform: scale(1.05);
-    }
+<!--    .book-tour:hover {-->
+<!--      transform: scale(1.05);-->
+<!--    }-->
 
-  </style>
-</head>
-<body>
-<header class="header top" id="header">
-  <div class="logo-left">
-    <div class="logo-circle"></div>
-    <div class="logo">BIG PANDA SAFARI</div>
-  </div>
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="header top" id="header">-->
+<!--  <div class="logo-left">-->
+<!--    <div class="logo-circle"></div>-->
+<!--    <div class="logo">BIG PANDA SAFARI</div>-->
+<!--  </div>-->
 
-  <nav class="nav">
-    <div class="nav-item">
-      <a class="nav-main">Adventure</a>
-      <div class="dropdown">
-        <a href="/parkspanda/three" target="_top">Family</a>
-        <a href="/adventure/path1">Adventure Path 1</a>
-        <a href="/adventure/path2">Adventure Path 2</a>
-        <a href="/adventure/path3">Adventure Path 3</a>
-        <a href="/adventure/path4">Adventure Path 4</a>
-        <a href="/adventure/path5">Adventure Path 5</a>
-      </div>
-    </div>
+<!--  <nav class="nav">-->
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">Adventure</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/parkspanda/three" target="_top">Family</a>-->
+<!--        <a href="/adventure/path1">Adventure Path 1</a>-->
+<!--        <a href="/adventure/path2">Adventure Path 2</a>-->
+<!--        <a href="/adventure/path3">Adventure Path 3</a>-->
+<!--        <a href="/adventure/path4">Adventure Path 4</a>-->
+<!--        <a href="/adventure/path5">Adventure Path 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="nav-item">
-      <a class="nav-main">Book a Tour</a>
-      <div class="dropdown">
-        <a href="/book/path1">Tour Option 1</a>
-        <a href="/book/path2">Tour Option 2</a>
-        <a href="/book/path3">Tour Option 3</a>
-        <a href="/book/path4">Tour Option 4</a>
-        <a href="/book/path5">Tour Option 5</a>
-      </div>
-    </div>
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">Book a Tour</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/book/path1">Tour Option 1</a>-->
+<!--        <a href="/book/path2">Tour Option 2</a>-->
+<!--        <a href="/book/path3">Tour Option 3</a>-->
+<!--        <a href="/book/path4">Tour Option 4</a>-->
+<!--        <a href="/book/path5">Tour Option 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="nav-item">
-      <a class="nav-main">New</a>
-      <div class="dropdown">
-        <a href="/new/path1">New Item 1</a>
-        <a href="/new/path2">New Item 2</a>
-        <a href="/new/path3">New Item 3</a>
-        <a href="/new/path4">New Item 4</a>
-        <a href="/new/path5">New Item 5</a>
-      </div>
-    </div>
-  </nav>
-</header>
+<!--    <div class="nav-item">-->
+<!--      <a class="nav-main">New</a>-->
+<!--      <div class="dropdown">-->
+<!--        <a href="/new/path1">New Item 1</a>-->
+<!--        <a href="/new/path2">New Item 2</a>-->
+<!--        <a href="/new/path3">New Item 3</a>-->
+<!--        <a href="/new/path4">New Item 4</a>-->
+<!--        <a href="/new/path5">New Item 5</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--</header>-->
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>BIG PANDA SAFARI</h1>
-    <p>Experience the ultimate wildlife adventure with our guided panda safari tours. Get up close with these magnificent creatures in their natural habitat.</p>
-    <p>Book your adventure today and get 20% off your first safari experience!</p>
-    <button class="book-tour">BOOK A TOUR</button>
-  </div>
-</section>
+<!--<section class="hero">-->
+<!--  <div class="hero-content">-->
+<!--    <h1>BIG PANDA SAFARI</h1>-->
+<!--    <p>Experience the ultimate wildlife adventure with our guided panda safari tours. Get up close with these magnificent creatures in their natural habitat.</p>-->
+<!--    <p>Book your adventure today and get 20% off your first safari experience!</p>-->
+<!--    <button class="book-tour">BOOK A TOUR</button>-->
+<!--  </div>-->
+<!--</section>-->
 
-<div class="video-background">
-  <video th:each="videoUrl : ${videos}"
-         th:src="${videoUrl}"
-         autoplay
-         muted
-         loop
-         playsinline
-         oncontextmenu="return false;">
-  </video>
-</div>
-<div class="video-overlay"></div>
+<!--<div class="video-background">-->
+<!--  <video th:each="videoUrl : ${videos}"-->
+<!--         th:src="${videoUrl}"-->
+<!--         autoplay-->
+<!--         muted-->
+<!--         loop-->
+<!--         playsinline-->
+<!--         oncontextmenu="return false;">-->
+<!--  </video>-->
+<!--</div>-->
+<!--<div class="video-overlay"></div>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

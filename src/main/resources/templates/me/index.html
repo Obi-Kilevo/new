@@ -1,36 +1,40 @@
+
+
+
+
+
+
+
+
 <!--<!DOCTYPE html>-->
 <!--<html xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->
 <!--    <style>-->
-<!--        -->
+<!--        /* Base reset - no global video/background */-->
+<!--        body {-->
+<!--            margin: 0 !important;-->
+<!--            padding: 0 !important;-->
+<!--            overflow-x: hidden !important;-->
+<!--        }-->
+
 <!--        * {-->
 <!--            margin: 0;-->
 <!--            padding: 0;-->
 <!--            box-sizing: border-box;-->
 <!--        }-->
 
-<!--        body {-->
-<!--            min-height: 100vh;-->
-<!--            font-family: Arial, sans-serif;-->
-<!--            overflow-x: hidden;-->
-<!--            margin: 0 !important; /* Added !important to enforce no margin */-->
-<!--            padding: 0 !important; /* Added !important to enforce no padding */-->
-<!--            position: relative; /* Ensure body is positioned correctly */-->
-<!--            top: 0; /* Align body to top of viewport */-->
-<!--        }-->
-
-<!--        /* Intro pages container (fixed height + edge lock) */-->
+<!--        /* Intro pages container - static (no scroll movement) */-->
 <!--        .intro-pages-container {-->
 <!--            position: relative;-->
-<!--            height: 300vh;-->
+<!--            height: 200vh; /* Fixed height for 2 full pages */-->
 <!--            width: 100%;-->
-<!--            margin-top: 0 !important; /* CHANGED: From -1px to 0 to eliminate top gap */-->
-<!--            top: 0; /* Ensure container starts at top */-->
+<!--            top: 0;-->
+<!--            margin-top: 0 !important; /* No top gap */-->
 <!--        }-->
 
-<!--        /* Intro page (fixed position + no transition delay) */-->
+<!--        /* Intro page - static (no scroll transform) */-->
 <!--        .intro-page {-->
-<!--            position: fixed;-->
+<!--            position: absolute; /* Changed from fixed to absolute - no overlap */-->
 <!--            top: 0;-->
 <!--            left: 0;-->
 <!--            width: 100%;-->
@@ -40,32 +44,24 @@
 <!--            justify-content: flex-start;-->
 <!--            padding: 0 4rem;-->
 <!--            z-index: 1;-->
-<!--            transition: none;-->
-<!--            will-change: transform;-->
 <!--            border-radius: 60px 0 0 60px;-->
 <!--            overflow: hidden;-->
-<!--            margin-top: 0 !important; /* Ensure no top margin on intro pages */-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            visibility: visible;-->
+<!--            opacity: 1;-->
 <!--        }-->
 
-<!--        .intro-page::before {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background: rgba(0, 0, 0, 0.3);-->
-<!--            z-index: -1;-->
-<!--            border-radius: 60px 0 0 60px;-->
-<!--        }-->
-
+<!--        /* Page positioning - no scroll movement */-->
 <!--        #page2 {-->
 <!--            background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;-->
 <!--            z-index: 1;-->
+<!--            top: 0; /* First page at top */-->
 <!--        }-->
 <!--        #page3 {-->
 <!--            background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;-->
-<!--            z-index: 2;-->
+<!--            z-index: 1;-->
+<!--            top: 100vh; /* Second page below first */-->
 <!--        }-->
 
 <!--        .page-text {-->
@@ -195,9 +191,6 @@
 <!--                padding: 0 2rem;-->
 <!--                border-radius: 40px 0 0 40px;-->
 <!--            }-->
-<!--            .intro-page::before {-->
-<!--                border-radius: 40px 0 0 40px;-->
-<!--            }-->
 <!--            .last-page {-->
 <!--                border-radius: 40px 0 0 40px;-->
 <!--                padding: 0 2rem;-->
@@ -233,7 +226,7 @@
 <!--            width: 100%;-->
 <!--            background: white;-->
 <!--            z-index: 4;-->
-<!--            margin-top: 0 !important; /* CHANGED: Removed top margin */-->
+<!--            margin-top: 0 !important;-->
 <!--            border-radius: 0;-->
 <!--            padding: 3rem 4rem;-->
 <!--            display: flex;-->
@@ -328,7 +321,6 @@
 
 <!--        .left-card {-->
 <!--            background: #f8f8f8;-->
-<!--            /* MODIFIED: 只保留左上角圆角，移除底部圆角 */-->
 <!--            border-radius: 60px 0 0 0;-->
 <!--            overflow: hidden;-->
 <!--            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);-->
@@ -352,7 +344,6 @@
 <!--            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);-->
 <!--        }-->
 
-<!--        /* MODIFIED: 覆盖层只保留左上角圆角 */-->
 <!--        .left-card-overlay {-->
 <!--            position: absolute;-->
 <!--            top: 0;-->
@@ -364,7 +355,6 @@
 <!--            border-radius: 60px 0 0 0;-->
 <!--        }-->
 
-<!--        /* MODIFIED: 移动端卡片只保留左上角圆角 */-->
 <!--        @media (max-width: 768px) {-->
 <!--            .left-card {-->
 <!--                border-radius: 40px 0 0 0;-->
@@ -404,7 +394,6 @@
 <!--            display: none;-->
 <!--        }-->
 
-<!--        /* MODIFIED: 卡片背景图只保留左上角圆角 */-->
 <!--        .left-card-bg {-->
 <!--            position: absolute;-->
 <!--            top: 0;-->
@@ -416,7 +405,6 @@
 <!--            border-radius: 60px 0 0 0;-->
 <!--        }-->
 
-<!--        /* MODIFIED: 移动端卡片背景图只保留左上角圆角 */-->
 <!--        @media (max-width: 768px) {-->
 <!--            .left-card-bg {-->
 <!--                border-radius: 40px 0 0 0;-->
@@ -519,7 +507,7 @@
 <!--            width: 100%;-->
 <!--            background: white;-->
 <!--            z-index: 6;-->
-<!--            margin-top: 0 !important; /* CHANGED: Removed top margin */-->
+<!--            margin-top: 0 !important;-->
 <!--            border-radius: 0;-->
 <!--            padding: 5rem 4rem;-->
 <!--            display: flex;-->
@@ -911,8 +899,9 @@
 <!--    </style>-->
 <!--</head>-->
 <!--<body>-->
+<!--&lt;!&ndash; Removed global top video container (no background video) &ndash;&gt;-->
 
-<!--&lt;!&ndash; Intro pages (airport pickup + refreshments + discounts) &ndash;&gt;-->
+<!--&lt;!&ndash; Intro pages (static - no scroll movement) &ndash;&gt;-->
 <!--<div class="intro-pages-container">-->
 <!--    <div class="intro-page" id="page2">-->
 <!--        <div>-->
@@ -926,11 +915,9 @@
 <!--            <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>-->
 <!--        </div>-->
 <!--    </div>-->
-<!--    <div class="intro-page" id="page4">-->
-<!--    </div>-->
 <!--</div>-->
 
-<!--&lt;!&ndash; National parks page &ndash;&gt;-->
+<!--&lt;!&ndash; National parks page (own video - no overlap) &ndash;&gt;-->
 <!--<div class="white-gap-page">-->
 <!--    <div class="white-gap-background-video">-->
 <!--        <video th:src="${backgroundVideoUrl}"-->
@@ -945,9 +932,7 @@
 
 <!--    <div class="white-gap-container">-->
 <!--        <div class="park-cards-container">-->
-<!--            &lt;!&ndash; Default 6 cards (left page) &ndash;&gt;-->
 <!--            <div class="default-cards-wrapper" id="defaultCardsWrapper">-->
-<!--                &lt;!&ndash; REPLACE THESE URLS WITH YOUR OWN PATHS &ndash;&gt;-->
 <!--                <a href="/masai/map" class="left-card">-->
 <!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">-->
 <!--                    <div class="left-card-overlay"></div>-->
@@ -1006,12 +991,9 @@
 <!--                <button class="toggle-btn hidden" id="showLessBtn">Back</button>-->
 <!--            </div>-->
 
-<!--            &lt;!&ndash; 5 Additional cards (front page) - SAME CARD STYLES &ndash;&gt;-->
 <!--            <div class="additional-cards-wrapper" id="additionalCardsWrapper">-->
-<!--                &lt;!&ndash; REPLACE THESE URLS WITH YOUR OWN PATHS &ndash;&gt;-->
 <!--                <a href="/parks/arusha-national-park" class="left-card">-->
 <!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/26727728/pexels-photo-26727728.jpeg" alt="Arusha National Park">-->
-
 <!--                    <div class="left-card-overlay"></div>-->
 <!--                    <div class="left-card-content">-->
 <!--                        <div class="left-card-title">Arusha National Park</div>-->
@@ -1055,24 +1037,20 @@
 <!--                    </div>-->
 <!--                </a>-->
 
-<!--                &lt;!&ndash; ADDED: Show Less button for additional cards &ndash;&gt;-->
 <!--                <button class="toggle-btn" id="showLessBtnAdditional">Back</button>-->
 <!--            </div>-->
 <!--        </div>-->
 
-<!--        &lt;!&ndash;my african map &ndash;&gt;-->
 <!--        <iframe src="http://localhost:4000/masai/africaMap"-->
 <!--                width="830"-->
 <!--                height="630"-->
 <!--                style="border:0;">-->
 <!--        </iframe>-->
-
 <!--    </div>-->
 <!--</div>-->
 
-<!--&lt;!&ndash; New white page &ndash;&gt;-->
+<!--&lt;!&ndash; New white page (own content - no background video overlap) &ndash;&gt;-->
 <!--<div class="new-white-page">-->
-<!--    &lt;!&ndash; Vertical lines on LEFT side WITH VIDEO &ndash;&gt;-->
 <!--    <div class="vertical-lines-container">-->
 <!--        <div class="vertical-line vertical-line-tallest">-->
 <!--            <div class="stripe-video-container">-->
@@ -1111,9 +1089,8 @@
 <!--    </div>-->
 <!--</div>-->
 
-<!--&lt;!&ndash; Last page with video &ndash;&gt;-->
+<!--&lt;!&ndash; Last page (own video - no overlap) &ndash;&gt;-->
 <!--<div class="last-page">-->
-<!--    &lt;!&ndash; Vertical lines on RIGHT side WITH VIDEO - REVERSE ORDER &ndash;&gt;-->
 <!--    <div class="last-page-lines-container">-->
 <!--        <div class="last-page-line last-page-line-long">-->
 <!--            <div class="last-page-stripe-video-container">-->
@@ -1177,50 +1154,9 @@
 <!--    </div>-->
 <!--</div>-->
 
-
-<!--&lt;!&ndash; Fixed scroll script &ndash;&gt;-->
+<!--&lt;!&ndash; Only card flip script (removed scroll movement for intro pages) &ndash;&gt;-->
 <!--<script>-->
-<!--    const introPages = [-->
-<!--        document.getElementById('page2'),-->
-<!--        document.getElementById('page3'),-->
-<!--        document.getElementById('page4')-->
-<!--    ];-->
-<!--    const viewportHeight = window.innerHeight;-->
-<!--    let lastScrollY = window.scrollY;-->
-<!--    let isTicking = false;-->
-
-<!--    function syncPagePositions() {-->
-<!--        const currentScrollY = window.scrollY;-->
-<!--        lastScrollY = currentScrollY;-->
-
-<!--        introPages.forEach((page, index) => {-->
-<!--            const threshold = index;-->
-<!--            const scrollProgress = currentScrollY / viewportHeight;-->
-
-<!--            if (scrollProgress < threshold) {-->
-<!--                page.style.transform = 'translateY(100%)';-->
-<!--            } else if (scrollProgress < threshold + 1) {-->
-<!--                const translateY = 100 - ((scrollProgress - threshold) * 100);-->
-<!--                page.style.transform = `translateY(${translateY}%)`;-->
-<!--            } else {-->
-<!--                page.style.transform = 'translateY(0)';-->
-<!--            }-->
-<!--        });-->
-<!--        isTicking = false;-->
-<!--    }-->
-
-<!--    window.addEventListener('scroll', () => {-->
-<!--        if (!isTicking) {-->
-<!--            requestAnimationFrame(syncPagePositions);-->
-<!--            isTicking = true;-->
-<!--        }-->
-<!--    });-->
-
-<!--    // Initialize with scrollY = 0 to ensure intro page is visible immediately-->
-<!--    window.scrollTo(0, 0);-->
-<!--    syncPagePositions();-->
-
-<!--    // Book/Page Flip Functionality-->
+<!--    // Book/Page Flip Functionality ONLY (no scroll movement)-->
 <!--    const showMoreBtn = document.getElementById('showMoreBtn');-->
 <!--    const showLessBtn = document.getElementById('showLessBtn');-->
 <!--    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');-->
@@ -1252,19 +1188,7 @@
 <!--</html>-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--               BEOW IS MY ORIGINAL FORM-->
 
 
 
@@ -1274,84 +1198,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
-        /*header of system*/
-        .custom-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            padding: 3.5rem 4rem; /* Keeps the large height we set earlier */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            min-height: 180px;
-        }
-
-        /* Logo Container (replaces "Adventure" text) */
-        .header-logo {
-            height: 100%; /* Fills the header's vertical space */
-            max-height: 120px; /* Prevents logo from being too tall */
-            width: auto; /* Maintains logo aspect ratio */
-        }
-
-        /* Trip Budget Section (keeps large styling) */
-        .header-budget {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            font-size: 2.5rem;
-        }
-
-        .budget-label {
-            font-weight: 500;
-        }
-        .budget-value {
-            font-weight: bold;
-            color: #4CAF50;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .custom-header {
-                padding: 2.2rem 1.5rem;
-                min-height: 120px;
-            }
-            .header-logo {
-                max-height: 80px; /* Smaller logo on mobile */
-            }
-            .header-budget {
-                font-size: 1.8rem;
-                gap: 1.2rem;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .custom-header {
-                padding: 4rem 6rem;
-                min-height: 200px;
-            }
-            .header-logo {
-                max-height: 140px; /* Larger logo on big screens */
-            }
-            .header-budget {
-                font-size: 2.8rem;
-            }
-        }
-
-        /* Body padding to fit large header */
+        /* Single, consolidated body style (no duplicates) */
         body {
-            padding-top: 180px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow-x: hidden !important;
+            position: relative !important;
+            background-color: #ffc0cb !important; /* Keep your pink background */
         }
 
-        @media (min-width: 1200px) {
-            body {
-                padding-top: 200px !important;
-            }
+        /* Full-top video container (fixed but non-intrusive) */
+        .top-full-video-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: -1 !important; /* Lower z-index to ensure it's BEHIND everything */
+            overflow: hidden !important;
+            pointer-events: none !important; /* Prevent video from intercepting clicks */
+        }
+
+        /* 恢复原始版本的intro容器样式 - 关键修改：高度改回300vh，移除冲突的!important */
+        .intro-pages-container {
+            position: relative;
+            height: 300vh; /* 改回原始的300vh，让滚动需要更多距离才会显示国家公园板块 */
+            width: 100%;
+            margin-top: 0 !important; /* 改回原始的0，移除-1px */
+            top: 0;
+            z-index: 1; /* Ensures intro pages are above the background video */
         }
 
         * {
@@ -1360,53 +1235,7 @@
             box-sizing: border-box;
         }
 
-        body {
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
-            margin: 0 !important; /* Added !important to enforce no margin */
-            padding: 0 !important; /* Added !important to enforce no padding */
-            position: relative; /* Ensure body is positioned correctly */
-            top: 0; /* Align body to top of viewport */
-        }
-
-        /* Intro pages container (fixed height + edge lock) */
-        .intro-pages-container {
-            position: relative;
-            height: 300vh;
-            width: 100%;
-            margin-top: 0 !important; /* CHANGED: From -1px to 0 to eliminate top gap */
-            top: 0; /* Ensure container starts at top */
-        }
-
-        /* === NEW: HEADER VIDEO SECTION (INSIDE INTRO CONTAINER) === */
-        .header-video-section {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Same height as intro pages */
-            z-index: 0; /* Below intro pages, above nothing */
-            overflow: hidden;
-        }
-
-        .header-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
-        }
-
-        /* Intro page (fixed position + no transition delay) */
+        /* Intro page (fixed position + no transition delay) - ORIGINAL functionality */
         .intro-page {
             position: fixed;
             top: 0;
@@ -1417,33 +1246,25 @@
             align-items: center;
             justify-content: flex-start;
             padding: 0 4rem;
-            z-index: 1;
+            z-index: 2; /* Higher z-index to ensure intro pages are above background */
             transition: none;
             will-change: transform;
             border-radius: 60px 0 0 60px;
             overflow: hidden;
-            margin-top: 0 !important; /* Ensure no top margin on intro pages */
-        }
-
-        .intro-page::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
-            border-radius: 60px 0 0 60px;
+            margin-top: 0 !important;
+            background-size: cover;
+            background-position: center;
+            visibility: visible;
+            opacity: 1;
         }
 
         #page2 {
             background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;
-            z-index: 1;
+            z-index: 2;
         }
         #page3 {
             background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;
-            z-index: 2;
+            z-index: 3;
         }
 
         .page-text {
@@ -1611,7 +1432,7 @@
             width: 100%;
             background: white;
             z-index: 4;
-            margin-top: 0 !important; /* CHANGED: Removed top margin */
+            margin-top: 0 !important;
             border-radius: 0;
             padding: 3rem 4rem;
             display: flex;
@@ -1706,7 +1527,6 @@
 
         .left-card {
             background: #f8f8f8;
-            /* MODIFIED: 只保留左上角圆角，移除底部圆角 */
             border-radius: 60px 0 0 0;
             overflow: hidden;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -1730,7 +1550,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
-        /* MODIFIED: 覆盖层只保留左上角圆角 */
         .left-card-overlay {
             position: absolute;
             top: 0;
@@ -1742,7 +1561,6 @@
             border-radius: 60px 0 0 0;
         }
 
-        /* MODIFIED: 移动端卡片只保留左上角圆角 */
         @media (max-width: 768px) {
             .left-card {
                 border-radius: 40px 0 0 0;
@@ -1782,7 +1600,6 @@
             display: none;
         }
 
-        /* MODIFIED: 卡片背景图只保留左上角圆角 */
         .left-card-bg {
             position: absolute;
             top: 0;
@@ -1794,7 +1611,6 @@
             border-radius: 60px 0 0 0;
         }
 
-        /* MODIFIED: 移动端卡片背景图只保留左上角圆角 */
         @media (max-width: 768px) {
             .left-card-bg {
                 border-radius: 40px 0 0 0;
@@ -1897,7 +1713,7 @@
             width: 100%;
             background: white;
             z-index: 6;
-            margin-top: 0 !important; /* CHANGED: Removed top margin */
+            margin-top: 0 !important;
             border-radius: 0;
             padding: 5rem 4rem;
             display: flex;
@@ -2289,42 +2105,20 @@
     </style>
 </head>
 <body>
-<!-- Custom Header: Logo & Trip Budget -->
-<div class="custom-header">
-    <img src="obi/panda.jpg" alt="BigPanda Safaris" class="header-logo">
-    <div class="header-budget">
-        <span class="budget-label">Trip Budget:</span>
-    </div>
+<!-- Fixed duplicate body tag -->
+<div class="top-full-video-container">
+    <video th:src="${backgroundVideoUrl}"
+           autoplay
+           muted
+           loop
+           playsinline
+           oncontextmenu="return false;"
+           style="width: 100%; height: 100%; object-fit: cover !important;">
+    </video>
 </div>
 
-<!-- Intro pages (airport pickup + refreshments + discounts) -->
 <div class="intro-pages-container">
-    <!-- === NEW: VIDEO SECTION (INSIDE INTRO CONTAINER - NO SCROLL CONFLICTS) === -->
-    <div class="header-video-section">
-        <video class="header-video"
-               th:src="${backgroundVideoUrl}"
-               autoplay
-               muted
-               loop
-               playsinline
-               oncontextmenu="return false;">
-        </video>
-        <div class="header-video-overlay"></div>
-    </div>
-<!--<div class="header-video-section">-->
-<!--    <video class="header-video"-->
-<!--           th:src="${introVideoUrl}"-->
-<!--           autoplay-->
-<!--           muted-->
-<!--           loop-->
-<!--           playsinline-->
-<!--           oncontextmenu="return false;">-->
-<!--    </video>-->
-<!--    <div class="header-video-overlay"></div>-->
-<!--</div>-->
-
-
-    <!-- Original Intro Pages (unchanged) -->
+    <!-- 恢复原始的3个intro page结构，保持原有交互逻辑 -->
     <div class="intro-page" id="page2">
         <div>
             <div class="page-text">Enjoy free airport pickup.</div>
@@ -2337,11 +2131,11 @@
             <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>
         </div>
     </div>
-    <div class="intro-page" id="page4">
-    </div>
+    <!-- 恢复page4，保持原始的滚动层级 -->
+    <div class="intro-page" id="page4"></div>
 </div>
 
-<!-- National parks page (unchanged) -->
+<!-- National parks page -->
 <div class="white-gap-page">
     <div class="white-gap-background-video">
         <video th:src="${backgroundVideoUrl}"
@@ -2356,9 +2150,7 @@
 
     <div class="white-gap-container">
         <div class="park-cards-container">
-            <!-- Default 6 cards (left page) -->
             <div class="default-cards-wrapper" id="defaultCardsWrapper">
-                <!-- REPLACE THESE URLS WITH YOUR OWN PATHS -->
                 <a href="/masai/map" class="left-card">
                     <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">
                     <div class="left-card-overlay"></div>
@@ -2417,12 +2209,9 @@
                 <button class="toggle-btn hidden" id="showLessBtn">Back</button>
             </div>
 
-            <!-- 5 Additional cards (front page) - SAME CARD STYLES -->
             <div class="additional-cards-wrapper" id="additionalCardsWrapper">
-                <!-- REPLACE THESE URLS WITH YOUR OWN PATHS -->
                 <a href="/parks/arusha-national-park" class="left-card">
                     <img class="left-card-bg" src="https://images.pexels.com/photos/26727728/pexels-photo-26727728.jpeg" alt="Arusha National Park">
-
                     <div class="left-card-overlay"></div>
                     <div class="left-card-content">
                         <div class="left-card-title">Arusha National Park</div>
@@ -2466,24 +2255,20 @@
                     </div>
                 </a>
 
-                <!-- ADDED: Show Less button for additional cards -->
                 <button class="toggle-btn" id="showLessBtnAdditional">Back</button>
             </div>
         </div>
 
-        <!--my african map -->
         <iframe src="http://localhost:4000/masai/africaMap"
                 width="830"
                 height="630"
                 style="border:0;">
         </iframe>
-
     </div>
 </div>
 
-<!-- New white page (unchanged) -->
+<!-- New white page -->
 <div class="new-white-page">
-    <!-- Vertical lines on LEFT side WITH VIDEO -->
     <div class="vertical-lines-container">
         <div class="vertical-line vertical-line-tallest">
             <div class="stripe-video-container">
@@ -2522,9 +2307,8 @@
     </div>
 </div>
 
-<!-- Last page with video (unchanged) -->
+<!-- Last page with video -->
 <div class="last-page">
-    <!-- Vertical lines on RIGHT side WITH VIDEO - REVERSE ORDER -->
     <div class="last-page-lines-container">
         <div class="last-page-line last-page-line-long">
             <div class="last-page-stripe-video-container">
@@ -2588,12 +2372,12 @@
     </div>
 </div>
 
-<!-- Fixed scroll script (unchanged) -->
+<!-- 恢复原始的滚动脚本，包含page4以保持原有交互逻辑 -->
 <script>
     const introPages = [
         document.getElementById('page2'),
         document.getElementById('page3'),
-        document.getElementById('page4')
+        document.getElementById('page4') // 恢复page4，保持原始滚动逻辑
     ];
     const viewportHeight = window.innerHeight;
     let lastScrollY = window.scrollY;
@@ -2626,7 +2410,6 @@
         }
     });
 
-    // Initialize with scrollY = 0 to ensure intro page is visible immediately
     window.scrollTo(0, 0);
     syncPagePositions();
 
