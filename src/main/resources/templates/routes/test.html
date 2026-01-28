@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngorongoro Crater</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* FIRST SECTION STYLES */
+        .first-section {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            min-height: 100vh;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .title {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 48px; /* Increased from 42px */
+            font-weight: 800;
+            color: #2c3e50;
+            text-align: center;
+            width: 100%;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            position: absolute;
+            left: 40px;
+            max-width: 550px;
+            line-height: 2.0; /* Increased from 1.9 */
+            color: #333;
+            font-size: 24px; /* Increased from 22px */
+            padding: 10px;
+            text-align: justify;
+            top: 140px;
+        }
+
+
+        .description2 {
+            position: absolute;
+            right: 40px;
+            max-width: 550px;
+            line-height: 2.0; /* Increased from 1.9 */
+            color: #333;
+            font-size: 24px; /* Increased from 22px */
+            padding: 10px;
+            text-align: justify;
+            top: 613px;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .red {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .rectangle-box {
+            width: 450px; /* Increased from 400px */
+            height: 300px; /* Increased from 250px */
+            background-color: #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rectangle-box-right {
+            position: absolute;
+            right: 20px;
+            border-top-left-radius: 180px; /* Increased from 150px */
+            border-bottom-right-radius: 180px; /* Increased from 150px */
+            top: 140px;
+        }
+
+        .rectangle-box-left {
+            position: absolute;
+            left: 40px;
+            top: 610px; /* Increased from 480px for more spacing */
+            border-top-right-radius: 180px; /* Increased from 150px */
+            border-bottom-left-radius: 180px; /* Increased from 150px */
+        }
+
+        .slideshow-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slideshow-image.active {
+            opacity: 1;
+        }
+
+        /* SPACING BETWEEN FIRST AND SECOND SECTIONS */
+        .spacing-between-sections {
+            height: 100px; /* Added spacing between sections */
+        }
+
+        /* SECOND SECTION STYLES (centered below first section) */
+        .second-section {
+            padding: 40px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin-top: 400px; /* Added spacing from shape 2 */
+        }
+
+        .text-section {
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+        }
+
+        .text-content {
+            font-size: 26px; /* Increased from 22px */
+            line-height: 2.0; /* Increased from 1.9 */
+            color: #333;
+            text-align: justify;
+        }
+
+        .guides-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            max-width: 1400px;
+            height: 700px;
+            margin: 0 auto;
+            margin-top: 40px; /* Added spacing between text and boxes */
+        }
+
+        .green-bar {
+            width: 280px;
+            height: 500px;
+            /* Direct image URL (zebras) */
+            background-image: url("https://images.pexels.com/photos/8412819/pexels-photo-8412819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+
+        .guide-box {
+            width: 280px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            position: relative;
+            margin-left: -1px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .box-1 {
+            height: 350px;
+            margin-top: 30px;
+            margin-left: 280px;
+            /* Direct image URL (antelopes) */
+            background-image: url("https://images.pexels.com/photos/15373902/pexels-photo-15373902/free-photo-of-antelopes-herd-on-savannah.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        }
+
+        .box-2 {
+            height: 500px;
+            /* Direct image URL (hippo) */
+            background-image: url("https://images.pexels.com/photos/27785865/pexels-photo-27785865/free-photo-of-hippo-s-big-smile-for-camera.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        }
+
+        .box-3 {
+            height: 620px;
+            margin-top: 80px;
+            /* Your static file path (updated to your provided path) */
+            background-image: url("/11nationalparks/ngorongoro/4.png");
+        }
+
+        .box-4 {
+            height: 500px;
+            background-image: url("https://images.pexels.com/photos/18458044/pexels-photo-18458044.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        }
+    </style>
+</head>
+<body>
+<!-- FIRST SECTION -->
+<div class="first-section">
+    <div class="title">Ngorongoro Crater</div>
+
+    <div class="description">
+        <span class="bold">Ngorongoro Crater</span> is a giant bowl-shaped valley (<span class="red">a volcanic caldera</span>) in <span class="bold">northern Tanzania</span>, the largest intact one in the world. It formed when a volcano exploded and collapsed millions of years ago. It's inside the Ngorongoro Conservation Area, <span class="bold">about ~180 km west of Arusha.</span>
+    </div>
+
+
+
+    <div class="rectangle-box rectangle-box-left">
+        <img src="https://images.pexels.com/photos/13033123/pexels-photo-13033123.jpeg" alt="Image 1 Left" class="slideshow-image active" id="image1-left">
+        <img src="https://images.pexels.com/photos/12402982/pexels-photo-12402982.jpeg" alt="Image 2 Left" class="slideshow-image" id="image2-left">
+        <img src="https://images.pexels.com/photos/7637399/pexels-photo-7637399.jpeg" alt="Image 3 Left" class="slideshow-image" id="image3-left">
+    </div>
+
+
+    <div class="description2">
+        <span class="bold">The name of the crater</span>  has an onomatopoeic origin; (<span class="red">it was named by the Maasai pastoralists after the sound produced by the cowbell (ngoro ngoro).</span>) Based on fossil evidence OH 7 found at the Olduvai Gorge, various hominid species have occupied the area for at least .<span class="bold"> 1.75 million years</span>  </span>
+
+
+
+    </div>
+    <div class="rectangle-box rectangle-box-right">
+        <img src="11nationalparks/ngorongoro/1.png" alt="Image 1 Right" class="slideshow-image active" id="image1-right">
+        <img src="11nationalparks/ngorongoro/2.png" alt="Image 2 Right" class="slideshow-image" id="image2-right">
+        <img src="11nationalparks/ngorongoro/3.png" alt="Image 3 Right" class="slideshow-image" id="image3-right">
+    </div>
+</div>
+
+<!-- SPACING BETWEEN SECTIONS -->
+<div class="spacing-between-sections"></div>
+
+<!-- SECOND SECTION (centered) -->
+<div class="second-section">
+    <div class="text-section">
+        <div class="text-content">
+            <span class="bold">Big Five</span>, large populations of <span class="bold">zebras, wildebeest, hippos, and hyenas</span>, as well as <span class="bold">seasonal flamingos</span> at <span class="bold">Lake Magadi</span>. Thanks to this rare combination of rich wildlife, stunning scenery, and easy animal viewing, <span class="bold">Ngorongoro Crater is considered one of the best safari destinations in Africa</span>.
+        </div>
+    </div>
+
+    <div class="guides-container">
+        <div class="green-bar"></div>
+        <div class="guide-box box-1"></div>
+        <div class="guide-box box-2"></div>
+        <div class="guide-box box-3"></div>
+        <div class="guide-box box-4"></div>
+    </div>
+</div>
+
+
+<script>
+    // FIRST SECTION SLIDESHOW
+    const imagePaths = [
+        "https://images.pexels.com/photos/13033123/pexels-photo-13033123.jpeg",
+        "https://images.pexels.com/photos/12402982/pexels-photo-12402982.jpeg",
+        "https://images.pexels.com/photos/7637399/pexels-photo-7637399.jpeg"
+    ];
+
+    const leftImages = document.querySelectorAll('.rectangle-box-left .slideshow-image');
+    const rightImages = document.querySelectorAll('.rectangle-box-right .slideshow-image');
+
+    // Only set left images from Pexels URLs
+    leftImages.forEach((img, index) => {
+        const pathIndex = index % 3;
+        img.src = imagePaths[pathIndex];
+    });
+
+    // Keep right images as they were in HTML
+    rightImages.forEach((img, index) => {
+        const pathIndex = index % 3;
+        // This won't override if src already exists
+        if (!img.src) {
+            img.src = `11nationalparks/ngorongoro/${(pathIndex + 1)}.png`;
+        }
+    });
+
+    function initializeSlideshow(rectangleClass) {
+        const rectangleImages = document.querySelectorAll(`${rectangleClass} .slideshow-image`);
+        let currentImageIndex = 0;
+        const totalImages = rectangleImages.length;
+
+        function changeImage() {
+            rectangleImages.forEach(img => img.classList.remove('active'));
+            rectangleImages[currentImageIndex].classList.add('active');
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+        }
+
+        setInterval(changeImage, 3000);
+        changeImage();
+    }
+
+    initializeSlideshow('.rectangle-box-left');
+    initializeSlideshow('.rectangle-box-right');
+</script>
+</body>
+</html>

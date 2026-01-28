@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Routes</title>
+  <style>
+    .image-options {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .option-section {
+      margin-bottom: 15px;
+    }
+    .pexel-example {
+      font-size: 0.9em;
+      color: #666;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+<h1>Manage Routes</h1>
+
+<h2>Add New Route</h2>
+<!-- CRITICAL FIX: Added onsubmit="setImageUrl()" to form (removed from button) -->
+<form th:action="@{/climb/admin}" method="post" th:object="${newRoute}" onsubmit="setImageUrl()">
+  <label>Park Name: <input type="text" th:field="*{parkName}" required/></label><br/>
+  <label>Route Name: <input type="text" th:field="*{routeName}" required/></label><br/>
+  <label>Description: <input type="text" th:field="*{description}"/></label><br/>
+  <label>Price: <input type="number" th:field="*{price}" step="0.01"/></label><br/>
+  <label>Show Price: <input type="checkbox" th:field="*{showPrice}"/></label><br/>
+  <label>Status:
+    <select th:field="*{status}">
+      <option value="available">Available</option>
+      <option value="closed">Closed</option>
+      <option value="not_available">Not Available</option>
+    </select>
+  </label><br/>
+
+  <!-- Image URL Section -->
+  <div class="image-options">
+    <h3>Image Options</h3>
+
+    <div class="option-section">
+      <label>
+        <input type="radio" name="imageOption" value="pexels" onclick="showOption('pexels')" checked>
+        Use Pexels Image URL
+      </label>
+      <div id="pexels-option" style="margin-left: 20px; margin-top: 5px;">
+        <label>Pexels Image URL:
+          <input type="text" id="pexelsUrl" name="pexelsUrl"
+                 placeholder="https://images.pexels.com/photos/..."
+                 size="50"/>
+        </label>
+        <div class="pexel-example">
+          Example: https://images.pexels.com/photos/7277030/pexels-photo-7277030.jpeg
+        </div>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <label>
+        <input type="radio" name="imageOption" value="static" onclick="showOption('static')">
+        Use Static/Local Image Path
+      </label>
+      <div id="static-option" style="margin-left: 20px; margin-top: 5px; display: none;">
+        <label>Static Image Path:
+          <input type="text" id="staticPath" name="staticPath"
+                 placeholder="/images/mountain.jpg"
+                 size="50"/>
+        </label>
+        <div class="pexel-example">
+          Example: /static/images/route1.jpg or /images/mountain.jpg
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden field to store final image URL -->
+    <input type="hidden" id="imageUrl" th:field="*{imageUrl}" name="imageUrl"/>
+  </div>
+
+  <button type="submit">Add Route</button> <!-- Removed onclick here -->
+</form>
+
+<h2>Existing Routes</h2>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Park Name</th>
+    <th>Route Name</th>
+    <th>Image</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Show Price</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="route : ${routes}">
+    <td th:text="${route.id}">1</td>
+    <td th:text="${route.parkName}">Park</td>
+    <td th:text="${route.routeName}">Route</td>
+    <td>
+      <div th:if="${route.imageUrl}" style="width: 100px; height: 60px; overflow: hidden;">
+        <img th:src="${route.imageUrl}" style="width: 100%; height: 100%; object-fit: cover;"
+             alt="Route Image" onerror="this.style.display='none'"/>
+      </div>
+      <span th:unless="${route.imageUrl}">No Image</span>
+    </td>
+    <td th:text="${route.description}">Desc</td>
+    <td th:text="${route.price}">Price</td>
+    <td th:text="${route.showPrice}">Show?</td>
+    <td th:text="${route.status}">Status</td>
+
+    <td>
+      <a th:href="@{/climb/admin/edit/{id}(id=${route.id})}">
+        <button>Edit</button>
+      </a>
+      <form th:action="@{/climb/admin/delete/{id}(id=${route.id})}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<script>
+  function showOption(option) {
+    document.getElementById('pexels-option').style.display =
+            (option === 'pexels') ? 'block' : 'none';
+    document.getElementById('static-option').style.display =
+            (option === 'static') ? 'block' : 'none';
+
+    // Clear other field when switching
+    if (option === 'pexels') {
+      document.getElementById('staticPath').value = '';
+    } else {
+      document.getElementById('pexelsUrl').value = '';
+    }
+  }
+
+  function setImageUrl() {
+    const pexelsUrl = document.getElementById('pexelsUrl').value;
+    const staticPath = document.getElementById('staticPath').value;
+
+    // Set the value in hidden field before submission
+    if (pexelsUrl) {
+      document.getElementById('imageUrl').value = pexelsUrl;
+    } else if (staticPath) {
+      document.getElementById('imageUrl').value = staticPath;
+    } else {
+      document.getElementById('imageUrl').value = '';
+    }
+  }
+</script>
+</body>
+</html>

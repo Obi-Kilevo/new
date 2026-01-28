@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Route</title>
+    <style>
+        .image-options {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .option-section {
+            margin-bottom: 15px;
+        }
+        .current-image {
+            margin: 10px 0;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+<h1>Edit Route</h1>
+
+<!-- CRITICAL: Add onsubmit="setImageUrl()" here -->
+<form th:action="@{/climb/admin/edit/{id}(id=${route.id})}" method="post"
+      th:object="${route}" onsubmit="return setImageUrl()">
+
+    <label>Park Name: <input type="text" th:field="*{parkName}" required/></label><br/>
+    <label>Route Name: <input type="text" th:field="*{routeName}" required/></label><br/>
+    <label>Description: <input type="text" th:field="*{description}"/></label><br/>
+    <label>Price: <input type="number" th:field="*{price}" step="0.01"/></label><br/>
+    <label>Show Price: <input type="checkbox" th:field="*{showPrice}"/></label><br/>
+    <label>Status:
+        <select th:field="*{status}">
+            <option value="available">Available</option>
+            <option value="closed">Closed</option>
+            <option value="not_available">Not Available</option>
+        </select>
+    </label><br/>
+
+    <!-- Current Image -->
+    <div th:if="${route.imageUrl}">
+        <strong>Current Image:</strong>
+        <div class="current-image">
+            <img th:src="${route.imageUrl}" style="max-width: 100%;"
+                 onerror="this.style.display='none'"/>
+        </div>
+    </div>
+
+    <!-- Image URL Section -->
+    <div class="image-options">
+        <h3>Update Image</h3>
+
+        <!-- CRITICAL: Hidden field for imageUrl (must match entity field) -->
+        <input type="hidden" id="imageUrl" th:field="*{imageUrl}" name="imageUrl"/>
+
+        <div class="option-section">
+            <label>
+                <input type="radio" name="imageOption" value="pexels" onclick="showOption('pexels')" checked>
+                Use Pexels Image URL
+            </label>
+            <div id="pexels-option" style="margin-left: 20px; margin-top: 5px;">
+                <label>Pexels Image URL:
+                    <input type="text" id="pexelsUrl" name="pexelsUrl"
+                           th:value="${route.imageUrl}"
+                           placeholder="https://images.pexels.com/photos/..."
+                           size="50"/>
+                </label>
+            </div>
+        </div>
+
+        <div class="option-section">
+            <label>
+                <input type="radio" name="imageOption" value="static" onclick="showOption('static')">
+                Use Static/Local Image Path
+            </label>
+            <div id="static-option" style="margin-left: 20px; margin-top: 5px; display: none;">
+                <label>Static Image Path:
+                    <input type="text" id="staticPath" name="staticPath"
+                           placeholder="/images/mountain.jpg"
+                           size="50"/>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit">Save Changes</button>
+    <a th:href="@{/climb/admin}">
+        <button type="button">Cancel</button>
+    </a>
+</form>
+
+<script>
+    function showOption(option) {
+        document.getElementById('pexels-option').style.display =
+            (option === 'pexels') ? 'block' : 'none';
+        document.getElementById('static-option').style.display =
+            (option === 'static') ? 'block' : 'none';
+    }
+
+    function setImageUrl() {
+        const pexelsUrl = document.getElementById('pexelsUrl').value;
+        const staticPath = document.getElementById('staticPath').value;
+
+        // CRITICAL: Copy value to hidden field
+        if (pexelsUrl) {
+            document.getElementById('imageUrl').value = pexelsUrl;
+        } else if (staticPath) {
+            document.getElementById('imageUrl').value = staticPath;
+        } else {
+            document.getElementById('imageUrl').value = '';
+        }
+
+        console.log("Image URL set to:", document.getElementById('imageUrl').value);
+        return true; // Allow form submission
+    }
+
+    // Auto-detect current image type on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUrl = document.getElementById('pexelsUrl').value;
+        if (currentUrl && currentUrl.includes('pexels.com')) {
+            document.querySelector('input[value="pexels"]').checked = true;
+            showOption('pexels');
+        }
+    });
+</script>
+</body>
+</html>
