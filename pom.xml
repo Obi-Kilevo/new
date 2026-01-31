@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
+        <version>4.0.0</version>
         <relativePath/>
     </parent>
 
@@ -23,34 +20,26 @@
     </properties>
 
     <dependencies>
+        <!-- Web dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Thymeleaf dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
-            <scope>runtime</scope>
-        </dependency>
-
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -68,15 +57,21 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -87,192 +82,237 @@
 
 
 
-<!--        <?xml version="1.0" encoding="UTF-8"?>-->
-<!--        <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">-->
-<!--            <modelVersion>4.0.0</modelVersion>-->
-<!--            <parent>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--                <version>4.0.0</version>-->
-<!--                <relativePath/>-->
-<!--            </parent>-->
 
-<!--            <groupId>com.obi</groupId>-->
-<!--            <artifactId>pandaNow</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--            <name>pandaNow</name>-->
-<!--            <description>pandaNow</description>-->
-
-<!--            <properties>-->
-<!--                <java.version>17</java.version>-->
-<!--            </properties>-->
-
-<!--            <dependencies>-->
-<!--                &lt;!&ndash; Web dependencies &ndash;&gt;-->
-<!--                <dependency>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-web</artifactId>-->
-<!--                </dependency>-->
-
-<!--                &lt;!&ndash; Thymeleaf dependencies &ndash;&gt;-->
-<!--                <dependency>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--                </dependency>-->
-
-<!--                &lt;!&ndash; Lombok &ndash;&gt;-->
-<!--                <dependency>-->
-<!--                    <groupId>org.projectlombok</groupId>-->
-<!--                    <artifactId>lombok</artifactId>-->
-<!--                    <optional>true</optional>-->
-<!--                </dependency>-->
-<!--                -->
-<!--                &lt;!&ndash; Test dependencies &ndash;&gt;-->
-<!--                <dependency>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-test</artifactId>-->
-<!--                    <scope>test</scope>-->
-<!--                </dependency>-->
-<!--            </dependencies>-->
-
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                        <configuration>-->
-<!--                            <annotationProcessorPaths>-->
-<!--                                <path>-->
-<!--                                    <groupId>org.projectlombok</groupId>-->
-<!--                                    <artifactId>lombok</artifactId>-->
-<!--                                </path>-->
-<!--                            </annotationProcessorPaths>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.springframework.boot</groupId>-->
-<!--                        <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                        <configuration>-->
-<!--                            <excludes>-->
-<!--                                <exclude>-->
-<!--                                    <groupId>org.projectlombok</groupId>-->
-<!--                                    <artifactId>lombok</artifactId>-->
-<!--                                </exclude>-->
-<!--                            </excludes>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </project>-->
-
-
-
-
-
-
-
-
-
-<!--        <?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
 <!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">-->
-<!--<modelVersion>4.0.0</modelVersion>-->
-<!--<parent>-->
-<!--    <groupId>org.springframework.boot</groupId>-->
-<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--    <version>4.0.0</version>-->
-<!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-<!--</parent>-->
-<!--<groupId>com.obi</groupId>-->
-<!--<artifactId>bigPandaTwo</artifactId>-->
-<!--<version>0.0.1-SNAPSHOT</version>-->
-<!--<name>bigPandaTwo</name>-->
-<!--<description>bigPandaTwo</description>-->
-<!--<url/>-->
-<!--<licenses>-->
-<!--    <license/>-->
-<!--</licenses>-->
-<!--<developers>-->
-<!--    <developer/>-->
-<!--</developers>-->
-<!--<scm>-->
-<!--    <connection/>-->
-<!--    <developerConnection/>-->
-<!--    <tag/>-->
+<!--    <modelVersion>4.0.0</modelVersion>-->
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>4.0.0</version>-->
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--    </parent>-->
+<!--    <groupId>com.obi</groupId>-->
+<!--    <artifactId>bigPandaTwo</artifactId>-->
+<!--    <version>0.0.1-SNAPSHOT</version>-->
+<!--    <name>bigPandaTwo</name>-->
+<!--    <description>bigPandaTwo</description>-->
 <!--    <url/>-->
-<!--</scm>-->
-<!--<properties>-->
-<!--    <java.version>17</java.version>-->
-<!--</properties>-->
-<!--<dependencies>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-session-jdbc</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--    </dependency>-->
-
-
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--    </dependency>-->
-
-
-<!--    <dependency>-->
-<!--        <groupId>org.projectlombok</groupId>-->
-<!--        <artifactId>lombok</artifactId>-->
-<!--        &lt;!&ndash;            <version>1.18.30</version>&ndash;&gt;-->
-<!--        <scope>provided</scope>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-webmvc</artifactId>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--        <groupId>org.postgresql</groupId>-->
-<!--        <artifactId>postgresql</artifactId>-->
-<!--        <scope>runtime</scope>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-data-jpa-test</artifactId>-->
-<!--        <scope>test</scope>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-session-jdbc-test</artifactId>-->
-<!--        <scope>test</scope>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-thymeleaf-test</artifactId>-->
-<!--        <scope>test</scope>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-webmvc-test</artifactId>-->
-<!--        <scope>test</scope>-->
-<!--    </dependency>-->
-<!--</dependencies>-->
-
-<!--<build>-->
-<!--    <plugins>-->
-<!--        <plugin>-->
+<!--    <licenses>-->
+<!--        <license/>-->
+<!--    </licenses>-->
+<!--    <developers>-->
+<!--        <developer/>-->
+<!--    </developers>-->
+<!--    <scm>-->
+<!--        <connection/>-->
+<!--        <developerConnection/>-->
+<!--        <tag/>-->
+<!--        <url/>-->
+<!--    </scm>-->
+<!--    <properties>-->
+<!--        <java.version>17</java.version>-->
+<!--    </properties>-->
+<!--    <dependencies>-->
+<!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--        </plugin>-->
-<!--    </plugins>-->
-<!--</build>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-session-jdbc</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.17.1</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Spring Boot Web (required for @RestController, HttpServletResponse) &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-web</artifactId>-->
+<!--            </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            &lt;!&ndash;            <version>1.18.30</version>&ndash;&gt;-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-webmvc</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-session-jdbc-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-webmvc-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+
+
+<!--        <dependency>-->
+<!--            <groupId>ws.schild</groupId>-->
+<!--            <artifactId>jave-all-deps</artifactId>-->
+<!--            <version>3.3.1</version>-->
+<!--            <exclusions>-->
+<!--                &lt;!&ndash; Only keep the platform you deploy to (e.g., linux-x86_64) &ndash;&gt;-->
+<!--                <exclusion>-->
+<!--                    <groupId>ws.schild</groupId>-->
+<!--                    <artifactId>jave-nativebin-linux32</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 <!--</project>-->
+
+
+
+
+
+
+
+
+<!--     commercial deploy use this -->
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
+<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+
+<!--    <modelVersion>4.0.0</modelVersion>-->
+
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>2.7.18</version>-->
+<!--        <relativePath/>-->
+<!--    </parent>-->
+
+<!--    <groupId>com.obi</groupId>-->
+<!--    <artifactId>pandaNow</artifactId>-->
+<!--    <version>0.0.1-SNAPSHOT</version>-->
+<!--    <name>pandaNow</name>-->
+<!--    <description>pandaNow</description>-->
+
+<!--    <properties>-->
+<!--        <java.version>17</java.version>-->
+<!--    </properties>-->
+
+<!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <version>42.6.0</version>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                            <version>1.18.30</version>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+<!--</project>-->
+
+
+
+
+
+
+
+
+
+
+
 
 

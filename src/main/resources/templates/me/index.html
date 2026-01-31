@@ -1,1191 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <style>-->
-<!--        /* Base reset - no global video/background */-->
-<!--        body {-->
-<!--            margin: 0 !important;-->
-<!--            padding: 0 !important;-->
-<!--            overflow-x: hidden !important;-->
-<!--        }-->
-
-<!--        * {-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            box-sizing: border-box;-->
-<!--        }-->
-
-<!--        /* Intro pages container - static (no scroll movement) */-->
-<!--        .intro-pages-container {-->
-<!--            position: relative;-->
-<!--            height: 200vh; /* Fixed height for 2 full pages */-->
-<!--            width: 100%;-->
-<!--            top: 0;-->
-<!--            margin-top: 0 !important; /* No top gap */-->
-<!--        }-->
-
-<!--        /* Intro page - static (no scroll transform) */-->
-<!--        .intro-page {-->
-<!--            position: absolute; /* Changed from fixed to absolute - no overlap */-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100vh;-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: flex-start;-->
-<!--            padding: 0 4rem;-->
-<!--            z-index: 1;-->
-<!--            border-radius: 60px 0 0 60px;-->
-<!--            overflow: hidden;-->
-<!--            background-size: cover;-->
-<!--            background-position: center;-->
-<!--            visibility: visible;-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        /* Page positioning - no scroll movement */-->
-<!--        #page2 {-->
-<!--            background: url('https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg') center/cover no-repeat;-->
-<!--            z-index: 1;-->
-<!--            top: 0; /* First page at top */-->
-<!--        }-->
-<!--        #page3 {-->
-<!--            background: url('https://images.pexels.com/photos/16761787/pexels-photo-16761787.jpeg') center/cover no-repeat;-->
-<!--            z-index: 1;-->
-<!--            top: 100vh; /* Second page below first */-->
-<!--        }-->
-
-<!--        .page-text {-->
-<!--            font-size: 4rem;-->
-<!--            color: white;-->
-<!--            font-weight: bold;-->
-<!--            text-align: left;-->
-<!--            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);-->
-<!--            line-height: 1.2;-->
-<!--        }-->
-
-<!--        .page-subtext {-->
-<!--            font-size: 1.5rem;-->
-<!--            color: white;-->
-<!--            margin-top: 1rem;-->
-<!--            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);-->
-<!--            line-height: 1.4;-->
-<!--            max-width: 600px;-->
-<!--        }-->
-
-<!--        .last-page {-->
-<!--            height: 100vh;-->
-<!--            width: 100%;-->
-<!--            position: relative;-->
-<!--            z-index: 5;-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: flex-start;-->
-<!--            padding: 0 4rem;-->
-<!--            color: white;-->
-<!--            overflow: hidden;-->
-<!--            border-radius: 60px 0 0 60px;-->
-<!--            background: white;-->
-<!--        }-->
-
-<!--        .last-page-video {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            z-index: -1;-->
-<!--            border-radius: 60px 0 0 60px;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .last-page-video video {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--        }-->
-
-<!--        .last-page-overlay {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background: rgba(0, 0, 0, 0.6);-->
-<!--            z-index: 0;-->
-<!--            border-radius: 60px 0 0 60px;-->
-<!--        }-->
-
-<!--        .last-page-content {-->
-<!--            position: relative;-->
-<!--            z-index: 1;-->
-<!--        }-->
-
-<!--        .logo-circle {-->
-<!--            position: absolute;-->
-<!--            right: 40px;-->
-<!--            top: 50%;-->
-<!--            transform: translateY(-50%);-->
-<!--            width: 325px;-->
-<!--            height: 325px;-->
-<!--            border-radius: 50%;-->
-<!--            background-color: white;-->
-<!--            z-index: 10;-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            overflow: hidden;-->
-<!--            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);-->
-<!--        }-->
-
-<!--        .logo-circle img {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--        }-->
-
-<!--        .comm-icons {-->
-<!--            margin-top: 3rem;-->
-<!--            display: flex;-->
-<!--            gap: 2rem;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        .comm-icon {-->
-<!--            width: 80px;-->
-<!--            height: 80px;-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            transition: transform 0.3s ease;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        .comm-icon:hover {-->
-<!--            transform: scale(1.1);-->
-<!--        }-->
-
-<!--        .comm-icon img {-->
-<!--            width: 50px;-->
-<!--            height: 50px;-->
-<!--            object-fit: contain;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .page-text {-->
-<!--                font-size: 2.5rem;-->
-<!--            }-->
-<!--            .page-subtext {-->
-<!--                font-size: 1.2rem;-->
-<!--            }-->
-<!--            .intro-page {-->
-<!--                padding: 0 2rem;-->
-<!--                border-radius: 40px 0 0 40px;-->
-<!--            }-->
-<!--            .last-page {-->
-<!--                border-radius: 40px 0 0 40px;-->
-<!--                padding: 0 2rem;-->
-<!--            }-->
-<!--            .last-page-video {-->
-<!--                border-radius: 40px 0 0 40px;-->
-<!--            }-->
-<!--            .last-page-overlay {-->
-<!--                border-radius: 40px 0 0 40px;-->
-<!--            }-->
-<!--            .comm-icon {-->
-<!--                width: 60px;-->
-<!--                height: 60px;-->
-<!--            }-->
-<!--            .comm-icon img {-->
-<!--                width: 35px;-->
-<!--                height: 35px;-->
-<!--            }-->
-<!--            .comm-icons {-->
-<!--                gap: 1.5rem;-->
-<!--            }-->
-<!--            .logo-circle {-->
-<!--                right: 20px;-->
-<!--                width: 100px;-->
-<!--                height: 100px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .white-gap-page {-->
-<!--            position: relative;-->
-<!--            height: auto;-->
-<!--            min-height: 100vh;-->
-<!--            width: 100%;-->
-<!--            background: white;-->
-<!--            z-index: 4;-->
-<!--            margin-top: 0 !important;-->
-<!--            border-radius: 0;-->
-<!--            padding: 3rem 4rem;-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            justify-content: flex-start;-->
-<!--            overflow: hidden;-->
-<!--            padding-top: 5vh;-->
-<!--        }-->
-
-<!--        .white-gap-background-video {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            z-index: 0;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .white-gap-background-video video {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--        }-->
-
-<!--        .white-gap-video-overlay {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background: rgba(0, 0, 0, 0.3);-->
-<!--            z-index: 1;-->
-<!--        }-->
-
-<!--        .white-gap-header,-->
-<!--        .white-gap-container {-->
-<!--            position: relative;-->
-<!--            z-index: 2;-->
-<!--        }-->
-
-<!--        .white-gap-container {-->
-<!--            display: flex;-->
-<!--            gap: 3rem;-->
-<!--            width: 100%;-->
-<!--            padding-left: 0;-->
-<!--            margin-right: 0;-->
-<!--            justify-content: space-between;-->
-<!--        }-->
-
-<!--        .park-cards-container {-->
-<!--            width: 90%;-->
-<!--            position: relative;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .default-cards-wrapper {-->
-<!--            display: grid;-->
-<!--            grid-template-columns: repeat(3, 1fr);-->
-<!--            gap: 2.5rem;-->
-<!--            position: relative;-->
-<!--            z-index: 1;-->
-<!--            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);-->
-<!--            transform: translateX(0);-->
-<!--            opacity: 1;-->
-<!--            width: 100%;-->
-<!--        }-->
-
-<!--        .default-cards-wrapper.pushed-left {-->
-<!--            transform: translateX(-100%);-->
-<!--            opacity: 0;-->
-<!--        }-->
-
-<!--        .additional-cards-wrapper {-->
-<!--            display: grid;-->
-<!--            grid-template-columns: repeat(3, 1fr);-->
-<!--            gap: 2.5rem;-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            z-index: 2;-->
-<!--            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);-->
-<!--            transform: translateX(100%);-->
-<!--            opacity: 0;-->
-<!--            width: 100%;-->
-<!--        }-->
-
-<!--        .additional-cards-wrapper.visible {-->
-<!--            transform: translateX(0);-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        .left-card {-->
-<!--            background: #f8f8f8;-->
-<!--            border-radius: 60px 0 0 0;-->
-<!--            overflow: hidden;-->
-<!--            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            justify-content: flex-end;-->
-<!--            padding: 2.5rem;-->
-<!--            text-align: center;-->
-<!--            position: relative;-->
-<!--            min-height: 450px;-->
-<!--            width: 100%;-->
-<!--            aspect-ratio: 3/4;-->
-<!--            cursor: pointer;-->
-<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
-<!--            text-decoration: none;-->
-<!--        }-->
-
-<!--        .left-card:hover {-->
-<!--            transform: translateY(-5px);-->
-<!--            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);-->
-<!--        }-->
-
-<!--        .left-card-overlay {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);-->
-<!--            z-index: 2;-->
-<!--            border-radius: 60px 0 0 0;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .left-card {-->
-<!--                border-radius: 40px 0 0 0;-->
-<!--            }-->
-<!--            .left-card-overlay {-->
-<!--                border-radius: 40px 0 0 0;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .toggle-btn {-->
-<!--            grid-column: 1 / -1;-->
-<!--            padding: 1.2rem 2.5rem;-->
-<!--            background-color: #2a2a2a;-->
-<!--            color: white;-->
-<!--            border: none;-->
-<!--            border-radius: 8px;-->
-<!--            font-size: 1.1rem;-->
-<!--            font-weight: 600;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease, transform 0.2s ease;-->
-<!--            margin-top: 1rem;-->
-<!--            min-height: auto;-->
-<!--            position: relative;-->
-<!--            z-index: 3;-->
-<!--        }-->
-
-<!--        .toggle-btn:hover {-->
-<!--            background-color: #444;-->
-<!--            transform: translateY(-2px);-->
-<!--        }-->
-
-<!--        .toggle-btn:active {-->
-<!--            transform: translateY(0);-->
-<!--        }-->
-
-<!--        .toggle-btn.hidden {-->
-<!--            display: none;-->
-<!--        }-->
-
-<!--        .left-card-bg {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--            z-index: 1;-->
-<!--            border-radius: 60px 0 0 0;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .left-card-bg {-->
-<!--                border-radius: 40px 0 0 0;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .left-card-content {-->
-<!--            position: relative;-->
-<!--            z-index: 3;-->
-<!--            color: white;-->
-<!--            text-align: center;-->
-<!--            width: 100%;-->
-<!--        }-->
-
-<!--        .left-card-title {-->
-<!--            font-size: 1.8rem;-->
-<!--            font-weight: bold;-->
-<!--            color: white;-->
-<!--            margin-bottom: 0.5rem;-->
-<!--            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);-->
-<!--        }-->
-
-<!--        .left-card-subtext {-->
-<!--            font-size: 1.2rem;-->
-<!--            color: white;-->
-<!--            font-weight: 500;-->
-<!--            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);-->
-<!--        }-->
-
-<!--        .white-gap-header {-->
-<!--            text-align: center;-->
-<!--            margin-bottom: 4rem;-->
-<!--        }-->
-
-<!--        .white-gap-logo {-->
-<!--            font-size: 2.5rem;-->
-<!--            font-weight: bold;-->
-<!--            color: #2a2a2a;-->
-<!--            margin-bottom: 0.5rem;-->
-<!--        }-->
-
-<!--        .white-gap-main-text {-->
-<!--            font-size: 3rem;-->
-<!--            font-weight: bold;-->
-<!--            color: #2a2a2a;-->
-<!--            margin-bottom: 1rem;-->
-<!--        }-->
-
-<!--        .white-gap-subtext {-->
-<!--            font-size: 1.2rem;-->
-<!--            color: #555;-->
-<!--            max-width: 800px;-->
-<!--            margin: 0 auto;-->
-<!--        }-->
-
-<!--        @media (max-width: 1024px) {-->
-<!--            .white-gap-container {-->
-<!--                flex-direction: column;-->
-<!--            }-->
-<!--            .park-cards-container {-->
-<!--                width: 100%;-->
-<!--            }-->
-<!--            .left-card {-->
-<!--                min-height: 250px;-->
-<!--            }-->
-<!--            .default-cards-wrapper.pushed-left {-->
-<!--                transform: translateX(-100%);-->
-<!--            }-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .white-gap-page {-->
-<!--                padding: 2rem 1.5rem;-->
-<!--            }-->
-<!--            .default-cards-wrapper, .additional-cards-wrapper {-->
-<!--                grid-template-columns: 1fr;-->
-<!--            }-->
-<!--            .white-gap-main-text {-->
-<!--                font-size: 1.8rem;-->
-<!--            }-->
-<!--            .left-card {-->
-<!--                min-height: 220px;-->
-<!--            }-->
-<!--            .left-card-title {-->
-<!--                font-size: 1.5rem;-->
-<!--            }-->
-<!--            .left-card-subtext {-->
-<!--                font-size: 1rem;-->
-<!--            }-->
-<!--            .toggle-btn {-->
-<!--                padding: 1rem 2rem;-->
-<!--                font-size: 1rem;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .new-white-page {-->
-<!--            position: relative;-->
-<!--            height: auto;-->
-<!--            min-height: 100vh;-->
-<!--            width: 100%;-->
-<!--            background: white;-->
-<!--            z-index: 6;-->
-<!--            margin-top: 0 !important;-->
-<!--            border-radius: 0;-->
-<!--            padding: 5rem 4rem;-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            justify-content: flex-start;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .new-white-page-header {-->
-<!--            text-align: center;-->
-<!--            margin-bottom: 4rem;-->
-<!--        }-->
-
-<!--        .new-white-page-logo {-->
-<!--            font-size: 2.5rem;-->
-<!--            font-weight: bold;-->
-<!--            color: #2a2a2a;-->
-<!--            margin-bottom: 0.5rem;-->
-<!--        }-->
-
-<!--        .new-white-page-main-text {-->
-<!--            font-size: 3rem;-->
-<!--            font-weight: bold;-->
-<!--            color: #2a2a2a;-->
-<!--            margin-bottom: 1rem;-->
-<!--        }-->
-
-<!--        .new-white-page-subtext {-->
-<!--            font-size: 1.2rem;-->
-<!--            color: #555;-->
-<!--            max-width: 800px;-->
-<!--            margin: 0 auto 3rem auto;-->
-<!--        }-->
-
-<!--        .new-white-page-content {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            gap: 3rem;-->
-<!--            max-width: 1200px;-->
-<!--            margin: 0 auto;-->
-<!--            width: 100%;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .new-white-page {-->
-<!--                padding: 3rem 1.5rem;-->
-<!--            }-->
-<!--            .new-white-page-main-text {-->
-<!--                font-size: 1.8rem;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .vertical-lines-container {-->
-<!--            position: absolute;-->
-<!--            left: 4rem;-->
-<!--            top: 0;-->
-<!--            display: flex;-->
-<!--            flex-direction: row;-->
-<!--            align-items: flex-start;-->
-<!--            gap: 40px;-->
-<!--            z-index: 2;-->
-<!--        }-->
-
-<!--        .vertical-line {-->
-<!--            background: linear-gradient(to bottom,-->
-<!--            #0a0a0a 0%,-->
-<!--            #1a1a1a 30%,-->
-<!--            #2a2a2a 70%,-->
-<!--            #333 100%);-->
-<!--            border-radius: 0 0 12px 12px;-->
-<!--            width: 45px;-->
-<!--            transform-origin: top center;-->
-<!--            animation: lineGrowDown 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;-->
-<!--            opacity: 0;-->
-<!--            margin-top: 0;-->
-<!--            position: relative;-->
-<!--            border: none;-->
-<!--            overflow: hidden;-->
-<!--            isolation: isolate;-->
-<!--        }-->
-
-<!--        .vertical-line-tallest {-->
-<!--            height: 400px;-->
-<!--            animation-delay: 0.1s;-->
-<!--        }-->
-
-<!--        .vertical-line-taller {-->
-<!--            height: 320px;-->
-<!--            animation-delay: 0.3s;-->
-<!--        }-->
-
-<!--        .vertical-line-tall {-->
-<!--            height: 240px;-->
-<!--            animation-delay: 0.5s;-->
-<!--        }-->
-
-<!--        @keyframes lineGrowDown {-->
-<!--            0% {-->
-<!--                height: 0;-->
-<!--                opacity: 0;-->
-<!--                transform: scaleY(0) translateY(-40px);-->
-<!--            }-->
-<!--            60% {-->
-<!--                transform: scaleY(1.15);-->
-<!--            }-->
-<!--            80% {-->
-<!--                transform: scaleY(0.98);-->
-<!--            }-->
-<!--            100% {-->
-<!--                opacity: 1;-->
-<!--                transform: scaleY(1);-->
-<!--            }-->
-<!--        }-->
-
-<!--        .vertical-line:hover {-->
-<!--            background: linear-gradient(to bottom,-->
-<!--            #1a1a1a 0%,-->
-<!--            #2a2a2a 30%,-->
-<!--            #444 70%,-->
-<!--            #555 100%);-->
-<!--            transform: scaleX(1.15) translateY(5px);-->
-<!--            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);-->
-<!--        }-->
-
-<!--        .vertical-line::before {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 6px;-->
-<!--            height: 100%;-->
-<!--            background: linear-gradient(to bottom,-->
-<!--            rgba(255, 255, 255, 0.15) 0%,-->
-<!--            rgba(255, 255, 255, 0.08) 50%,-->
-<!--            rgba(255, 255, 255, 0.03) 100%);-->
-<!--            border-radius: 0 0 12px 0;-->
-<!--            z-index: 1;-->
-<!--        }-->
-
-<!--        .vertical-line::after {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: -4px;-->
-<!--            right: -4px;-->
-<!--            height: 16px;-->
-<!--            background: #222;-->
-<!--            border-radius: 8px 8px 0 0;-->
-<!--            z-index: 2;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .vertical-lines-container {-->
-<!--                left: 1.5rem;-->
-<!--                top: 0;-->
-<!--                gap: 25px;-->
-<!--            }-->
-
-<!--            .vertical-line {-->
-<!--                width: 30px;-->
-<!--            }-->
-
-<!--            .vertical-line-tallest {-->
-<!--                height: 250px;-->
-<!--            }-->
-
-<!--            .vertical-line-taller {-->
-<!--                height: 200px;-->
-<!--            }-->
-
-<!--            .vertical-line-tall {-->
-<!--                height: 150px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        @media (min-width: 1200px) {-->
-<!--            .vertical-lines-container {-->
-<!--                left: 6rem;-->
-<!--                gap: 60px;-->
-<!--            }-->
-
-<!--            .vertical-line {-->
-<!--                width: 60px;-->
-<!--            }-->
-
-<!--            .vertical-line-tallest {-->
-<!--                height: 500px;-->
-<!--            }-->
-
-<!--            .vertical-line-taller {-->
-<!--                height: 400px;-->
-<!--            }-->
-
-<!--            .vertical-line-tall {-->
-<!--                height: 300px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .last-page-lines-container {-->
-<!--            position: absolute;-->
-<!--            right: 4rem;-->
-<!--            bottom: 0;-->
-<!--            display: flex;-->
-<!--            flex-direction: row;-->
-<!--            align-items: flex-end;-->
-<!--            gap: 40px;-->
-<!--            z-index: 11;-->
-<!--        }-->
-
-<!--        .last-page-line {-->
-<!--            background: linear-gradient(to top,-->
-<!--            rgba(255, 255, 255, 0.1) 0%,-->
-<!--            rgba(255, 255, 255, 0.08) 30%,-->
-<!--            rgba(255, 255, 255, 0.05) 70%,-->
-<!--            rgba(255, 255, 255, 0.02) 100%);-->
-<!--            border-radius: 12px 12px 0 0;-->
-<!--            width: 45px;-->
-<!--            transform-origin: bottom center;-->
-<!--            animation: lineGrowUp 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;-->
-<!--            opacity: 0;-->
-<!--            margin-bottom: 0;-->
-<!--            position: relative;-->
-<!--            overflow: hidden;-->
-<!--            isolation: isolate;-->
-<!--        }-->
-
-<!--        .last-page-line-longest {-->
-<!--            height: 350px;-->
-<!--            animation-delay: 1.2s;-->
-<!--        }-->
-
-<!--        .last-page-line-longer {-->
-<!--            height: 280px;-->
-<!--            animation-delay: 1.4s;-->
-<!--        }-->
-
-<!--        .last-page-line-long {-->
-<!--            height: 210px;-->
-<!--            animation-delay: 1.6s;-->
-<!--        }-->
-
-<!--        @keyframes lineGrowUp {-->
-<!--            0% {-->
-<!--                height: 0;-->
-<!--                opacity: 0;-->
-<!--                transform: scaleY(0) translateY(40px);-->
-<!--            }-->
-<!--            60% {-->
-<!--                transform: scaleY(1.15);-->
-<!--            }-->
-<!--            80% {-->
-<!--                transform: scaleY(0.98);-->
-<!--            }-->
-<!--            100% {-->
-<!--                opacity: 1;-->
-<!--                transform: scaleY(1);-->
-<!--            }-->
-<!--        }-->
-
-<!--        .last-page-line::before {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            bottom: 0;-->
-<!--            left: 0;-->
-<!--            width: 6px;-->
-<!--            height: 100%;-->
-<!--            background: linear-gradient(to top,-->
-<!--            rgba(255, 255, 255, 0.2) 0%,-->
-<!--            rgba(255, 255, 255, 0.12) 50%,-->
-<!--            rgba(255, 255, 255, 0.05) 100%);-->
-<!--            border-radius: 12px 0 0 0;-->
-<!--            z-index: 1;-->
-<!--        }-->
-
-<!--        .last-page-line::after {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            bottom: 0;-->
-<!--            left: -4px;-->
-<!--            right: -4px;-->
-<!--            height: 16px;-->
-<!--            background: rgba(255, 255, 255, 0.15);-->
-<!--            border-radius: 0 0 8px 8px;-->
-<!--            z-index: 2;-->
-<!--        }-->
-
-<!--        .last-page-line:hover {-->
-<!--            background: linear-gradient(to top,-->
-<!--            rgba(255, 255, 255, 0.15) 0%,-->
-<!--            rgba(255, 255, 255, 0.12) 30%,-->
-<!--            rgba(255, 255, 255, 0.08) 70%,-->
-<!--            rgba(255, 255, 255, 0.04) 100%);-->
-<!--            transform: scaleX(1.15) translateY(-5px);-->
-<!--            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .last-page-lines-container {-->
-<!--                right: 1.5rem;-->
-<!--                bottom: 0;-->
-<!--                gap: 25px;-->
-<!--            }-->
-
-<!--            .last-page-line {-->
-<!--                width: 30px;-->
-<!--            }-->
-
-<!--            .last-page-line-longest {-->
-<!--                height: 200px;-->
-<!--            }-->
-
-<!--            .last-page-line-longer {-->
-<!--                height: 160px;-->
-<!--            }-->
-
-<!--            .last-page-line-long {-->
-<!--                height: 120px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        @media (min-width: 1200px) {-->
-<!--            .last-page-lines-container {-->
-<!--                right: 6rem;-->
-<!--                gap: 60px;-->
-<!--            }-->
-
-<!--            .last-page-line {-->
-<!--                width: 50px;-->
-<!--            }-->
-
-<!--            .last-page-line-longest {-->
-<!--                height: 400px;-->
-<!--            }-->
-
-<!--            .last-page-line-longer {-->
-<!--                height: 320px;-->
-<!--            }-->
-
-<!--            .last-page-line-long {-->
-<!--                height: 240px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .stripe-video-container {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            z-index: -1;-->
-<!--            overflow: hidden;-->
-<!--            border-radius: inherit;-->
-<!--            pointer-events: none;-->
-<!--        }-->
-
-<!--        .stripe-video-container video {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--            filter: brightness(0.6) contrast(1.1);-->
-<!--        }-->
-
-<!--        .last-page-stripe-video-container {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            z-index: -1;-->
-<!--            overflow: hidden;-->
-<!--            border-radius: inherit;-->
-<!--            pointer-events: none;-->
-<!--        }-->
-
-<!--        .last-page-stripe-video-container video {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--            filter: brightness(1.2) contrast(1.05);-->
-<!--        }-->
-
-<!--        .vertical-line::before,-->
-<!--        .vertical-line::after,-->
-<!--        .last-page-line::before,-->
-<!--        .last-page-line::after {-->
-<!--            z-index: 2;-->
-<!--            position: relative;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--&lt;!&ndash; Removed global top video container (no background video) &ndash;&gt;-->
-
-<!--&lt;!&ndash; Intro pages (static - no scroll movement) &ndash;&gt;-->
-<!--<div class="intro-pages-container">-->
-<!--    <div class="intro-page" id="page2">-->
-<!--        <div>-->
-<!--            <div class="page-text">Enjoy free airport pickup.</div>-->
-<!--            <div class="page-subtext">We'll meet you on arrival and take you straight to your destination—fast, easy, and stress-free.</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="intro-page" id="page3">-->
-<!--        <div>-->
-<!--            <div class="page-text">Free Refreshments snacks for Every Guest.</div>-->
-<!--            <div class="page-subtext">snacks and drinks, served to make your journey welcoming, comfortable, and refreshing from the very first moment.</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; National parks page (own video - no overlap) &ndash;&gt;-->
-<!--<div class="white-gap-page">-->
-<!--    <div class="white-gap-background-video">-->
-<!--        <video th:src="${backgroundVideoUrl}"-->
-<!--               autoplay-->
-<!--               muted-->
-<!--               loop-->
-<!--               playsinline-->
-<!--               oncontextmenu="return false;">-->
-<!--        </video>-->
-<!--        <div class="white-gap-video-overlay"></div>-->
-<!--    </div>-->
-
-<!--    <div class="white-gap-container">-->
-<!--        <div class="park-cards-container">-->
-<!--            <div class="default-cards-wrapper" id="defaultCardsWrapper">-->
-<!--                <a href="/masai/map" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Ngorongoro Crater</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/tarangire-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3691809/pexels-photo-3691809.jpeg" alt="Tarangire National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Tarangire National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/serengeti-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/15373902/pexels-photo-15373902.jpeg" alt="Serengeti National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Serengeti National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/olduvai-gorge" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/27141127/pexels-photo-27141127.jpeg" alt="Olduvai Gorge">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Olduvai Gorge</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/kikuletwa-hot-spring" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3800074/pexels-photo-3800074.jpeg" alt="Kikuletwa Hot Spring">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Kikuletwa Hot Spring</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/manyara-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/16636159/pexels-photo-16636159.jpeg" alt="Manyara National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Manyara National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <button class="toggle-btn" id="showMoreBtn">Show More National Parks</button>-->
-<!--                <button class="toggle-btn hidden" id="showLessBtn">Back</button>-->
-<!--            </div>-->
-
-<!--            <div class="additional-cards-wrapper" id="additionalCardsWrapper">-->
-<!--                <a href="/parks/arusha-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/26727728/pexels-photo-26727728.jpeg" alt="Arusha National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Arusha National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/ruaha-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3751673/pexels-photo-3751673.jpeg" alt="Ruaha National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Ruaha National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/mikumi-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/35076154/pexels-photo-35076154.jpeg" alt="Mikumi National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Mikumi National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/katavi-national-park" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/16044989/pexels-photo-16044989.jpeg" alt="Katavi National Park">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Katavi National Park</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <a href="/parks/mount-kilimanjaro" class="left-card">-->
-<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/8879241/pexels-photo-8879241.jpeg" alt="Mount Kilimanjaro">-->
-<!--                    <div class="left-card-overlay"></div>-->
-<!--                    <div class="left-card-content">-->
-<!--                        <div class="left-card-title">Mount Kilimanjaro</div>-->
-<!--                        <div class="left-card-subtext">View</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
-<!--                <button class="toggle-btn" id="showLessBtnAdditional">Back</button>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <iframe src="http://localhost:4000/masai/africaMap"-->
-<!--                width="830"-->
-<!--                height="630"-->
-<!--                style="border:0;">-->
-<!--        </iframe>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; New white page (own content - no background video overlap) &ndash;&gt;-->
-<!--<div class="new-white-page">-->
-<!--    <div class="vertical-lines-container">-->
-<!--        <div class="vertical-line vertical-line-tallest">-->
-<!--            <div class="stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="vertical-line vertical-line-taller">-->
-<!--            <div class="stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="vertical-line vertical-line-tall">-->
-<!--            <div class="stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="new-white-page-header">-->
-<!--        <div class="new-white-page-logo">Your Section Title</div>-->
-<!--        <div class="new-white-page-main-text">Main Heading Here</div>-->
-<!--        <div class="new-white-page-subtext">Description or subtext goes here. You can write about your services, features, or any other information you want to display.</div>-->
-<!--    </div>-->
-
-<!--    <div class="new-white-page-content">-->
-<!--        <p>Your content will go here</p>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Last page (own video - no overlap) &ndash;&gt;-->
-<!--<div class="last-page">-->
-<!--    <div class="last-page-lines-container">-->
-<!--        <div class="last-page-line last-page-line-long">-->
-<!--            <div class="last-page-stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="last-page-line last-page-line-longer">-->
-<!--            <div class="last-page-stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="last-page-line last-page-line-longest">-->
-<!--            <div class="last-page-stripe-video-container">-->
-<!--                <video th:src="${backgroundVideoUrl}"-->
-<!--                       autoplay muted loop playsinline-->
-<!--                       oncontextmenu="return false">-->
-<!--                </video>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="last-page-video">-->
-<!--        <video th:each="videoUrl : ${videos}"-->
-<!--               th:src="${videoUrl}"-->
-<!--               autoplay-->
-<!--               muted-->
-<!--               loop-->
-<!--               playsinline-->
-<!--               oncontextmenu="return false;">-->
-<!--        </video>-->
-<!--        <div class="last-page-overlay"></div>-->
-<!--    </div>-->
-
-<!--    <div class="logo-circle">-->
-<!--        <img src="obi/panda.jpg" alt="Logo">-->
-<!--    </div>-->
-
-<!--    <div class="last-page-content">-->
-<!--        <div class="page-text">Start Your Journey Today</div>-->
-<!--        <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>-->
-<!--        <div class="comm-icons">-->
-<!--            <a href="YOUR_WECHAT_URL_HERE" class="comm-icon" target="_self">-->
-<!--                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111615.png" alt="WeChat">-->
-<!--            </a>-->
-<!--            <a href="YOUR_FACEBOOK_URL_HERE" class="comm-icon" target="_self">-->
-<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">-->
-<!--            </a>-->
-<!--            <a href="YOUR_WHATSAPP_URL_HERE" class="comm-icon" target="_self">-->
-<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">-->
-<!--            </a>-->
-<!--            <a href="YOUR_INSTAGRAM_URL_HERE" class="comm-icon" target="_self">-->
-<!--                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Only card flip script (removed scroll movement for intro pages) &ndash;&gt;-->
-<!--<script>-->
-<!--    // Book/Page Flip Functionality ONLY (no scroll movement)-->
-<!--    const showMoreBtn = document.getElementById('showMoreBtn');-->
-<!--    const showLessBtn = document.getElementById('showLessBtn');-->
-<!--    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');-->
-<!--    const defaultCardsWrapper = document.getElementById('defaultCardsWrapper');-->
-<!--    const additionalCardsWrapper = document.getElementById('additionalCardsWrapper');-->
-
-<!--    showMoreBtn.addEventListener('click', function() {-->
-<!--        defaultCardsWrapper.classList.add('pushed-left');-->
-<!--        additionalCardsWrapper.classList.add('visible');-->
-<!--        this.classList.add('hidden');-->
-<!--        showLessBtn.classList.remove('hidden');-->
-<!--    });-->
-
-<!--    showLessBtn.addEventListener('click', function() {-->
-<!--        additionalCardsWrapper.classList.remove('visible');-->
-<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
-<!--        this.classList.add('hidden');-->
-<!--        showMoreBtn.classList.remove('hidden');-->
-<!--    });-->
-
-<!--    showLessBtnAdditional.addEventListener('click', function() {-->
-<!--        additionalCardsWrapper.classList.remove('visible');-->
-<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
-<!--        showLessBtn.classList.add('hidden');-->
-<!--        showMoreBtn.classList.remove('hidden');-->
-<!--    });-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-
-
-<!--               BEOW IS MY ORIGINAL FORM-->
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -1985,20 +797,7 @@
             margin: 0 auto;
         }
 
-        @media (max-width: 1024px) {
-            .white-gap-container {
-                flex-direction: column;
-            }
-            .park-cards-container {
-                width: 100%;
-            }
-            .left-card {
-                min-height: 250px;
-            }
-            .default-cards-wrapper.pushed-left {
-                transform: translateX(-100%);
-            }
-        }
+
 
         @media (max-width: 768px) {
             .white-gap-page {
@@ -2421,6 +1220,226 @@
             z-index: 2;
             position: relative;
         }
+
+
+
+
+        #rotatingVideo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* or contain based on your need */
+            background-color: black; /* Prevents flash of background */
+        }
+
+        .white-gap-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .white-gap-background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .white-gap-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+
+
+
+
+        /*African map at national parks sections */
+        /* African map at national parks sections - FIXED */
+        .map-position {
+            margin-top: 60px;
+            align-self: center;
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        /* Make bigger on hover */
+        .map-position:hover {
+            transform: scale(1.05);
+        }
+
+        /* FIX: Proper responsive sizes */
+        /* Desktop: Keep original size */
+        @media (min-width: 1201px) {
+            .map-position {
+                width: 830px;
+                height: 630px;
+            }
+        }
+
+        /* Tablets: Smaller but proportional */
+        @media (max-width: 1200px) and (min-width: 992px) {
+            .map-position {
+                width: 500px;
+                height: 380px;
+            }
+        }
+
+        /* Small tablets: Even smaller */
+        @media (max-width: 991px) and (min-width: 769px) {
+            .map-position {
+                width: 400px;
+                height: 300px;
+            }
+        }
+
+        /* Phones: Much smaller */
+        @media (max-width: 768px) {
+            .map-position {
+                width: 300px !important;
+                height: 230px !important;
+                margin: 20px auto !important;
+                display: block;
+            }
+        }
+
+        /* Very small phones: Even smaller */
+        @media (max-width: 480px) {
+            .map-position {
+                width: 250px !important;
+                height: 190px !important;
+                margin: 15px auto !important;
+            }
+        }
+
+        /*here for all devices */
+
+        /* ===== NEW RESPONSIVE FIXES ===== */
+        /* For tablets: Keep side-by-side layout */
+        @media (max-width: 1200px) {
+            .left-card {
+                min-height: 200px;
+            }
+            .white-gap-container {
+                gap: 2rem;
+            }
+            .map-position {
+                width: 600px;
+                height: 450px;
+            }
+        }
+
+        /* For smaller tablets: Adjust widths */
+        @media (max-width: 992px) {
+            .park-cards-container {
+                width: 55%;
+            }
+            .map-position {
+                width: 40%;
+                height: auto;
+            }
+        }
+
+        /* For phones: 2 columns, map under cards */
+        @media (max-width: 768px) {
+            .default-cards-wrapper,
+            .additional-cards-wrapper {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            .white-gap-container {
+                flex-direction: column; /* Stack on phones */
+            }
+            .park-cards-container {
+                width: 100%;
+            }
+            .map-position {
+                width: 90%;
+                margin: 30px auto;
+                display: block;
+            }
+            .left-card {
+                min-height: 200px !important;
+            }
+        }
+
+        /* For very small phones: Adjust spacing */
+        @media (max-width: 480px) {
+            .default-cards-wrapper,
+            .additional-cards-wrapper {
+                grid-template-columns: 1fr !important; /* 1 column on very small screens */
+                gap: 1rem;
+            }
+            .map-position {
+                width: 95%;
+            }
+        }
+
+
+
+        /* FIX THE EMPTY SPACE - ADD AT VERY END */
+        /* FINAL FIX - REPLACE ALL PREVIOUS .white-gap-page HEIGHT RULES */
+        .white-gap-page {
+            min-height: auto !important;
+            max-height: none !important;
+            height: auto !important;
+            padding-bottom: 2rem !important;
+        }
+
+        /* Remove desktop min-height too */
+        @media (min-width: 769px) {
+            .white-gap-page {
+                min-height: auto !important;
+            }
+        }
+
+
+
+
+
+        /*vi icon vya kipumbavu, kwa simu */
+        /* Hide ALL video controls and play buttons */
+        /* Hide video controls on all devices */
+        video {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        /* Prevent video from being selectable/tappable */
+        .top-full-video-container video,
+        .last-page-video video,
+        .stripe-video-container video,
+        .last-page-stripe-video-container video {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* The ONLY essential pseudo-element that works */
+        video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        /* Mobile-specific fix */
+        @media (max-width: 768px) {
+            video {
+                -webkit-appearance: none;
+            }
+
+            /* Some browsers still need this */
+            video::-webkit-media-controls-enclosure {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2433,9 +1452,11 @@
         <span class="header-brand">BigPanda Safaris</span>
     </div>
     <nav class="header-nav">
-        <a href="#parks" class="nav-link">National Parks</a>
+<!--        <a href="#parks" class="nav-link">National Parks</a>-->
+        <a href="#parks" onclick="scrollToParks(event)" class="nav-link">National Parks</a>
         <a href="#adventures" class="nav-link">Adventures</a>
-        <a href="#contact" class="nav-link">Contact Us</a>
+<!--        <a href="#contact" class="nav-link">Contact Us</a>-->
+        <a href="#contact" onclick="scrollToContact(event)" class="nav-link">Contact Us</a>
         <a href="#book" class="nav-link cta-btn">Book Now</a>
     </nav>
 </div>
@@ -2443,16 +1464,33 @@
 
 
 <!-- Fixed duplicate body tag -->
+<!--<div class="top-full-video-container">-->
+<!--    <video th:src="${backgroundVideoUrlforhead}"-->
+<!--           autoplay-->
+<!--           muted-->
+<!--           loop-->
+<!--           playsinline-->
+<!--           oncontextmenu="return false;"-->
+<!--           style="width: 100%; height: 100%; object-fit: cover !important;">-->
+<!--    </video>-->
+<!--</div>-->
+
+
+
+
 <div class="top-full-video-container">
-    <video th:src="${backgroundVideoUrl}"
+    <video id="rotatingVideo"
            autoplay
            muted
-           loop
            playsinline
            oncontextmenu="return false;"
            style="width: 100%; height: 100%; object-fit: cover !important;">
+        <!-- REMOVE th:src - JavaScript will handle it -->
     </video>
 </div>
+
+
+
 
 <div class="intro-pages-container">
     <!-- 恢复原始的3个intro page结构，保持原有交互逻辑 -->
@@ -2473,19 +1511,31 @@
 </div>
 
 <!-- National parks page -->
-<div class="white-gap-page">
-    <div class="white-gap-background-video">
-        <video th:src="${backgroundVideoUrl}"
-               autoplay
-               muted
-               loop
-               playsinline
-               oncontextmenu="return false;">
-        </video>
-        <div class="white-gap-video-overlay"></div>
+<!--<div class="white-gap-page">-->
+
+<!--<div class="white-gap-page" id="parks">-->
+<!--    <div class="white-gap-background-video">-->
+<!--        <video th:src="${videoUrl}"-->
+<!--               autoplay-->
+<!--               muted-->
+<!--               loop-->
+<!--               playsinline-->
+<!--               oncontextmenu="return false;">-->
+<!--        </video>-->
+<!--        <div class="white-gap-video-overlay"></div>-->
+<!--    </div>-->
+
+
+<div class="white-gap-page" id="parks">
+    <div class="white-gap-background-image">
+        <img src="https://images.pexels.com/photos/19328603/pexels-photo-19328603.jpeg" alt="Background">
+        <div class="white-gap-image-overlay"></div>
     </div>
 
+
+
     <div class="white-gap-container">
+
         <div class="park-cards-container">
             <div class="default-cards-wrapper" id="defaultCardsWrapper">
                 <a href="climb" class="left-card">
@@ -2599,11 +1649,18 @@
             </div>
         </div>
 
-        <iframe src="http://localhost:4000/masai/africaMap"
-                width="830"
-                height="630"
-                style="border:0;">
-        </iframe>
+<!--        <iframe src="http://localhost:4000/masai/africaMap"-->
+<!--                width="830"-->
+<!--                height="630"-->
+<!--                style="border:0;">-->
+<!--        </iframe>-->
+
+        <img src="/obi/africa.png"
+             class="map-position"
+             alt="Africa Map"
+             width="830"
+             height="630"
+             style="border: 0;">
     </div>
 </div>
 
@@ -2612,7 +1669,7 @@
     <div class="vertical-lines-container">
         <div class="vertical-line vertical-line-tallest">
             <div class="stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${backgroundVideoUrlforhead}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2620,7 +1677,7 @@
         </div>
         <div class="vertical-line vertical-line-taller">
             <div class="stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${backgroundVideoUrlforhead}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2628,7 +1685,7 @@
         </div>
         <div class="vertical-line vertical-line-tall">
             <div class="stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${backgroundVideoUrlforhead}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2648,11 +1705,12 @@
 </div>
 
 <!-- Last page with video -->
-<div class="last-page">
+<!--<div class="last-page">-->
+    <div class="last-page" id="contact">
     <div class="last-page-lines-container">
         <div class="last-page-line last-page-line-long">
             <div class="last-page-stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${videoUrl}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2660,7 +1718,7 @@
         </div>
         <div class="last-page-line last-page-line-longer">
             <div class="last-page-stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${videoUrl}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2668,7 +1726,7 @@
         </div>
         <div class="last-page-line last-page-line-longest">
             <div class="last-page-stripe-video-container">
-                <video th:src="${backgroundVideoUrl}"
+                <video th:src="${videoUrl}"
                        autoplay muted loop playsinline
                        oncontextmenu="return false">
                 </video>
@@ -2693,6 +1751,7 @@
     </div>
 
     <div class="last-page-content">
+
         <div class="page-text">Start Your Journey Today</div>
         <div class="page-subtext">Book your Tanzania national park adventure • All-inclusive packages • 24/7 customer support</div>
         <div class="comm-icons">
@@ -2713,6 +1772,206 @@
 </div>
 
 
+<script>
+    // Force videos to play without showing controls
+    function forceVideoPlay(videoElement) {
+        videoElement.setAttribute('playsinline', '');
+        videoElement.setAttribute('webkit-playsinline', '');
+        videoElement.setAttribute('x5-playsinline', '');
+        videoElement.setAttribute('x5-video-player-type', 'h5');
+        videoElement.setAttribute('x5-video-player-fullscreen', 'false');
+        videoElement.setAttribute('preload', 'auto');
+        videoElement.setAttribute('muted', 'muted');
+        videoElement.muted = true;
+        videoElement.volume = 0;
+
+        // Remove any controls attribute
+        videoElement.removeAttribute('controls');
+
+        // Try to play
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // If play fails, mute and try again
+                videoElement.muted = true;
+                videoElement.play();
+            });
+        }
+    }
+
+    // Apply to all videos on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('video').forEach(function(video) {
+            forceVideoPlay(video);
+        });
+    });
+</script>
+
+
+
+
+<script>
+function scrollToContact(event) {
+event.preventDefault();
+
+const contactSection = document.getElementById('contact');
+if (contactSection) {
+const header = document.querySelector('.premium-header');
+const headerHeight = header ? header.offsetHeight : 0;
+const targetPosition = contactSection.offsetTop - headerHeight;
+
+window.scrollTo({
+top: targetPosition,
+behavior: 'smooth'
+});
+}
+}
+</script>
+
+
+<script>
+function scrollToParks(event) {
+
+    event.preventDefault(); // Stop the default jump
+
+    const parksSection = document.getElementById('parks');
+    if (parksSection) {
+        const header = document.querySelector('.premium-header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const targetPosition = parksSection.offsetTop - headerHeight;
+
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+    }
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const allVideos = [[${foreheadVideos}]];
+    const trimDurations = [4, 8, 3, 4, 6, 9]; // Exact trim lengths (no speed change)
+    const preloadedUrls = [];
+    let currentVideoIndex = 0;
+    let activePlayer = 0;
+    let isVideoLoading = false;
+
+    // UNCHANGED: Build URL (speed param is passed but NOT used to alter playback)
+    function buildStreamUrl(originalUrl, speed, trimSeconds) {
+        if (!originalUrl || originalUrl.trim() === '') return '';
+        return `/masai/stream-video?sourceUrl=${encodeURIComponent(originalUrl)}&trimTo=${trimSeconds}&speed=${speed}`;
+    }
+
+    // Preload all video URLs (no speed change)
+    function preloadAllVideos() {
+        for (let i = 0; i < allVideos.length; i++) {
+            const video = allVideos[i];
+            const trim = trimDurations[i];
+            preloadedUrls.push(buildStreamUrl(video.url, video.speed, trim));
+        }
+    }
+
+    // Create dual players (instant swap, normal speed)
+    function createDualPlayers() {
+        const container = document.getElementById('rotatingVideo').parentElement;
+        container.innerHTML = '';
+
+        for (let i = 0; i < 2; i++) {
+            const player = document.createElement('video');
+            player.id = `player${i}`;
+            player.style.position = 'absolute';
+            player.style.top = '0';
+            player.style.left = '0';
+            player.style.width = '100%';
+            player.style.height = '100%';
+            player.style.objectFit = 'cover';
+            player.style.display = 'none';
+            player.muted = true;
+            player.playsInline = true;
+            player.preload = 'auto';
+            player.autoplay = true;
+            player.playbackRate = 1.0; // FORCE normal speed (critical)
+            container.appendChild(player);
+        }
+        container.style.position = 'relative';
+        container.style.overflow = 'hidden';
+    }
+
+    function getPlayers() {
+        const player1 = document.getElementById('player0');
+        const player2 = document.getElementById('player1');
+        return activePlayer === 0 ? { active: player1, inactive: player2 } : { active: player2, inactive: player1 };
+    }
+
+    // Core fix: Gapless swap at NORMAL speed (no early switching)
+    function playNextVideoImmediately() {
+        if (isVideoLoading || allVideos.length <= 1) return;
+        isVideoLoading = true;
+
+        const { active, inactive } = getPlayers();
+        currentVideoIndex = (currentVideoIndex + 1) % allVideos.length;
+        const nextUrl = preloadedUrls[currentVideoIndex];
+        const nextTrim = trimDurations[currentVideoIndex];
+
+        // Reset inactive player (force normal speed)
+        inactive.currentTime = 0;
+        inactive.playbackRate = 1.0; // Ensure speed never changes
+        inactive.src = nextUrl;
+        inactive.load();
+
+        // Wait for video to be fully buffered (no gaps)
+        function onReady() {
+            // Instant swap (no delay)
+            active.style.display = 'none';
+            inactive.style.display = 'block';
+
+            // Set timer for NEXT swap (EXACT trim duration = normal speed)
+            clearTimeout(window.videoTimer);
+            window.videoTimer = setTimeout(playNextVideoImmediately, nextTrim * 1000);
+
+            // Reset state
+            activePlayer = activePlayer === 0 ? 1 : 0;
+            isVideoLoading = false;
+        }
+
+        // Fallback for slow loads (no speed change)
+        setTimeout(() => {
+            if (isVideoLoading) onReady();
+        }, nextTrim * 1000 + 500);
+
+        inactive.addEventListener('canplaythrough', onReady, { once: true });
+    }
+
+    // Initialize (normal speed, gapless)
+    function initializePlayer() {
+        preloadAllVideos();
+        createDualPlayers();
+        const { active } = getPlayers();
+
+        // Load first video (normal speed)
+        active.src = preloadedUrls[0];
+        active.playbackRate = 1.0; // Force normal speed
+        active.style.display = 'block';
+        active.play().catch(err => {
+            active.load();
+            active.play();
+        });
+
+        // First timer (exact duration = normal speed)
+        const firstTrim = trimDurations[0];
+        window.videoTimer = setTimeout(playNextVideoImmediately, firstTrim * 1000);
+    }
+
+    // Validation
+    if (!allVideos || allVideos.length === 0) {
+        console.error('No video data received from server.');
+    } else {
+        initializePlayer();
+    }
+    /*]]>*/
+</script>
+
 
 <script>
     // Header scroll effect (NO CHANGES)
@@ -2724,8 +1983,6 @@
             header.classList.remove('scrolled');
         }
     });
-
-
   // this is other part below
     const introPages = [
         document.getElementById('page2'),
