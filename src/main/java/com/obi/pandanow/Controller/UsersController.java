@@ -112,6 +112,73 @@ public class UsersController {
 
 
 
+//    @GetMapping("/stream-video")
+//    public void streamTrimmedVideo(
+//            @RequestParam String sourceUrl,
+//            @RequestParam(defaultValue = "10") int trimTo,
+//            @RequestParam(defaultValue = "1.0") float speed,
+//            HttpServletResponse response) throws IOException {
+//
+//        System.err.println("=== STREAM ENDPOINT CALLED ===");
+//        System.err.println("URL: " + sourceUrl);
+//        System.err.println("Trim: " + trimTo + "s, Speed: " + speed);
+//
+//        String ffmpegPath = "C:\\Users\\Administrator\\Downloads\\ffmpeg-2026-01-29-git-c898ddb8fe-essentials_build\\ffmpeg-2026-01-29-git-c898ddb8fe-essentials_build\\bin\\ffmpeg.exe";
+//
+//        // Test if FFmpeg works
+//        try {
+//            String[] testCmd = {ffmpegPath, "-version"};
+//            Process test = new ProcessBuilder(testCmd).start();
+//            int testExit = test.waitFor();
+//            System.err.println("FFmpeg test exit code: " + testExit);
+//        } catch (Exception e) {
+//            System.err.println("FFMPEG TEST FAILED: " + e.getMessage());
+//            response.sendError(500, "FFmpeg failed: " + e.getMessage());
+//            return;
+//        }
+//
+//        String[] cmd = {
+//                ffmpegPath,
+//                "-fflags", "flush_packets", // Critical: reduce streaming delay
+//                "-i", sourceUrl,
+//                "-t", String.valueOf(trimTo),
+//                "-c:v", "copy",
+//                "-c:a", "copy",
+//                "-f", "matroska",
+//                "pipe:1"
+//        };
+//
+//        System.err.println("Starting FFmpeg process...");
+//
+//        try {
+//            Process process = new ProcessBuilder(cmd).start();
+//            response.setContentType("video/x-matroska");
+//
+//            // Copy stream
+//            InputStream in = process.getInputStream();
+//            OutputStream out = response.getOutputStream();
+//            byte[] buffer = new byte[8192];
+//            int bytesRead;
+//            int totalBytes = 0;
+//
+//            while ((bytesRead = in.read(buffer)) != -1) {
+//                out.write(buffer, 0, bytesRead);
+//                totalBytes += bytesRead;
+//            }
+//
+//            int exitCode = process.waitFor();
+//            System.err.println("FFmpeg completed. Exit: " + exitCode + ", Bytes: " + totalBytes);
+//
+//        } catch (Exception e) {
+//            System.err.println("STREAMING ERROR: " + e.getMessage());
+//            e.printStackTrace();
+//            if (!response.isCommitted()) {
+//                response.sendError(500, "Stream failed: " + e.getMessage());
+//            }
+//        }
+//    }
+
+
     @GetMapping("/stream-video")
     public void streamTrimmedVideo(
             @RequestParam String sourceUrl,
@@ -123,7 +190,8 @@ public class UsersController {
         System.err.println("URL: " + sourceUrl);
         System.err.println("Trim: " + trimTo + "s, Speed: " + speed);
 
-        String ffmpegPath = "C:\\Users\\Administrator\\Downloads\\ffmpeg-2026-01-29-git-c898ddb8fe-essentials_build\\ffmpeg-2026-01-29-git-c898ddb8fe-essentials_build\\bin\\ffmpeg.exe";
+        // Changed from hardcoded Windows path to system PATH lookup
+        String ffmpegPath = "ffmpeg";
 
         // Test if FFmpeg works
         try {
@@ -177,6 +245,5 @@ public class UsersController {
             }
         }
     }
-
 }
 
