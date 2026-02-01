@@ -1,0 +1,940 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>National Parks</title>-->
+<!--    <style>-->
+<!--        /* === CLEANED STYLES - NO SCROLL, NO BACKGROUND, NO BORDERS === */-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            /* Remove all scrollbars */-->
+<!--            overflow: hidden !important;-->
+<!--            /* Remove background - inherit from parent iframe */-->
+<!--            background: transparent !important;-->
+<!--            min-height: 100%;-->
+<!--            height: 100%;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0 !important;-->
+<!--            padding: 0 !important;-->
+<!--            position: relative;-->
+<!--            top: 0;-->
+<!--        }-->
+
+<!--        /* Remove all background/video elements (inherit from main page) */-->
+<!--        .white-gap-page {-->
+<!--            position: relative;-->
+<!--            height: auto;-->
+<!--            /* Exact original height - match main page container */-->
+<!--            min-height: 800px;-->
+<!--            width: 100%;-->
+<!--            /* Transparent background - no white overlay */-->
+<!--            background: transparent !important;-->
+<!--            z-index: 4;-->
+<!--            margin-top: 0 !important;-->
+<!--            border-radius: 0;-->
+<!--            /* Remove padding to eliminate boundaries */-->
+<!--            padding: 0 !important;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: flex-start;-->
+<!--            /* Ensure no overflow/scroll */-->
+<!--            overflow: hidden !important;-->
+<!--        }-->
+
+<!--        /* Remove background video/overlay completely */-->
+<!--        .white-gap-background-video,-->
+<!--        .white-gap-video-overlay {-->
+<!--            display: none !important;-->
+<!--        }-->
+
+<!--        .white-gap-header,-->
+<!--        .white-gap-container {-->
+<!--            position: relative;-->
+<!--            z-index: 2;-->
+<!--        }-->
+
+<!--        .white-gap-container {-->
+<!--            display: flex;-->
+<!--            gap: 3rem;-->
+<!--            width: 100%;-->
+<!--            padding-left: 0;-->
+<!--            margin-right: 0;-->
+<!--            justify-content: space-between;-->
+<!--            /* Exact original height to match main page */-->
+<!--            height: 800px;-->
+<!--        }-->
+
+<!--        .park-cards-container {-->
+<!--            width: 90%;-->
+<!--            position: relative;-->
+<!--            /* Remove overflow scroll */-->
+<!--            overflow: hidden !important;-->
+<!--            /* Exact height match */-->
+<!--            height: 100%;-->
+<!--        }-->
+
+<!--        .default-cards-wrapper {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(3, 1fr);-->
+<!--            gap: 2.5rem;-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);-->
+<!--            transform: translateX(0);-->
+<!--            opacity: 1;-->
+<!--            width: 100%;-->
+<!--            /* Remove any extra height */-->
+<!--            height: 100%;-->
+<!--        }-->
+
+<!--        .default-cards-wrapper.pushed-left {-->
+<!--            transform: translateX(-100%);-->
+<!--            opacity: 0;-->
+<!--        }-->
+
+<!--        .additional-cards-wrapper {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(3, 1fr);-->
+<!--            gap: 2.5rem;-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            z-index: 2;-->
+<!--            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);-->
+<!--            transform: translateX(100%);-->
+<!--            opacity: 0;-->
+<!--            width: 100%;-->
+<!--            /* Remove any extra height */-->
+<!--            height: 100%;-->
+<!--        }-->
+
+<!--        .additional-cards-wrapper.visible {-->
+<!--            transform: translateX(0);-->
+<!--            opacity: 1;-->
+<!--        }-->
+
+<!--        .left-card {-->
+<!--            background: #f8f8f8;-->
+<!--            border-radius: 60px 0 0 0;-->
+<!--            overflow: hidden;-->
+<!--            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: flex-end;-->
+<!--            padding: 2.5rem;-->
+<!--            text-align: center;-->
+<!--            position: relative;-->
+<!--            /* Exact original card height */-->
+<!--            min-height: 450px;-->
+<!--            width: 100%;-->
+<!--            aspect-ratio: 3/4;-->
+<!--            cursor: pointer;-->
+<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--            text-decoration: none;-->
+<!--            /* Remove any borders */-->
+<!--            border: none !important;-->
+<!--        }-->
+
+<!--        .left-card:hover {-->
+<!--            transform: translateY(-5px);-->
+<!--            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
+
+<!--        .left-card-overlay {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);-->
+<!--            z-index: 2;-->
+<!--            border-radius: 60px 0 0 0;-->
+<!--        }-->
+
+<!--        /* Mobile responsive adjustments (preserve original sizing) */-->
+<!--        @media (max-width: 768px) {-->
+<!--            .left-card {-->
+<!--                border-radius: 40px 0 0 0;-->
+<!--                min-height: 220px;-->
+<!--            }-->
+<!--            .left-card-overlay {-->
+<!--                border-radius: 40px 0 0 0;-->
+<!--            }-->
+<!--            .white-gap-container {-->
+<!--                flex-direction: column;-->
+<!--                height: 600px;-->
+<!--            }-->
+<!--            .park-cards-container {-->
+<!--                width: 100%;-->
+<!--            }-->
+<!--            .default-cards-wrapper, .additional-cards-wrapper {-->
+<!--                grid-template-columns: 1fr;-->
+<!--            }-->
+<!--        }-->
+
+<!--        @media (max-width: 1024px) {-->
+<!--            .white-gap-container {-->
+<!--                flex-direction: column;-->
+<!--                height: 700px;-->
+<!--            }-->
+<!--            .park-cards-container {-->
+<!--                width: 100%;-->
+<!--            }-->
+<!--            .left-card {-->
+<!--                min-height: 250px;-->
+<!--            }-->
+<!--            .default-cards-wrapper.pushed-left {-->
+<!--                transform: translateX(-100%);-->
+<!--            }-->
+<!--        }-->
+
+<!--        .toggle-btn {-->
+<!--            grid-column: 1 / -1;-->
+<!--            padding: 1.2rem 2.5rem;-->
+<!--            background-color: #2a2a2a;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 8px;-->
+<!--            font-size: 1.1rem;-->
+<!--            font-weight: 600;-->
+<!--            cursor: pointer;-->
+<!--            transition: background-color 0.3s ease, transform 0.2s ease;-->
+<!--            margin-top: 1rem;-->
+<!--            min-height: auto;-->
+<!--            position: relative;-->
+<!--            z-index: 3;-->
+<!--            /* Remove any borders */-->
+<!--            border: none !important;-->
+<!--        }-->
+
+<!--        .toggle-btn:hover {-->
+<!--            background-color: #444;-->
+<!--            transform: translateY(-2px);-->
+<!--        }-->
+
+<!--        .toggle-btn:active {-->
+<!--            transform: translateY(0);-->
+<!--        }-->
+
+<!--        .toggle-btn.hidden {-->
+<!--            display: none;-->
+<!--        }-->
+
+<!--        .left-card-bg {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            object-fit: cover;-->
+<!--            z-index: 1;-->
+<!--            border-radius: 60px 0 0 0;-->
+<!--            /* Remove any borders */-->
+<!--            border: none !important;-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .left-card-bg {-->
+<!--                border-radius: 40px 0 0 0;-->
+<!--            }-->
+<!--            .toggle-btn {-->
+<!--                padding: 1rem 2rem;-->
+<!--                font-size: 1rem;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .left-card-content {-->
+<!--            position: relative;-->
+<!--            z-index: 3;-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--            width: 100%;-->
+<!--        }-->
+
+<!--        .left-card-title {-->
+<!--            font-size: 1.8rem;-->
+<!--            font-weight: bold;-->
+<!--            color: white;-->
+<!--            margin-bottom: 0.5rem;-->
+<!--            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);-->
+<!--        }-->
+
+<!--        .left-card-subtext {-->
+<!--            font-size: 1.2rem;-->
+<!--            color: white;-->
+<!--            font-weight: 500;-->
+<!--            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);-->
+<!--        }-->
+
+<!--        /* Remove scrollbars from all elements */-->
+<!--        html, body, div, iframe {-->
+<!--            overflow: hidden !important;-->
+<!--            scrollbar-width: none !important; /* Firefox */-->
+<!--            -ms-overflow-style: none !important; /* IE/Edge */-->
+<!--        }-->
+
+<!--        /* Hide scrollbar for Chrome/Safari/Opera */-->
+<!--        html::-webkit-scrollbar,-->
+<!--        body::-webkit-scrollbar,-->
+<!--        div::-webkit-scrollbar {-->
+<!--            display: none !important;-->
+<!--        }-->
+
+<!--        /* Ensure map iframe has no borders/scroll */-->
+<!--        iframe {-->
+<!--            border: none !important;-->
+<!--            overflow: hidden !important;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; === CLEANED NATIONAL PARKS SECTION - NO BACKGROUND/VIDEO === &ndash;&gt;-->
+<!--<div class="white-gap-page">-->
+<!--    <div class="white-gap-container">-->
+<!--        <div class="park-cards-container">-->
+<!--            &lt;!&ndash; Default 6 cards (exact original content) &ndash;&gt;-->
+<!--            <div class="default-cards-wrapper" id="defaultCardsWrapper">-->
+<!--                <a href="/masai/map" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Ngorongoro Crater</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/tarangire-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3691809/pexels-photo-3691809.jpeg" alt="Tarangire National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Tarangire National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/serengeti-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/15373902/pexels-photo-15373902.jpeg" alt="Serengeti National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Serengeti National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/olduvai-gorge" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/27141127/pexels-photo-27141127.jpeg" alt="Olduvai Gorge">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Olduvai Gorge</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/kikuletwa-hot-spring" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3800074/pexels-photo-3800074.jpeg" alt="Kikuletwa Hot Spring">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Kikuletwa Hot Spring</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/manyara-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/16636159/pexels-photo-16636159.jpeg" alt="Manyara National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Manyara National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <button class="toggle-btn" id="showMoreBtn">Show More National Parks</button>-->
+<!--                <button class="toggle-btn hidden" id="showLessBtn">Back</button>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; 5 Additional cards (exact original content) &ndash;&gt;-->
+<!--            <div class="additional-cards-wrapper" id="additionalCardsWrapper">-->
+<!--                <a href="/parks/arusha-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/26727728/pexels-photo-26727728.jpeg" alt="Arusha National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Arusha National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/ruaha-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/3751673/pexels-photo-3751673.jpeg" alt="Ruaha National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Ruaha National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/mikumi-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/35076154/pexels-photo-35076154.jpeg" alt="Mikumi National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Mikumi National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/katavi-national-park" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/16044989/pexels-photo-16044989.jpeg" alt="Katavi National Park">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Katavi National Park</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <a href="/parks/mount-kilimanjaro" class="left-card">-->
+<!--                    <img class="left-card-bg" src="https://images.pexels.com/photos/8879241/pexels-photo-8879241.jpeg" alt="Mount Kilimanjaro">-->
+<!--                    <div class="left-card-overlay"></div>-->
+<!--                    <div class="left-card-content">-->
+<!--                        <div class="left-card-title">Mount Kilimanjaro</div>-->
+<!--                        <div class="left-card-subtext">View</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
+<!--                <button class="toggle-btn" id="showLessBtnAdditional">Back</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; African map (exact original - no borders) &ndash;&gt;-->
+<!--&lt;!&ndash;        <iframe src="http://localhost:4000/masai/africaMap"&ndash;&gt;-->
+<!--&lt;!&ndash;                width="830"&ndash;&gt;-->
+<!--&lt;!&ndash;                height="630"&ndash;&gt;-->
+<!--&lt;!&ndash;                style="border:0;">&ndash;&gt;-->
+<!--&lt;!&ndash;        </iframe>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; === EXACT ORIGINAL TOGGLE FUNCTIONALITY === &ndash;&gt;-->
+<!--<script>-->
+<!--    const showMoreBtn = document.getElementById('showMoreBtn');-->
+<!--    const showLessBtn = document.getElementById('showLessBtn');-->
+<!--    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');-->
+<!--    const defaultCardsWrapper = document.getElementById('defaultCardsWrapper');-->
+<!--    const additionalCardsWrapper = document.getElementById('additionalCardsWrapper');-->
+
+<!--    showMoreBtn.addEventListener('click', function() {-->
+<!--        defaultCardsWrapper.classList.add('pushed-left');-->
+<!--        additionalCardsWrapper.classList.add('visible');-->
+<!--        this.classList.add('hidden');-->
+<!--        showLessBtn.classList.remove('hidden');-->
+<!--    });-->
+
+<!--    showLessBtn.addEventListener('click', function() {-->
+<!--        additionalCardsWrapper.classList.remove('visible');-->
+<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
+<!--        this.classList.add('hidden');-->
+<!--        showMoreBtn.classList.remove('hidden');-->
+<!--    });-->
+
+<!--    showLessBtnAdditional.addEventListener('click', function() {-->
+<!--        additionalCardsWrapper.classList.remove('visible');-->
+<!--        defaultCardsWrapper.classList.remove('pushed-left');-->
+<!--        showLessBtn.classList.add('hidden');-->
+<!--        showMoreBtn.classList.remove('hidden');-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /* Remove all boundaries and default spacing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* FIXED: Allow vertical scrolling only for content */
+        html, body {
+            width: 100%;
+            min-height: 1200px; /* FIXED: Increased minimum height */
+            overflow-x: hidden !important;
+            overflow-y: auto; /* FIXED: Allow vertical scrolling */
+            position: relative;
+            font-family: Arial, sans-serif;
+            background: white !important;
+        }
+
+        /* Main container - fixed height to show all cards */
+        .national-parks-container {
+            width: 100%;
+            min-height: 1200px; /* FIXED: Increased height */
+            background: white !important;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 4rem;
+        }
+
+        /* Remove all video backgrounds */
+        .white-gap-background-video,
+        .white-gap-video-overlay {
+            display: none !important;
+        }
+
+        .white-gap-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .white-gap-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2a2a2a;
+            margin-bottom: 0.5rem;
+        }
+
+        .white-gap-main-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2a2a2a;
+            margin-bottom: 1rem;
+        }
+
+        .white-gap-subtext {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* FIXED: Flex container for cards and map */
+        .white-gap-container {
+            display: flex;
+            gap: 3rem;
+            width: 100%;
+            min-height: 900px; /* FIXED: Ensure enough height */
+            align-items: flex-start;
+        }
+
+        .park-cards-container {
+            width: 65%; /* FIXED: Adjusted width */
+            position: relative;
+            min-height: 900px; /* FIXED: Ensure cards container has height */
+        }
+
+        .default-cards-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(0);
+            opacity: 1;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .default-cards-wrapper.pushed-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .additional-cards-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            opacity: 0;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .additional-cards-wrapper.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* FIXED: Card dimensions */
+        .left-card {
+            background: #f8f8f8;
+            border-radius: 60px 0 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            height: 350px; /* FIXED: Fixed height */
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .left-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .left-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+            z-index: 2;
+            border-radius: 60px 0 0 0;
+        }
+
+        .left-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            border-radius: 60px 0 0 0;
+        }
+
+        .left-card-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+
+        .left-card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .left-card-subtext {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .toggle-btn {
+            grid-column: 1 / -1;
+            padding: 1.2rem 2.5rem;
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1rem;
+            min-height: auto;
+            position: relative;
+            z-index: 3;
+            width: 300px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .toggle-btn:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn:active {
+            transform: translateY(0);
+        }
+
+        .toggle-btn.hidden {
+            display: none;
+        }
+
+        /* Map container */
+        .map-container {
+            width: 35%; /* FIXED: Adjusted width */
+            flex-shrink: 0;
+        }
+
+        /* Map iframe styling */
+        iframe {
+            border: 0;
+            width: 100%;
+            height: 630px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .white-gap-container {
+                flex-direction: column;
+                gap: 4rem;
+            }
+            .park-cards-container {
+                width: 100%;
+            }
+            .map-container {
+                width: 100%;
+            }
+            iframe {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .national-parks-container {
+                padding: 1.5rem;
+                min-height: 1400px;
+            }
+            .default-cards-wrapper, .additional-cards-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .white-gap-main-text {
+                font-size: 1.8rem;
+            }
+            .left-card {
+                height: 280px;
+                border-radius: 40px 0 0 0;
+            }
+            .left-card-bg {
+                border-radius: 40px 0 0 0;
+            }
+            .left-card-overlay {
+                border-radius: 40px 0 0 0;
+            }
+            .left-card-title {
+                font-size: 1.5rem;
+            }
+            .left-card-subtext {
+                font-size: 1rem;
+            }
+            .toggle-btn {
+                width: 100%;
+                max-width: 300px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            iframe {
+                height: 400px;
+            }
+        }
+
+        /* Ensure horizontal scrollbar doesn't appear */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="national-parks-container">
+    <div class="white-gap-header">
+        <div class="white-gap-logo">BigPanda Safaris</div>
+        <div class="white-gap-main-text">Tanzania National Parks</div>
+        <div class="white-gap-subtext">Explore our beautiful national parks and conservation areas. Click on any park to view details and plan your visit.</div>
+    </div>
+
+    <div class="white-gap-container">
+        <div class="park-cards-container">
+            <!-- Default 6 cards (left page) -->
+            <div class="default-cards-wrapper" id="defaultCardsWrapper">
+                <!-- Card 1: Ngorongoro Crater -->
+                <a href="/masai/map" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/2695664/pexels-photo-2695664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ngorongoro Crater">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Ngorongoro Crater</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 2: Tarangire National Park -->
+                <a href="/parks/tarangire-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/3691809/pexels-photo-3691809.jpeg" alt="Tarangire National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Tarangire National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 3: Serengeti National Park -->
+                <a href="/parks/serengeti-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/15373902/pexels-photo-15373902.jpeg" alt="Serengeti National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Serengeti National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 4: Olduvai Gorge -->
+                <a href="/parks/olduvai-gorge" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/27141127/pexels-photo-27141127.jpeg" alt="Olduvai Gorge">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Olduvai Gorge</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 5: Kikuletwa Hot Spring -->
+                <a href="/parks/kikuletwa-hot-spring" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/3800074/pexels-photo-3800074.jpeg" alt="Kikuletwa Hot Spring">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Kikuletwa Hot Spring</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 6: Manyara National Park -->
+                <a href="/parks/manyara-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/16636159/pexels-photo-16636159.jpeg" alt="Manyara National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Manyara National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <button class="toggle-btn" id="showMoreBtn">Show More National Parks</button>
+                <button class="toggle-btn hidden" id="showLessBtn">Back</button>
+            </div>
+
+            <!-- 5 Additional cards (front page) -->
+            <div class="additional-cards-wrapper" id="additionalCardsWrapper">
+                <!-- Card 7: Arusha National Park -->
+                <a href="/parks/arusha-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/26727728/pexels-photo-26727728.jpeg" alt="Arusha National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Arusha National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 8: Ruaha National Park -->
+                <a href="/parks/ruaha-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/3751673/pexels-photo-3751673.jpeg" alt="Ruaha National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Ruaha National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 9: Mikumi National Park -->
+                <a href="/parks/mikumi-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/35076154/pexels-photo-35076154.jpeg" alt="Mikumi National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Mikumi National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 10: Katavi National Park -->
+                <a href="/parks/katavi-national-park" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/16044989/pexels-photo-16044989.jpeg" alt="Katavi National Park">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Katavi National Park</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Card 11: Mount Kilimanjaro -->
+                <a href="/parks/mount-kilimanjaro" class="left-card">
+                    <img class="left-card-bg" src="https://images.pexels.com/photos/8879241/pexels-photo-8879241.jpeg" alt="Mount Kilimanjaro">
+                    <div class="left-card-overlay"></div>
+                    <div class="left-card-content">
+                        <div class="left-card-title">Mount Kilimanjaro</div>
+                        <div class="left-card-subtext">View</div>
+                    </div>
+                </a>
+
+                <!-- Show Less button for additional cards -->
+                <button class="toggle-btn" id="showLessBtnAdditional">Back</button>
+            </div>
+        </div>
+
+        <!-- Map container -->
+        <div class="map-container">
+            <iframe src="http://localhost:4000/masai/africaMap"
+                    width="100%"
+                    height="630"
+                    style="border:0;">
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Book/Page Flip Functionality
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    const showLessBtnAdditional = document.getElementById('showLessBtnAdditional');
+    const defaultCardsWrapper = document.getElementById('defaultCardsWrapper');
+    const additionalCardsWrapper = document.getElementById('additionalCardsWrapper');
+
+    showMoreBtn.addEventListener('click', function() {
+        defaultCardsWrapper.classList.add('pushed-left');
+        additionalCardsWrapper.classList.add('visible');
+        this.classList.add('hidden');
+        showLessBtn.classList.remove('hidden');
+    });
+
+    showLessBtn.addEventListener('click', function() {
+        additionalCardsWrapper.classList.remove('visible');
+        defaultCardsWrapper.classList.remove('pushed-left');
+        this.classList.add('hidden');
+        showMoreBtn.classList.remove('hidden');
+    });
+
+    showLessBtnAdditional.addEventListener('click', function() {
+        additionalCardsWrapper.classList.remove('visible');
+        defaultCardsWrapper.classList.remove('pushed-left');
+        showLessBtn.classList.add('hidden');
+        showMoreBtn.classList.remove('hidden');
+    });
+</script>
+</body>
+</html>
